@@ -1,0 +1,6 @@
+PG_HOST: <server hosting your db>
+PG_USER: <your db user name>
+PG_PORT: <port>
+PG_PASSWORD: <user password>
+PG_NAME: <database name>
+MATERIALIZED_VIEW_NAME: <name of the output materialized view>
