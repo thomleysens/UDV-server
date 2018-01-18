@@ -60,13 +60,64 @@ if __name__ == '__main__':
 
     # Fetch Data and create materialized view
     if args.temporal:
+        ##### Design choices
+        # - When a date in the source database is infinity (respectively
+        #   -infinity) the associated semantics is to the end of time
+        #   (respecitvely from the begining of time).
+        # - When a date in the source database is null we consider that the
+        #   associated semantics is "unknown" (or unset) and in turn interpret
+        #   it a begining of time (respectively end of time) for
+        #   year_of_construction (respectively year_of_demolition).
+        # - Note: using infinity/-infinity instead of null to carry the
+        #   semantics of "end of/begining of time" instead of null not only
+        #   clarifies the situation but also makes the queries simpler and
+        #   clearer.
+        # - When computing the miminim and maximum dates of the source database
+        #   (in order to establish practical time boundaries, think for example
+        #   of setting upper and lower bounds to the temporal slider) we drop #   (disregard) dates that are either null or +/-infinity.
+        #   In the created materialized view we substitute to those source
+        #   values (either null or +/-infinity) the corresponding computed
+        #   minimum (respecitvely maximum) to a null or -infinity of a
+        #   year_of_construction (respectively to a null or infinity of a
+        #   year_of_demolition).
+        #   The associated semantics are that before the minimum (known or
+        #   finite) date means fromever and after the maximum (know or finite)
+        #   means forever. Again, if we consider the temporal slider usage of
+        #   such mapped dates the lower time boundary represents the situation
+        #   at the origin of time whereas the upper time boundary represents
+        #   final version of the city as expressed by the city data.
+        # References:
+        #  - https://stackoverflow.com/questions/8011914/how-to-represent-end-of-time-in-a-database
+        # - https://stewashton.wordpress.com/2014/07/04/sql-and-date-ranges-dont-use-null/
+        query = ( "SELECT MIN (year_of_construction) FROM building "
+                  "   WHERE year_of_construction != '-infinity'")
+        cursor.execute(query)
+        MinConstructionDate = cursor.fetchone()[0]
+
+        # WHERE year_demol != infinity
+        # Extract the maximum of the existing demolition dates
+        query = ( "SELECT MAX (year_of_demolition) FROM building "
+                  "   WHERE year_of_demolition != 'infinity'")
+        cursor.execute(query)
+        MaxDemolitionDate = cursor.fetchone()[0]
+
         # Create query fetching id, geometries and temporal information of buildings
+
         query = ("CREATE MATERIALIZED VIEW {0} AS SELECT building.id AS gid, "
-            "ST_Collect(surface_geometry.geometry) AS geom, building.year_of_construction "
-            "AS year_const, building.year_of_demolition AS year_demol FROM building "
-    	    "JOIN thematic_surface ON building.id=thematic_surface.building_id "
-    	    "JOIN surface_geometry ON surface_geometry.root_id=thematic_surface.lod2_multi_surface_id "
-            "WHERE surface_geometry.geometry is not null GROUP BY building.id ").format(db_config['MATERIALIZED_VIEW_NAME'])
+            "ST_Collect(surface_geometry.geometry) AS geom,"
+            "COALESCE(building.year_of_construction, DATE '{1}')"
+            "   AS year_const,"
+            "COALESCE(building.year_of_demolition, DATE '{2}')"
+            "   AS year_demol "
+            "FROM building "
+    	    "  JOIN thematic_surface ON"
+            "     building.id=thematic_surface.building_id "
+    	    "  JOIN surface_geometry ON "  # Trailing whitespace matters
+            "surface_geometry.root_id=thematic_surface.lod2_multi_surface_id "
+            "WHERE surface_geometry.geometry is not null"
+            "  GROUP BY building.id" ).format(db_config['MATERIALIZED_VIEW_NAME'],
+                                  MinConstructionDate,
+                                  MaxDemolitionDate)
     else:
         # Create query only fetching id and geometries of buildings
         query = ("CREATE MATERIALIZED VIEW {0} AS SELECT building.id AS gid, "
@@ -76,3 +127,10 @@ if __name__ == '__main__':
             "WHERE surface_geometry.geometry is not null GROUP BY building.id ").format(db_config['MATERIALIZED_VIEW_NAME'])
 
     cursor.execute(query)
+
+    # Make the changes to the database persistent
+    db.commit()
+
+    # Close communication with the database
+    cursor.close()
+    db.close()
