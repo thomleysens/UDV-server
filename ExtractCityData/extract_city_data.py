@@ -74,7 +74,8 @@ if __name__ == '__main__':
         #   clearer.
         # - When computing the miminim and maximum dates of the source database
         #   (in order to establish practical time boundaries, think for example
-        #   of setting upper and lower bounds to the temporal slider) we drop #   (disregard) dates that are either null or +/-infinity.
+        #   of setting upper and lower bounds to the temporal slider) we drop 
+        #   (disregard) dates that are either null or +/-infinity.
         #   In the created materialized view we substitute to those source
         #   values (either null or +/-infinity) the corresponding computed
         #   minimum (respecitvely maximum) to a null or -infinity of a
