@@ -18,7 +18,10 @@ and optionnally their year of construction and year of demolition.
 
 #### Use
 
-You can run `extract_city_data.py -h` to display help about this tool.
+Activate venv if you created one:
+`. venv/bin/activate`
+
+You can run `python extract_city_data.py -h` to display help about this tool.
 
 `extract_city_data.py` takes one mandatory argument and one optionnal argument.
 
