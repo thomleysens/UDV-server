@@ -16,5 +16,5 @@ default_formatter = '%(asctime)s [%(levelname)s] \n\t%(message)s'
 
 logger = logging.getLogger('sqlalchemy.engine')
 
-setLogger(logger, logging.INFO, 'info.log', 'w', default_formatter)
+setLogger(logger, logging.INFO, '../info.log', 'w', default_formatter)
 

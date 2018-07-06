@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-import json
 from sqlalchemy import Column, Integer
 from sqlalchemy.orm import relationship
 
@@ -14,21 +13,22 @@ class ExtendedDocument(Base):
     id = Column(Integer, primary_key=True)
     metaData = relationship("MetaData",
                             uselist=False,
-                            back_populates="extendedDocument",
                             cascade="all, delete-orphan")
     visualisation = relationship("Visualisation",
                                  uselist=False,
-                                 back_populates="extendedDocument",
                                  cascade="all, delete-orphan")
 
-    def __str__(self):
-        return "{document:  {" + \
-               "id : " + str(self.id) + ", " + \
-               str(self.metaData) + ", " + \
-               str(self.visualisation) + "}}"
+    def getAllAttr(self):
+        return {i for i in dir(self) if not (i.startswith('_') or callable(getattr(self, i)) or i == "metadata")}
 
     def serialize(self):
-        return json.dumps({'aDocument': {'type': "document", "properties": {"id": self.id, "metaData": self.metaData.serialise()}}}, indent=2)
+        objectSerialized = {}
+        for attr in self.getAllAttr():
+            try:
+                objectSerialized[attr] = getattr(self, attr).serialize()
+            except AttributeError:
+                objectSerialized[attr] = getattr(self, attr)
+        return objectSerialized
 
     def update(self, attributes):
         self.metaData.update(attributes)

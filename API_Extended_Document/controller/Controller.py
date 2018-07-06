@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # coding: utf8
-
+import json
 import sys
 
-from util.log import *
 from util.util import *
 from entity.MetaData import MetaData
 from entity.Visualisation import Visualisation
@@ -13,11 +12,9 @@ import persistenceUnit.PersistenceUnit as pUnit
 
 class Controller:
     @staticmethod
-    def createDocument(extended_document, metaData, visualisation):
+    def createDocument(extended_document):
         with pUnit.makeATransaction() as session:
             session.add(extended_document)
-            session.add(metaData)
-            session.add(visualisation)
 
     @staticmethod
     def recreateTables():
@@ -62,26 +59,29 @@ class Controller:
 
 
 if __name__ == "__main__":
-    # sys.stdout = open('result.log', 'w')
+    sys.stdout = open('../result.json', 'w')
 
     Controller.recreateTables()
 
     doc = ExtendedDocument()
-    meta = MetaData(doc, "un titre", "un sujet", "un type", "un link")
-    visual = Visualisation(doc)
-    Controller.createDocument(doc, meta, visual)
+    meta = MetaData("un titre", "un sujet", "un type", "un link")
+    visual = Visualisation()
+    doc.metaData = meta
+    doc.visualisation = visual
+    Controller.createDocument(doc)
 
     doc = ExtendedDocument()
-    meta = MetaData(doc, "un autre titre", "un sujet", "un type", "un link")
-    visual = Visualisation(doc)
-    Controller.createDocument(doc, meta, visual)
+    meta = MetaData("un autre titre", "un sujet", "un type", "un link")
+    visual = Visualisation()
+    doc.metaData = meta
+    doc.visualisation = visual
+    Controller.createDocument(doc)
 
     Controller.updateDocument(
         {'id': 1, 'positionX': 12, 'description': "this is a very boring description of a very boring document"})
     Controller.deleteDocuments(2)
 
-    print(Controller.getDocumentById(1))
+    print(json.dumps(Controller.getDocumentById(1).serialize()))
 
     for i in Controller.getDocuments({'subject': 'un sujet'}):
-        print("\n##\n", i, "\n##\n")
-        print(i.serialize())
+        print(json.dumps(i.serialize()))
