@@ -2,7 +2,7 @@
 
 ## MVC Architecture
 
-The API **Extended Document** is based on a MVC architecture, which means 
+The API **Extended Document** is based on an MVC architecture, which means 
 we have three main parts :
 - the **Model** 
 - the **View**
@@ -52,18 +52,55 @@ of DB used (postgreSQL, Oracle, MySQL...)
 Because we do not have to write sql request, we need to indicate relation between 
 object directly in their python code. 
 
-To do that we use the library call [[sqlalchemy|htps://www.sqlalchemy.org]] 
+To do that we use the library call [sqlalchemy](htps://www.sqlalchemy.org)
 If you wat to install the library got to ###
 
-A complete tutorial about ORM and sqlalchemy can be find [[here|https://docs.sqlalchemy.org/en/latest/orm/tutorial.html]]
+A complete tutorial about ORM with sqlalchemy can be find [here](https://docs.sqlalchemy.org/en/latest/orm/tutorial.html)
 
-We use in the application a model where all our classes have an associated table, defined like this 
-('extended_document' is the name of the DB class):
+#### A simple example
+
+We define a class called **ExtendedDocument**, this class has an associated table in the DB called **extended_document**
+The types of the attributes of the class need to be specify (like Integer, String or Float)
+This class has an id, which is the primary key of **extended_document**
 
 ```python
 class ExtendedDocument(Base):
     __tablename__ = "extended_document"
+    
+    id = Column(Integer, primary_key=True)
+    attribute1 = Column(String)
+    attribute2 = Column(Float, nullable=False)
 ```
+
+#### Caution
+
+The notion of class attribute and object attribute can easily be mistakable with this defintion. 
+
+```python
+class ExtendedDocument(Base):
+    attribute1 = 1
+    attribute2 = Column(Float, nullable=False)
+    self.attribute3 = 3
+```
+
+attribute1 is a class attribute when both attribute2 and attribute3 are object attribute, even if attribute3 is not present in the DB
+
+You have to describe the attributes of the class by specify explicity their type :
+```python
+title = Column(String)
+```
+
+To specify that a parameter cannot be null, the parameter *nullable* must be specify with the value False
+```python
+title = Column(String, nullable=False)
+```
+
+To define a foreign key, for instance to indicate that **MetaData** owns a foreign key which is an id of **ExtendedDocument**
+```python
+id = Column(Integer, ForeignKey('extended_document.id'), primary_key=True)
+```
+
+You can see 
 
 ## Other directories
 
