@@ -4,7 +4,7 @@
 
 The API **Extended Document** used to handle document and achieve all the CRUD operations is developed in python
 It is based on an **MVC** (Model, View, Controller) architecture.
-We use an **ORM** to persist our objects to the DataBase by using [sqlalchemy library](htps://www.sqlalchemy.org).
+We use an **ORM** to persist our objects to the DataBase by using [sqlalchemy library](https://www.sqlalchemy.org).
 To create a service able to interpret HTTP request and send response to the client, we use [flask library](http://flask.pocoo.org/docs/1.0/) 
 
 ## MVC Architecture
@@ -14,40 +14,30 @@ A document is composed of two main part :
 - the **MetaData** such as its title, its description, etc.
 - the **Visualisation** data that can allow to place it in space
 
-Finally, to make the link between this to part we have another entity 
-called **ExtendedDocument**
+Finally, to make the link between this to part we have another entity called **ExtendedDocument**
 
 You can find below the scheme of the DB
 ![](Pictures/DocumentTypeObjectClassDiagram.png)
 
 ### Controller
-The controller is used to interact with the entities. It can realize all
-the CRUD (Create, Read, Update, Delete) operations.
+The controller is used to interact with the entities. It can realize all the CRUD (Create, Read, Update, Delete) operations.
 
 ### View
 The view is a sort of interface between a human and the application. 
-By following the human's action the controller will make some operations 
-in response.
-In the application, the view is called **web_api.py** and can intercept
-web requests and send response to them.
+By following the human's action the view informs the controller which will make some operations in response.
+In the application, the view is called **web_api.py** and can intercept web requests and send response to them.
 
 ## ORM (Object Relational Mapping)
 
 ### Description
 ORM is a way to crate a strong interaction between the objects and the Database :
-When an object is modified, the modification can be easily persist to the DB without the need
-to write any SQL request. That can reduce the complexity of the code and increase 
-the abstraction between the application and the DB. Thus, we are independent of the type
-of DB used (postgreSQL, Oracle, MySQL...)
+When an object is modified, the modification can be easily persist to the DB without the need to write any SQL request. That can reduce the complexity of the code and increase the abstraction between the application and the DB. Thus, we are independent of the type of DB used (postgreSQL, Oracle, MySQL...)
 
 ### How to
 **How can we share inheritance or foreign key notion between an object and a DB ?**
 
-Because we do not have to write sql request, we need to indicate DB relationship between 
-object directly in their python code. 
-
+Because we do not have to write sql request, we need to indicate DB relationship between object directly in their python code. 
 We use for that the [sqlalchemy library](htps://www.sqlalchemy.org) which uses [psycorpg2](http://initd.org/psycopg/docs/) to communicate with the PostgreSQL DataBase.
-
 A complete tutorial about ORM with sqlalchemy can be find [here](https://docs.sqlalchemy.org/en/latest/orm/tutorial.html)
 
 #### A simple example
@@ -168,11 +158,11 @@ DB and the python objects and reduce lines of code when persisting objects.
 **test**
 This directory is used to make tests, in order to be sure the application works well
 
-**util**
+**db_config**
 This directory global script and file to configure the application
 
 **config.yml**
-This file is used to specify information about the database
+This file is used to specify information about the database. To use the **yml** format we use the python library named [PyYAML](https://pyyaml.org/wiki/PyYAMLDocumentation)
 
 ```
 ordbms: <type of DB>
@@ -191,5 +181,15 @@ Configure the application by using the *config.yml* file.
 
 ## Installation
 
+Python and postgreSQL must be installed on the server
 
+Required packages for the application:
+- **sqlalchemy**
+- **Flask**
+- **PyYAML**
 
+```
+pip install sqlalchemy
+pip install Flask
+pip install PyYAML
+```
