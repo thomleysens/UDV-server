@@ -1,13 +1,15 @@
-# Description of the architecture
+# Description of the application
 
-## MVC Architecture
+# Introduction
 
 The API **Extended Document** used to handle document and achieve all the CRUD operations is developed in python
 It is based on an **MVC** (Model, View, Controller) architecture.
 We use an **ORM** to persist our objects to the DataBase by using [sqlalchemy library](htps://www.sqlalchemy.org).
 To create a service able to interpret HTTP request and send response to the client, we use [flask library](http://flask.pocoo.org/docs/1.0/) 
 
-### The model (entities)
+## MVC Architecture
+
+### Model (entity)
 A document is composed of two main part :
 - the **MetaData** such as its title, its description, etc.
 - the **Visualisation** data that can allow to place it in space
@@ -18,12 +20,11 @@ called **ExtendedDocument**
 You can find below the scheme of the DB
 ![](Pictures/DocumentTypeObjectClassDiagram.png)
 
-
-### The controller
+### Controller
 The controller is used to interact with the entities. It can realize all
 the CRUD (Create, Read, Update, Delete) operations.
 
-### The view
+### View
 The view is a sort of interface between a human and the application. 
 By following the human's action the controller will make some operations 
 in response.
@@ -72,10 +73,10 @@ class ExtendedDocument(Base):
     self.attribute3 = 3
 ```
 
-**attribute1** is a class attribute when both **attribute2** and **attribute3** are instance attribute. **Attribute3** is not present in the DB
+**attribute1** is a class attribute when both **attribute2** and **attribute3** are instance attribute. **Attribute3** is not present in the DB.
 
-To create a relationship between two classes, you can define, for the DB, a **foreign key**
-For the object approach, you can define an explicit attribute in one class if it is a non reversible relationship or define an attribute in both classes otherwise.
+To create a relationship between two classes, we create a **foreign key** for the DB.
+For the object approach, you can define an explicit attribute in one class if it is a non reversible relationship, or define an attribute in both classes otherwise.
 
 For instance to indicate that **MetaData** owns a foreign key which is an id of **ExtendedDocument**
 ```python
@@ -88,24 +89,89 @@ metaData = relationship("MetaData", uselist=False, cascade="all, delete-orphan")
 ```
 Extended_Document has an attribute metaData, the parameter *uselist* specify that we have only one instance of **MetaData**,, the attribute cascade simplify operations on metaData directly from ExtendedDocument (such as the deletion).
 
+## Web Application
+
+### Flask
+
+[flask](http://flask.pocoo.org/docs/1.0/) is a micro web framework developped in python. This framework allows us to interpret HTTP request (mainly GET and POST methods) and send appropriate response to the client. 
+To understand this framework, a tutorial can be found [here](http://flask.pocoo.org/docs/1.0/quickstart/#a-minimal-application).
+
+#### Minimal applicaton
+We can create a file named **web_api.py** which contains the following code:
+```python
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return 'index'
+```
+First, we import the library and create an instance of Flask (called app).
+When a user accesses the route '<server-host>/' the function sends 'index' as a response.
+
+- During deployment, [follow the instruction](http://flask.pocoo.org/docs/1.0/deploying/#deployment) depending on your server.
+- During development, to start the server, you need to execute the instructions below:
+    - On **Linux**
+        ```
+        $ export FLASK_APP=web_api.py
+        $ flask run
+        ```
+    - On **Windows** command prompt
+        ```
+        C:\path\to\app>set FLASK_APP=web_api.py
+        C:\path\to\app>flask run
+        ```
+
+#### Variables
+
+You can specify variable name in the url by following the format *<var-type:var-name>*
+
+```python
+@app.route('/deleteDocument/<int:doc_id>')
+def delete_document(doc_id):
+    Controller.delete_documents(doc_id)
+    return 'success'
+```
+
+#### Request Data
+
+You can specify which method is expected when accessing to a specific route 
+```python
+@app.route('/getDocument/<int:doc_id>', methods=['GET', 'POST'])
+```
+Data send with GET and POST methods are stored in a MultiDict; this a set of keys and values and it can exist several times the same key. Its structure is as follow:
+```python
+{"key1": "value1", "key2": "value2", "key1": "value3"}
+```
+
+**GET** You can access parameters by using 
+```python
+request.args
+```
+
+**POST** You can access parameters by using 
+```python
+request.form
+```
+
 ## Other directories
 
-### log
+**log**
 This directory contains information of what happen during the execution of the application :
 - **info.log** : information about the global application execution 
 - **sqlalchemy.log** : operations between the DB and python
 
-### persistence_unit
+**persistence_unit**
 This directory contains some methods to facilitate interaction between the 
 DB and the python objects and reduce lines of code when persisting objects.
 
-### test
+**test**
 This directory is used to make tests, in order to be sure the application works well
 
-### util
+**util**
 This directory global script and file to configure the application
 
-#### config.yml
+**config.yml**
 This file is used to specify information about the database
 
 ```
@@ -117,10 +183,10 @@ port: <port of the server>
 dbname: <name of the database>
 ```
 
-### log.py
+**log.py**
 Configure the logger of the application
 
-### db_config.py
+**db_config.py**
 Configure the application by using the *config.yml* file. 
 
 ## Installation
