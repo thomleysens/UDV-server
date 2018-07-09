@@ -49,7 +49,7 @@ of DB used (postgreSQL, Oracle, MySQL...)
 
 **How can we share inheritance or foreign key notion between an object and a DB ?**
 
-Because we do not have to write sql request, we need to indicate relation between 
+Because we do not have to write sql request, we need to indicate DB relationship between 
 object directly in their python code. 
 
 To do that we use the library call [sqlalchemy](htps://www.sqlalchemy.org)
@@ -83,24 +83,21 @@ class ExtendedDocument(Base):
     self.attribute3 = 3
 ```
 
-attribute1 is a class attribute when both attribute2 and attribute3 are object attribute, even if attribute3 is not present in the DB
+**attribute1** is a class attribute when both **attribute2** and **attribute3** are instance attribute. **Attribute3** is not present in the DB
 
-You have to describe the attributes of the class by specify explicity their type :
-```python
-title = Column(String)
-```
+To create a relationship between two classes, you can define, for the DB, a **foreign key**
+For the object approach, you can define an explicit attribute in one class if it is a non reversible relationship or define an attribute in both classes otherwise.
 
-To specify that a parameter cannot be null, the parameter *nullable* must be specify with the value False
-```python
-title = Column(String, nullable=False)
-```
-
-To define a foreign key, for instance to indicate that **MetaData** owns a foreign key which is an id of **ExtendedDocument**
+For instance to indicate that **MetaData** owns a foreign key which is an id of **ExtendedDocument**
 ```python
 id = Column(Integer, ForeignKey('extended_document.id'), primary_key=True)
 ```
 
-You can see 
+In our example we have a relationship **One To One** between **metadata** and **extended_document** and its navigability is only from **extended_document** to **metadata**. We just have to precise in **ExtendedDocument**:
+```python
+metaData = relationship("MetaData", uselist=False, cascade="all, delete-orphan")
+```
+Extended_Document has an attribute metaData, the parameter *uselist* specify that we have only one instance of **MetaData**,, the attribute cascade simplify operations on metaData directly from ExtendedDocument (such as the deletion).
 
 ## Other directories
 
