@@ -4,13 +4,14 @@
 from sqlalchemy import Column, Integer, Float
 from sqlalchemy import ForeignKey
 
-from util.util import Base
+from util.db_config import Base
 
 
 class Visualisation(Base):
     __tablename__ = "visualisation"
 
-    id = Column(Integer, ForeignKey('extended_document.id'), primary_key=True, )
+    id = Column(Integer, ForeignKey('extended_document.id'),
+                primary_key=True, )
     quaternionX = Column(Float)
     quaternionY = Column(Float)
     quaternionZ = Column(Float)
@@ -19,17 +20,20 @@ class Visualisation(Base):
     positionY = Column(Float)
     positionZ = Column(Float)
 
-    def update(self, newValues):
-        for attKey, attVal in newValues.items():
+    def update(self, new_values):
+        for attKey, attVal in new_values.items():
             if hasattr(self, attKey):
                 setattr(self, attKey, attVal)
+        return self
 
-    def getAllAttr(self):
-        return {i for i in dir(self) if not (i.startswith('_') or callable(getattr(self, i)) or i == "metadata")}
+    def get_all_attr(self):
+        return {i for i in dir(self)
+                if not (i.startswith('_')
+                        or callable(getattr(self, i))
+                        or i == "metadata")}
 
     def serialize(self):
-        objectSerialized = {}
-        for attr in self.getAllAttr():
-            objectSerialized[attr] = getattr(self, attr)
-        return objectSerialized
-
+        serialized_object = {}
+        for attr in self.get_all_attr():
+            serialized_object[attr] = getattr(self, attr)
+        return serialized_object

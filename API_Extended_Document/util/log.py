@@ -3,18 +3,21 @@
 
 import logging
 
+default_formatter = '[%(levelname)s] %(asctime)s : %(message)s'
 
-def setLogger(logger, level, fileName, mode, formatter):
-    logger.setLevel(level)
-    fileHandler = logging.FileHandler(fileName, mode=mode)
+
+def set_logger(a_logger, level, file_name, mode, formatter):
+    a_logger.setLevel(level)
+    file_handler = logging.FileHandler(file_name, mode=mode)
     formatter = logging.Formatter(formatter)
-    fileHandler.setFormatter(formatter)
-    logger.addHandler(fileHandler)
+    file_handler.setFormatter(formatter)
+    a_logger.addHandler(file_handler)
 
 
-default_formatter = '%(asctime)s [%(levelname)s] \n\t%(message)s'
+info_logger = logging.getLogger('sqlalchemy.engine')
+set_logger(info_logger, logging.DEBUG, '../log/sqlalchemy.log', 'w',
+           default_formatter)
 
-logger = logging.getLogger('sqlalchemy.engine')
-
-setLogger(logger, logging.INFO, '../info.log', 'w', default_formatter)
-
+info_logger = logging.getLogger('info_logger')
+set_logger(info_logger, logging.DEBUG, '../log/info.log', 'w',
+           default_formatter)

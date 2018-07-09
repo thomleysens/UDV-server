@@ -4,7 +4,9 @@
 from sqlalchemy import Column, Integer
 from sqlalchemy.orm import relationship
 
-from util.util import Base
+from util.db_config import Base
+from entity.MetaData import MetaData
+from entity.Visualisation import Visualisation
 
 
 class ExtendedDocument(Base):
@@ -18,17 +20,24 @@ class ExtendedDocument(Base):
                                  uselist=False,
                                  cascade="all, delete-orphan")
 
-    def getAllAttr(self):
-        return {i for i in dir(self) if not (i.startswith('_') or callable(getattr(self, i)) or i == "metadata")}
+    def __init__(self):
+        self.metaData = MetaData()
+        self.visualisation = Visualisation()
+
+    def get_all_attr(self):
+        return {i for i in dir(self)
+                if not (i.startswith('_')
+                        or callable(getattr(self, i))
+                        or i == "metadata")}
 
     def serialize(self):
-        objectSerialized = {}
-        for attr in self.getAllAttr():
+        serialized_object = {}
+        for attr in self.get_all_attr():
             try:
-                objectSerialized[attr] = getattr(self, attr).serialize()
+                serialized_object[attr] = getattr(self, attr).serialize()
             except AttributeError:
-                objectSerialized[attr] = getattr(self, attr)
-        return objectSerialized
+                serialized_object[attr] = getattr(self, attr)
+        return serialized_object
 
     def update(self, attributes):
         self.metaData.update(attributes)

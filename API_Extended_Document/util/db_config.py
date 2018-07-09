@@ -5,7 +5,8 @@ import yaml
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
-default_db_info = 'postgresql://postgres:password@localhost:5432/extendedDoc'
+default_db_info = ('postgresql://'
+                   'postgres:password@localhost:5432/extendedDoc')
 
 
 def get_db_info(config_file_name):

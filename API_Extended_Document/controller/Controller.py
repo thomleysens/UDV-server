@@ -1,87 +1,63 @@
 #!/usr/bin/env python3
 # coding: utf8
-import json
-import sys
 
-from util.util import *
+from util.log import *
+from util.db_config import *
 from entity.MetaData import MetaData
-from entity.Visualisation import Visualisation
 from entity.ExtendedDocument import ExtendedDocument
-import persistenceUnit.PersistenceUnit as pUnit
+import persistence_unit.PersistenceUnit as pUnit
 
 
 class Controller:
     @staticmethod
-    def createDocument(extended_document):
-        with pUnit.makeATransaction() as session:
-            session.add(extended_document)
-
-    @staticmethod
-    def recreateTables():
+    def recreate_tables():
         Base.metadata.drop_all(pUnit.engine)
         Base.metadata.create_all(pUnit.engine)
 
     @staticmethod
-    def getAllDocuments():
-        with pUnit.makeATransaction() as session:
-            return session.query(ExtendedDocument)
+    def create_document(attributes):
+        with pUnit.make_a_transaction() as session:
+            document = ExtendedDocument()
+            document.update(attributes)
+            session.add(document)
 
     @staticmethod
-    def getDocumentById(anId):
-        # @FIXME: impossible to manipulate 'metadata' and 'visualisation' if session is closed
-        with pUnit.makeAQuery() as session:
-            return session.query(ExtendedDocument).filter(ExtendedDocument.id == anId).one()
+    def get_document_by_id(doc_id):
+        with pUnit.make_a_query() as session:
+            return session.query(ExtendedDocument).filter(
+                ExtendedDocument.id == doc_id).one()
 
     @staticmethod
-    def getDocuments(attributes):
-        # @FIXME: impossible to manipulate 'metadata' and 'visualisation' if session is closed
-        with pUnit.makeAQuery() as session:
-            return session.query(ExtendedDocument).join(MetaData).filter_by(**attributes).all()
-
-    """
-    dictionary 'attributes' must contain a key id
-    """
+    def get_documents(attributes):
+        # @FIXME: impossible to manipulate 'metadata' and
+        # 'visualisation' if session is closed
+        with pUnit.make_a_query() as session:
+            return session.query(ExtendedDocument).join(
+                MetaData).filter_by(**attributes).all()
 
     @staticmethod
-    def updateDocument(attributes):
-        with pUnit.makeATransaction() as session:
-            aDoc = session.query(ExtendedDocument).filter(ExtendedDocument.id == attributes['id']).one()
-            aDoc.update(attributes)
-            session.add(aDoc)
-            session.add(aDoc.metaData)
-            session.add(aDoc.visualisation)
+    def update_document(doc_id, attributes):
+        with pUnit.make_a_transaction() as session:
+            document = session.query(ExtendedDocument) \
+                .filter(ExtendedDocument.id == doc_id).one()
+            document.update(attributes)
+            session.add(document)
 
     @staticmethod
-    def deleteDocuments(anId):
-        with pUnit.makeATransaction() as session:
-            aDoc = session.query(ExtendedDocument).filter(ExtendedDocument.id == anId).one()
-            session.delete(aDoc)
+    def delete_documents(an_id):
+        with pUnit.make_a_transaction() as session:
+            a_doc = session.query(ExtendedDocument).filter(
+                ExtendedDocument.id == an_id).one()
+            session.delete(a_doc)
 
-
-if __name__ == "__main__":
-    sys.stdout = open('../result.json', 'w')
-
-    Controller.recreateTables()
-
-    doc = ExtendedDocument()
-    meta = MetaData("un titre", "un sujet", "un type", "un link")
-    visual = Visualisation()
-    doc.metaData = meta
-    doc.visualisation = visual
-    Controller.createDocument(doc)
-
-    doc = ExtendedDocument()
-    meta = MetaData("un autre titre", "un sujet", "un type", "un link")
-    visual = Visualisation()
-    doc.metaData = meta
-    doc.visualisation = visual
-    Controller.createDocument(doc)
-
-    Controller.updateDocument(
-        {'id': 1, 'positionX': 12, 'description': "this is a very boring description of a very boring document"})
-    Controller.deleteDocuments(2)
-
-    print(json.dumps(Controller.getDocumentById(1).serialize()))
-
-    for i in Controller.getDocuments({'subject': 'un sujet'}):
-        print(json.dumps(i.serialize()))
+    @staticmethod
+    def serialize(document):
+        if type(document) is list:
+            doc_lists = []
+            for doc in document:
+                doc_lists.append(doc.serialize())
+            return doc_lists
+        elif type(document) is ExtendedDocument:
+            return document.serialize()
+        else:
+            return None

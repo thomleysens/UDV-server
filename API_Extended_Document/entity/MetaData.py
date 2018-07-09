@@ -4,38 +4,37 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import ForeignKey
 
-from util.util import Base
+from util.db_config import Base
 
 
 class MetaData(Base):
     __tablename__ = "metadata"
 
-    id = Column(Integer, ForeignKey('extended_document.id'), primary_key=True)
-    title = Column(String)
-    subject = Column(String)
-    description = Column(String)
+    id = Column(Integer, ForeignKey('extended_document.id'),
+                primary_key=True)
+    title = Column(String, nullable=False)
+    subject = Column(String, nullable=False)
+    description = Column(String, nullable=False)
     refDate = Column(String)
     publicationDate = Column(String)
     type = Column(String)
-    link = Column(String)
+    link = Column(String, nullable=False)
     originalName = Column(String)
 
-    def __init__(self, title, subject, type, link):
-        self.subject = subject
-        self.title = title
-        self.type = type
-        self.link = link
-
-    def update(self, newValues):
-        for attKey, attVal in newValues.items():
+    def update(self, new_values):
+        for attKey, attVal in new_values.items():
             if hasattr(self, attKey):
                 setattr(self, attKey, attVal)
+        return self
 
-    def getAllAttr(self):
-        return {i for i in dir(self) if not (i.startswith('_') or callable(getattr(self, i)) or i == "metadata")}
+    def get_all_attr(self):
+        return {i for i in dir(self)
+                if not (i.startswith('_')
+                        or callable(getattr(self, i))
+                        or i == "metadata")}
 
     def serialize(self):
-        objectSerialized = {}
-        for attr in self.getAllAttr():
-            objectSerialized[attr] = getattr(self, attr)
-        return objectSerialized
+        serialized_object = {}
+        for attr in self.get_all_attr():
+            serialized_object[attr] = getattr(self, attr)
+        return serialized_object
