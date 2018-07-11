@@ -18,6 +18,10 @@ info_logger = logging.getLogger('sqlalchemy.engine')
 set_logger(info_logger, logging.DEBUG, '../log/sqlalchemy.log', 'w',
            default_formatter)
 
-info_logger = logging.getLogger('info_logger')
-set_logger(info_logger, logging.DEBUG, '../log/info.log', 'w',
+info_logger = logging.getLogger('sqlalchemy.engine')
+set_logger(info_logger, logging.INFO, '../log/sqlalchemy_info.log', 'w',
            default_formatter)
+
+'''info_logger = logging.getLogger('info_logger')
+set_logger(info_logger, logging.DEBUG, '../log/info.log', 'w',
+           default_formatter)'''
