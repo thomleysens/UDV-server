@@ -24,7 +24,7 @@ def create_document():
         return 'success'
     except Exception as e:
         info_logger.error(e)
-        return 'error'
+        return 'error', 404
 
 
 @app.route('/getDocument/<int:doc_id>', methods=['GET', 'POST'])
@@ -34,18 +34,24 @@ def get_document(doc_id):
             Controller.get_document_by_id(doc_id)))
     except Exception as e:
         info_logger.error(e)
-        return 'error'
+        return 'error', 404
 
 
 @app.route('/getDocuments', methods=['GET'])
 def get_documents():
     try:
-        return jsonify(Controller.serialize(Controller.get_documents(
-            {key: request.args.get(key) for key in
-             request.args.keys()})))
+        if request.args.get("keyword"):
+            return jsonify(Controller.serialize((
+                Controller.get_documents_by_keyword(
+                    request.args.get('keyword')))))
+        else:
+            return jsonify(
+                Controller.serialize(Controller.get_documents(
+                    {key: request.args.get(key) for key in
+                     request.args.keys()})))
     except Exception as e:
         info_logger.error(e)
-        return 'error'
+        return 'error', 404
 
 
 @app.route('/editDocument/<int:doc_id>', methods=['POST'])

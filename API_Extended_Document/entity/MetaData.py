@@ -27,6 +27,12 @@ class MetaData(Base):
                 setattr(self, attKey, attVal)
         return self
 
+    @classmethod
+    def get_attr(cls, attr_name):
+        if hasattr(cls, attr_name):
+            return getattr(cls, attr_name)
+        return None
+
     def get_all_attr(self):
         return {i for i in dir(self)
                 if not (i.startswith('_')
