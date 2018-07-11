@@ -38,14 +38,14 @@ class Controller:
     def get_documents(attributes):
         with pUnit.make_a_query() as session:
             # dictionaries of attributes to compare
-            sup_dict = {key.replace('<', ''): attributes[key]
-                        for key in attributes if '<' in key}
-            inf_dict = {key.replace('>', ''): attributes[key]
-                        for key in attributes if '>' in key}
+            inf_dict = {key.replace('Start', ''): attributes[key]
+                        for key in attributes if 'Start' in key}
+            sup_dict = {key.replace('End', ''): attributes[key]
+                        for key in attributes if 'End' in key}
 
             # remove dictionaries to compare
             attributes = {key: attributes[key] for key in attributes
-                          if not ('<' in key or '>' in key)}
+                          if not ('Start' in key or 'End' in key)}
 
             filter_condition = []
             for attr in sup_dict.keys():

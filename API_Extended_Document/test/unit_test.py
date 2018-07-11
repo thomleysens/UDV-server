@@ -22,6 +22,7 @@ def create_documents():
         Controller.create_document(
             {"title": "another title", "subject": "subject",
              "type": "type", "non_attr": "non_value",
+             "refDate": "2018-12-03",
              "link": "link", "description": "an other description"})
 
     with make_atomic_transaction("needed argument missing"):
@@ -40,7 +41,7 @@ def read_documents():
 
     with make_atomic_transaction("specific documents"):
         docs = Controller.serialize(Controller.get_documents(
-            {"title": "titre", 'refDate<': '2018-12-3'}))
+            {"title": "titre", 'refDateStart': '2018-12-03'}))
     print(f"\t\t\t{Fore.BLUE}", docs, sep="")
 
     doc = None
