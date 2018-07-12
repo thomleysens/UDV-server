@@ -2,19 +2,19 @@
 
 # Introduction
 
-The API **Extended Document** used to handle document and achieve all the CRUD operations is developed in python
-It is based on an **MVC** (Model, View, Controller) architecture.
-We use an **ORM** to persist our objects to the DataBase by using [sqlalchemy library](https://www.sqlalchemy.org).
-To create a service able to interpret HTTP request and send response to the client, we use [flask library](http://flask.pocoo.org/docs/1.0/) 
+The goal of the API **Extended Document** is to handle documents and achieve all the [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) on the backend side.
+API Extended Document (AED) is developed in python and is based on an **MVC** (Model, View, Controller) architecture.
+Persistance of objects (documents) to the DataBase is obtained through the usage of the [sqlalchemy library](https://www.sqlalchemy.org) [**ORM**](https://en.wikipedia.org/wiki/Object-relational_mapping).
+In order to wrap the (CRUD) service within an HTTP protocol (to deal with the requests and send responses to the client), AED uses [flask library](http://flask.pocoo.org/docs/1.0/).
 
 ## MVC Architecture
 
 ### Model (entity)
-A document is composed of two main part :
-- the **MetaData** such as its title, its description, etc.
-- the **Visualisation** data that can allow to place it in space
+A (UDV oriented) document is composed of two main parts :
+- the **MetaData** of the document such as having a title, a description, etc.
+- the **Visualisation** data that can allow e.g. to display the document   at a specified spatial position when realising a rendering of a City.
 
-Finally, to make the link between this to part we have another entity called **ExtendedDocument**
+Additionally, in order to relate (link) those two parts AED uses another entity called **ExtendedDocument**.
 
 You can find below the scheme of the DB
 ![](Pictures/DocumentTypeObjectClassDiagram.png)
@@ -23,38 +23,37 @@ You can find below the scheme of the DB
 The controller is used to interact with the entities. It can realize all the CRUD (Create, Read, Update, Delete) operations.
 
 ### View
-The view is a sort of interface between a human and the application. 
+The view is a sort of interface between a human and the application.
 By following the human's action the view informs the controller which will make some operations in response.
 In the application, the view is called **web_api.py** and can intercept web requests and send response to them.
 
 ## ORM (Object Relational Mapping)
 
 ### Description
-ORM is a way to crate a strong interaction between the objects and the Database :
-When an object is modified, the modification can be easily persist to the DB without the need to write any SQL request. That can reduce the complexity of the code and increase the abstraction between the application and the DB. Thus, we are independent of the type of DB used (postgreSQL, Oracle, MySQL...)
+ORM is a way to crate a strong interaction between the objects and the Database : when an object is modified, the modification can be easily persisted to the DB without the need to write any SQL request.
+Such a feature can reduce the complexity of the code since it offers to increase its abstraction level by making it independent from the particular technology of the chosen concrete DB (postgreSQL, Oracle, MySQL...).
 
 ### How to
 **How can we share inheritance or foreign key notion between an object and a DB ?**
 
-Because we do not have to write sql request, we need to indicate DB relationship between object directly in their python code. 
-We use for that the [sqlalchemy library](htps://www.sqlalchemy.org) which uses [psycorpg2](http://initd.org/psycopg/docs/) to communicate with the PostgreSQL DataBase.
-A complete tutorial about ORM with sqlalchemy can be find [here](https://docs.sqlalchemy.org/en/latest/orm/tutorial.html)
+Although the implementation is not required to write sql requests, it still needs to indicate the relationship between the DB and the object directly in their python code.
+For that we use the [sqlalchemy library](htps://www.sqlalchemy.org) that in turn uses the [psycorpg2](http://initd.org/psycopg/docs/) (as an adapter/connector) to communicate with the PostgreSQL DataBase.
+A complete tutorial about ORM with sqlalchemy can be found [here](https://docs.sqlalchemy.org/en/latest/orm/tutorial.html)
 
 #### A simple example
-We define a class called **ExtendedDocument**, this class has an associated table in the DB called **extended_document**
-The types of the attributes of the class need to be specify (like Integer, String or Float)
-This class has an id, which is the primary key of **extended_document**
+We define a class called **ExtendedDocument**. This class has an associated table in the DB called **extended_document**. The (primitive) types (e.g. Integer, String or Float) of the attributes of that class need to be specified. This class has an id, which is the primary key of **extended_document**.
+The corresponding code snippet goes
 ```python
 class ExtendedDocument(Base):
     __tablename__ = "extended_document"
-    
+
     id = Column(Integer, primary_key=True)
     attribute1 = Column(String)
     attribute2 = Column(Float, nullable=False)
 ```
 
 **Caution**
-The notion of class attribute and object attribute can easily be mistakable with this defintion. 
+The notion of class attribute and object attribute can easily be mistaken with this definition.
 
 ```python
 class ExtendedDocument(Base):
@@ -83,7 +82,7 @@ Extended_Document has an attribute metaData, the parameter *uselist* specify tha
 
 ### Flask
 
-[flask](http://flask.pocoo.org/docs/1.0/) is a micro web framework developped in python. This framework allows us to interpret HTTP request (mainly GET and POST methods) and send appropriate response to the client. 
+[flask](http://flask.pocoo.org/docs/1.0/) is a micro web framework developped in python. This framework allows us to interpret HTTP request (mainly GET and POST methods) and send appropriate response to the client.
 To understand this framework, a tutorial can be found [here](http://flask.pocoo.org/docs/1.0/quickstart/#a-minimal-application).
 
 #### Minimal applicaton
@@ -125,7 +124,7 @@ def delete_document(doc_id):
 
 #### Request Data
 
-You can specify which method is expected when accessing to a specific route 
+You can specify which method is expected when accessing to a specific route
 ```python
 @app.route('/getDocument/<int:doc_id>', methods=['GET', 'POST'])
 ```
@@ -134,12 +133,12 @@ Data send with GET and POST methods are stored in a MultiDict; this a set of key
 {"key1": "value1", "key2": "value2", "key1": "value3"}
 ```
 
-**GET** You can access parameters by using 
+**GET** You can access parameters by using
 ```python
 request.args
 ```
 
-**POST** You can access parameters by using 
+**POST** You can access parameters by using
 ```python
 request.form
 ```
@@ -148,11 +147,11 @@ request.form
 
 **log**
 This directory contains information of what happen during the execution of the application :
-- **info.log** : information about the global application execution 
+- **info.log** : information about the global application execution
 - **sqlalchemy.log** : operations between the DB and python
 
 **persistence_unit**
-This directory contains some methods to facilitate interaction between the 
+This directory contains some methods to facilitate interaction between the
 DB and the python objects and reduce lines of code when persisting objects.
 
 **test**
@@ -177,7 +176,7 @@ dbname: <name of the database>
 Configure the logger of the application
 
 **db_config.py**
-Configure the application by using the *config.yml* file. 
+Configure the application by using the *config.yml* file.
 
 ## Installation
 
