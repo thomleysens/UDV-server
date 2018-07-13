@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from util.db_config import get_db_info
+from util.log import info_logger
 from util.serialize import serialize
 
 db_string = get_db_info("util/config.yml")
@@ -26,10 +27,16 @@ Finally the second part of the contextmanager is executed in all cases
 def make_a_transaction(old_function):
     def new_function(*args):
         session = Session()
-        document = old_function(session, *args)
-        session.commit()
-        response = serialize(document)
-        session.close()
+        response = None
+        try:
+            document = old_function(session, *args)
+            session.commit()
+            response = serialize(document)
+        except Exception as e:
+            info_logger.error(e)
+            raise e
+        finally:
+            session.close()
         return response
 
     return new_function
@@ -38,9 +45,15 @@ def make_a_transaction(old_function):
 def make_a_query(old_function):
     def new_function(attr):
         session = Session()
-        document = old_function(session, attr)
-        response = serialize(document)
-        session.close()
+        response = None
+        try:
+            document = old_function(session, attr)
+            response = serialize(document)
+        except Exception as e:
+            info_logger.error(e)
+            raise e
+        finally:
+            session.close()
         return response
 
     return new_function

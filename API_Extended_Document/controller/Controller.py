@@ -12,6 +12,14 @@ import persistence_unit.PersistenceUnit as pUnit
 
 
 class Controller:
+    """
+    Class that allows communication with the DB
+    No instance is needed because all its methods are static.
+    This methods are used to make a CRUD operation,
+    by making a query or a transaction with the DB by using
+    the decorators '~persistence_unit.PersistenceUnit.make_a_query'
+    and make_a_transaction
+    """
     keyword_attr = ["title", "description"]
 
     @staticmethod
@@ -38,8 +46,17 @@ class Controller:
     @staticmethod
     @pUnit.make_a_query
     def get_documents(session, *args):
-        # @TODO: delete strong dependence to MetaData
+        """
+        This method si used to make a research using three criteria :
+         - keyword research, document with attributes containing keyword
+         - comparison research, search between two dates
+         - attribute research, document with specific attributes values
+        :param session: Session object
+        :param args: List<attributes>
+        :return: List<ExtendedDocument>
+        """
 
+        # @TODO: delete strong dependence to MetaData
         # list that will contain research conditions for the query
         keyword_conditions = []
         attributes = args[0]
@@ -48,8 +65,7 @@ class Controller:
             keyword = attributes.pop("keyword")
             for attr in Controller.keyword_attr:
                 keyword_conditions.append(
-                    MetaData.get_attr(attr).ilike(
-                        '%' + keyword + '%'))
+                    MetaData.get_attr(attr).ilike('%' + keyword + '%'))
 
         comparison_conditions = []
         # dictionaries of attributes to compare
@@ -76,19 +92,6 @@ class Controller:
             or_(*keyword_conditions))
 
         return query.all()
-
-    @staticmethod
-    @pUnit.make_a_query
-    def get_documents_by_keyword(session, *args):
-        keyword = args[0]
-
-        # @TODO: delete strong dependence to MetaData
-        query = session.query(ExtendedDocument).join(MetaData)
-        filter_condition = []
-        for attr in Controller.keyword_attr:
-            filter_condition.append(MetaData.get_attr(attr).ilike(
-                '%' + keyword + '%'))
-        return query.filter(or_(*filter_condition)).all()
 
     @staticmethod
     @pUnit.make_a_transaction

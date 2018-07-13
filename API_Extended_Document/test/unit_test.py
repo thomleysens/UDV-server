@@ -3,124 +3,156 @@
 
 from colorama import Fore
 from colorama import Style
-from contextlib import contextmanager
 
-from util.log import info_logger
-from util.serialize import serialize
 from controller.Controller import Controller
 
 
-def create_documents():
-    print("\033[01m## Creation ##\033[0m")
-    with make_atomic_transaction("all needed attributes"):
-        Controller.create_document(
-            {"title": "title",
-             "subject": "Subject1",
-             "type": "type",
-             "description": "a description",
-             "link": "1.gif"})
-
-    with make_atomic_transaction("all needed attributes"):
-        Controller.create_document(
-            {"title": "title",
-             "subject": "Subject2",
-             "type": "type",
-             "description": "a description",
-             "link": "campus_ouest_large_adouci.gif",
-             "refDate": "2019-02-05"})
-
-    with make_atomic_transaction(
-            "all needed attributes + non existing attributes"):
-
-        Controller.create_document(
-            {"title": "another title",
-             "subject": "Subject3",
-             "type": "type",
-             "non_attr": "non_value",
-             "refDate": "2018-12-03",
-             "description": "an other description",
-             "link": "3.png"})
-
-    with make_atomic_transaction("needed argument missing"):
-        Controller.create_document({"title": "another title"})
-
-    print("")
+# @TODO: possibility to upload a file
+# from werkzeug.datastructures import FileStorage
+# file = None
+# with open('document-test/test.pdf', 'rb') as fp:
+#     file = FileStorage(fp)
+# file.save('document-test/test_new.pdf')
 
 
-def read_documents():
-    print("\033[01m## Reading ##\033[0m")
+class Test:
+    nb_tests = 0
+    nb_tests_succeed = 0
 
-    docs = None
-    with make_atomic_transaction("all documents"):
-        docs = Controller.get_documents({})
-    print(f"\t\t\t{Fore.BLUE}", docs, sep="")
+    @staticmethod
+    def create_documents():
+        print("\033[01m## Creation ##\033[0m")
+        test_operation("all needed attributes",
+                       False,
+                       lambda: Controller.create_document(
+                           {"title": "title",
+                            "subject": "Subject1",
+                            "type": "type",
+                            "description": "a description",
+                            "link": "1.gif"}))
 
-    with make_atomic_transaction("specific documents"):
-        docs = Controller.get_documents(
-            {"keyword": "description", 'refDateStart': '2018-12-03'})
-    print(f"\t\t\t{Fore.BLUE}", docs, sep="")
+        test_operation("all needed attributes",
+                       False,
+                       lambda: Controller.create_document(
+                           {"title": "title",
+                            "subject": "Subject2",
+                            "type": "type",
+                            "description": "a description",
+                            "link": "2.gif",
+                            "refDate": "2019-02-05"}))
 
-    doc = None
-    with make_atomic_transaction("document with existing id"):
-        doc = Controller.get_document_by_id(1)
-    print(f"\t\t\t{Fore.BLUE}", doc, sep="")
+        test_operation("needed + nonexistent attributes",
+                       False,
+                       lambda: Controller.create_document(
+                           {"title": "another title",
+                            "subject": "Subject3",
+                            "type": "type",
+                            "non_attr": "non_value",
+                            "refDate": "2018-12-03",
+                            "description": "an other description",
+                            "link": "3.png"}))
 
-    doc = None
-    with make_atomic_transaction("document with non existing id"):
-        doc = serialize(Controller.get_document_by_id(178))
-    print(f"\t\t\t{Fore.BLUE}", doc, sep="")
-    print("")
+        test_operation("needed argument missing",
+                       True,
+                       lambda: Controller.create_document(
+                           {"title": "another title"}))
+
+    @staticmethod
+    def read_documents():
+        print("\n\033[01m## Reading ##\033[0m")
+
+        test_operation("all documents", False,
+                       lambda: Controller.get_documents({}))
+
+        test_operation("specific documents", False,
+                       lambda: Controller.get_documents(
+                           {"keyword": "description",
+                            'refDateStart': '2018-12-03'}))
+
+        test_operation("document with existing id", False,
+                       lambda: Controller.get_document_by_id(1))
+
+        test_operation("document with non existing id", True,
+                       lambda: Controller.get_document_by_id(-1))
+
+    @staticmethod
+    def update_documents():
+        print("\n\033[01m## Updating ##\033[0m")
+        test_operation("existing document", False,
+                       lambda: Controller.update_document(1, {
+                           'positionX': 12,
+                           'description': "description of a document"
+                       }))
+
+        test_operation("existing document", False,
+                       lambda: Controller.update_document(1, {
+                           'positionX': 12,
+                           'description': "another description"
+                       }))
+
+        test_operation("existing document", True,
+                       lambda: Controller.update_document(-1, {
+                           'positionX': 12,
+                           'description': "description of a document"
+                       }))
+
+    @staticmethod
+    def delete_documents():
+        print("\n\033[01m## Deletion ##\033[0m")
+        test_operation("existing document", False,
+                       lambda: Controller.delete_documents(2))
+        test_operation("existing document", True,
+                       lambda: Controller.delete_documents(2))
 
 
-def update_documents():
-    print("\033[01m## Updating ##\033[0m")
-    with make_atomic_transaction("existing document"):
-        Controller.update_document(1, {
-            'positionX': 12,
-            'description': "description of a very boring document"
-        })
-
-    with make_atomic_transaction("existing document"):
-        Controller.update_document(2, {
-            'positionX': 12,
-            'description': "description of a very boring document"
-        })
-
-    with make_atomic_transaction("non existing document"):
-        Controller.update_document(3, {
-            'positionX': 12,
-            'description': "description of a very boring document"
-        })
-    print('')
+def display_error(error=True):
+    if error:
+        print(f"{Fore.RED}[ error ]", end=" ")
+    else:
+        print(f"{Fore.GREEN}[success]", end=" ")
+    print(f"{Style.RESET_ALL}", end="")
 
 
-def delete_documents():
-    print("\033[01m## Deletion ##\033[0m")
-    with make_atomic_transaction("existing document"):
-        Controller.delete_documents(2)
-    with make_atomic_transaction("non existing document"):
-        Controller.delete_documents(2)
-    print('')
+def make_transaction(old_function):
+    def new_function(description, expecting_error,
+                     function_to_test):
+        happened_error = False
+        function_result = ""
+        exception = ""
+        try:
+            function_result = old_function(function_to_test)
+        except Exception as e:
+            exception = e
+            happened_error = True
+        finally:
+            display_error(expecting_error != happened_error)
+            display_error(expecting_error)
+            display_error(happened_error)
+            print("{:<32}".format(description + ":"), end="")
+            print(f"{Fore.RED}", str(exception).replace("\n", ""),
+                  end="")
+            print(f"{Fore.BLUE}", function_result, sep="")
+            print(f"{Style.RESET_ALL}", sep="", end="")
+
+            Test.nb_tests += 1
+            if expecting_error == happened_error:
+                Test.nb_tests_succeed += 1
+
+    return new_function
 
 
-@contextmanager
-def make_atomic_transaction(description=""):
-    try:
-        yield
-        print(f"{Fore.GREEN}[success]{Style.RESET_ALL}", end=' ')
-        print('\t', description, '\033[0m', sep='')
-    except Exception as e:
-        print(f"{Fore.RED}[ error ]{Style.RESET_ALL}", end=' ')
-        print('\t', description, sep='', end=':')
-        print(f"{Fore.RED}", str(e).replace("\n", ""),
-              f"{Style.RESET_ALL}")
+@make_transaction
+def test_operation(function_to_test):
+    return function_to_test()
 
 
 if __name__ == "__main__":
     Controller.recreate_tables()
-    create_documents()
-    read_documents()
-    update_documents()
-    read_documents()
-    delete_documents()
-    read_documents()
+    Test.create_documents()
+    Test.read_documents()
+    Test.update_documents()
+    Test.read_documents()
+    Test.delete_documents()
+    Test.read_documents()
+    print("\n\n\033[04mSuccess\033[01m: ", Test.nb_tests_succeed, "/",
+          Test.nb_tests, sep="")
