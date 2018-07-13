@@ -1,29 +1,45 @@
 #!/usr/bin/env python3
 # coding: utf8
-from contextlib import contextmanager
 
 from colorama import Fore
 from colorama import Style
+from contextlib import contextmanager
 
-from controller.Controller import Controller
 from util.log import info_logger
+from util.serialize import serialize
+from controller.Controller import Controller
 
 
 def create_documents():
     print("\033[01m## Creation ##\033[0m")
     with make_atomic_transaction("all needed attributes"):
         Controller.create_document(
-            {"title": "title", "subject": "subject1", "type": "type",
-             "link": "link", "description": "a description"})
+            {"title": "title",
+             "subject": "Subject1",
+             "type": "type",
+             "description": "a description",
+             "link": "1.gif"})
+
+    with make_atomic_transaction("all needed attributes"):
+        Controller.create_document(
+            {"title": "title",
+             "subject": "Subject2",
+             "type": "type",
+             "description": "a description",
+             "link": "campus_ouest_large_adouci.gif",
+             "refDate": "2019-02-05"})
 
     with make_atomic_transaction(
             "all needed attributes + non existing attributes"):
 
         Controller.create_document(
-            {"title": "another title", "subject": "subject",
-             "type": "type", "non_attr": "non_value",
+            {"title": "another title",
+             "subject": "Subject3",
+             "type": "type",
+             "non_attr": "non_value",
              "refDate": "2018-12-03",
-             "link": "link", "description": "an other description"})
+             "description": "an other description",
+             "link": "3.png"})
 
     with make_atomic_transaction("needed argument missing"):
         Controller.create_document({"title": "another title"})
@@ -36,21 +52,22 @@ def read_documents():
 
     docs = None
     with make_atomic_transaction("all documents"):
-        docs = Controller.serialize(Controller.get_documents({}))
+        docs = Controller.get_documents({})
     print(f"\t\t\t{Fore.BLUE}", docs, sep="")
 
     with make_atomic_transaction("specific documents"):
-        docs = Controller.serialize(Controller.get_documents(
-            {"title": "titre", 'refDateStart': '2018-12-03'}))
+        docs = Controller.get_documents(
+            {"keyword": "description", 'refDateStart': '2018-12-03'})
     print(f"\t\t\t{Fore.BLUE}", docs, sep="")
 
     doc = None
     with make_atomic_transaction("document with existing id"):
-        doc = Controller.serialize(Controller.get_document_by_id(1))
+        doc = Controller.get_document_by_id(1)
     print(f"\t\t\t{Fore.BLUE}", doc, sep="")
 
+    doc = None
     with make_atomic_transaction("document with non existing id"):
-        doc = Controller.serialize(Controller.get_document_by_id(3))
+        doc = serialize(Controller.get_document_by_id(178))
     print(f"\t\t\t{Fore.BLUE}", doc, sep="")
     print("")
 
@@ -80,9 +97,9 @@ def update_documents():
 def delete_documents():
     print("\033[01m## Deletion ##\033[0m")
     with make_atomic_transaction("existing document"):
-        Controller.delete_documents(1)
+        Controller.delete_documents(2)
     with make_atomic_transaction("non existing document"):
-        Controller.delete_documents(1)
+        Controller.delete_documents(2)
     print('')
 
 

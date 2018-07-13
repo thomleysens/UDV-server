@@ -16,13 +16,13 @@ class ExtendedDocument(Base):
     metaData = relationship("MetaData",
                             uselist=False,
                             cascade="all, delete-orphan")
-    visualisation = relationship("Visualisation",
+    visualization = relationship("Visualisation",
                                  uselist=False,
                                  cascade="all, delete-orphan")
 
     def __init__(self):
         self.metaData = MetaData()
-        self.visualisation = Visualisation()
+        self.visualization = Visualisation()
 
     def get_all_attr(self):
         return {i for i in dir(self)
@@ -41,4 +41,4 @@ class ExtendedDocument(Base):
 
     def update(self, attributes):
         self.metaData.update(attributes)
-        self.visualisation.update(attributes)
+        self.visualization.update(attributes)

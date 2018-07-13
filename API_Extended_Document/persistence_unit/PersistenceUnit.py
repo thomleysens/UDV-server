@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-from contextlib import contextmanager
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from util.db_config import get_db_info
+from util.serialize import serialize
 
 db_string = get_db_info("util/config.yml")
 engine = create_engine(db_string)
@@ -24,20 +23,24 @@ Finally the second part of the contextmanager is executed in all cases
 """
 
 
-@contextmanager
-def make_a_transaction():
-    session = Session()
-    try:
-        yield session
+def make_a_transaction(old_function):
+    def new_function(*args):
+        session = Session()
+        document = old_function(session, *args)
         session.commit()
-    except Exception as e:
-        session.rollback()
-        raise e
-    finally:
+        response = serialize(document)
         session.close()
+        return response
+
+    return new_function
 
 
-@contextmanager
-def make_a_query():
-    session = Session()
-    yield session
+def make_a_query(old_function):
+    def new_function(attr):
+        session = Session()
+        document = old_function(session, attr)
+        response = serialize(document)
+        session.close()
+        return response
+
+    return new_function

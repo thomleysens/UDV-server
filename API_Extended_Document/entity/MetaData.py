@@ -18,7 +18,7 @@ class MetaData(Base):
     refDate = Column(String)
     publicationDate = Column(String)
     type = Column(String)
-    link = Column(String, nullable=False)
+    link = Column(String)
     originalName = Column(String)
 
     def update(self, new_values):
