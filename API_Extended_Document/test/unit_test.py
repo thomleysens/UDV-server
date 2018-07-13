@@ -7,17 +7,11 @@ from colorama import Style
 from controller.Controller import Controller
 
 
-# @TODO: possibility to upload a file
-# from werkzeug.datastructures import FileStorage
-# file = None
-# with open('document-test/test.pdf', 'rb') as fp:
-#     file = FileStorage(fp)
-# file.save('document-test/test_new.pdf')
-
-
 class Test:
     nb_tests = 0
     nb_tests_succeed = 0
+
+    # @TODO: create a method to check the success of uploading a file
 
     @staticmethod
     def create_documents():
@@ -113,7 +107,7 @@ def display_error(error=True):
     print(f"{Style.RESET_ALL}", end="")
 
 
-def make_transaction(old_function):
+def format_display(old_function):
     def new_function(description, expecting_error,
                      function_to_test):
         happened_error = False
@@ -141,7 +135,7 @@ def make_transaction(old_function):
     return new_function
 
 
-@make_transaction
+@format_display
 def test_operation(function_to_test):
     return function_to_test()
 
