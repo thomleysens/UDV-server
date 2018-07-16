@@ -3,20 +3,10 @@
 import sys
 from json import dumps
 
-from sqlalchemy import or_, and_
-
-from controller.Controller import Controller
-from entity.DocumentTour import DocumentTour
-from util.log import *
-from util.db_config import *
-
-from controller.DocController import DocController
-
-from entity.ExtendedDocument import ExtendedDocument
-from entity.GuidedTour import GuidedTour
-
 import persistence_unit.PersistenceUnit as pUnit
-from util.serialize import serialize
+from controller.Controller import Controller
+from entities.ExtendedDocument import ExtendedDocument
+from entities.GuidedTour import GuidedTour
 
 
 class TourController:
@@ -35,9 +25,9 @@ class TourController:
     def create_tour(session, *args):
         name = args[0]
         description = args[1]
-        document = GuidedTour(name, description)
-        session.add(document)
-        return document
+        guided_tour = GuidedTour(name, description)
+        session.add(guided_tour)
+        return guided_tour
 
     @staticmethod
     @pUnit.make_a_query
@@ -48,8 +38,8 @@ class TourController:
 
     @staticmethod
     @pUnit.make_a_transaction
-    def get_tour_by_keyword(session, *args):
-        session.query(GuidedTour).all()
+    def get_tours(session, *args):
+        return session.query(GuidedTour).all()
 
     @staticmethod
     @pUnit.make_a_transaction
@@ -90,9 +80,10 @@ class TourController:
 
 if __name__ == "__main__":
     sys.stdout = open('../file.json', 'w')
-    Controller.recreate_tables()
+    # Controller.recreate_tables()
     TourController.create_tour("second", "second guided tour ever make")
 
+    print(dumps(TourController.get_tours({})))
     print(dumps(TourController.get_tour_by_id(1)))
     # TourController.add_document(1, 3)"""
     # TourController.remove_document(1, 1)

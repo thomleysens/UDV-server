@@ -4,7 +4,7 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String
 
-from entity.DocumentTour import DocumentTour
+from entities.ExtendedDocGuidedTour import DocumentTour
 from util.db_config import Base
 from util.serialize import serialize
 

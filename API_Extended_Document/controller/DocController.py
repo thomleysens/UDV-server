@@ -5,8 +5,8 @@ from sqlalchemy import or_, and_
 
 from util.log import *
 from util.db_config import *
-from entity.MetaData import MetaData
-from entity.ExtendedDocument import ExtendedDocument
+from entities.MetaData import MetaData
+from entities.ExtendedDocument import ExtendedDocument
 import persistence_unit.PersistenceUnit as pUnit
 
 

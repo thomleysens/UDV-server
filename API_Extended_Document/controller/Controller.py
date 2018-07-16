@@ -19,3 +19,7 @@ class Controller:
     def recreate_tables():
         Base.metadata.drop_all(pUnit.engine)
         Base.metadata.create_all(pUnit.engine)
+
+    @staticmethod
+    def create_tables():
+        Base.metadata.create_all(pUnit.engine)

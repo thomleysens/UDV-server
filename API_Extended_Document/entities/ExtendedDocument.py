@@ -5,8 +5,8 @@ from sqlalchemy import Column, Integer
 from sqlalchemy.orm import relationship
 
 from util.db_config import Base
-from entity.MetaData import MetaData
-from entity.Visualisation import Visualisation
+from entities.MetaData import MetaData
+from entities.Visualisation import Visualisation
 
 
 class ExtendedDocument(Base):
