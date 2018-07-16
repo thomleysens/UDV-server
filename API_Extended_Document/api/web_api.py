@@ -7,7 +7,7 @@ from flask_cors import CORS
 
 from util.log import *
 from util.upload import *
-from controller.Controller import Controller
+from controller.DocController import DocController
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -26,14 +26,14 @@ def index():
 @app.route('/addDocument', methods=['POST'])
 def create_document():
     try:
-        document = Controller.create_document(
+        document = DocController.create_document(
             {key: request.form.get(key) for key in request.form.keys()})
 
         if request.files.get('link'):
             filename = save_file(document["id"], request.files['link'])
             if filename:
-                Controller.update_document(document["id"],
-                                           {"link": filename})
+                DocController.update_document(document["id"],
+                                              {"link": filename})
                 return "success", 200
         return 'error', 404
     except Exception as e:
@@ -44,7 +44,7 @@ def create_document():
 @app.route('/getDocument/<int:doc_id>', methods=['GET', 'POST'])
 def get_document(doc_id):
     try:
-        return jsonify(Controller.get_document_by_id(doc_id))
+        return jsonify(DocController.get_document_by_id(doc_id))
     except Exception as e:
         info_logger.error(e)
         return 'error', 404
@@ -53,7 +53,7 @@ def get_document(doc_id):
 @app.route('/getDocuments', methods=['GET', 'POST'])
 def get_documents():
     try:
-        return jsonify(Controller.get_documents(
+        return jsonify(DocController.get_documents(
             {key: request.args.get(key)
              for key in request.args.keys()}))
     except Exception as e:
@@ -63,13 +63,13 @@ def get_documents():
 
 @app.route('/editDocument/<int:doc_id>', methods=['POST'])
 def update_document(doc_id):
-    Controller.update_document(doc_id, request.form)
+    DocController.update_document(doc_id, request.form)
     return 'success'
 
 
 @app.route('/deleteDocument/<int:doc_id>')
 def delete_document(doc_id):
-    Controller.delete_documents(doc_id)
+    DocController.delete_documents(doc_id)
     return 'success'
 
 

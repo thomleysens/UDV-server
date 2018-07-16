@@ -5,6 +5,7 @@ from colorama import Fore
 from colorama import Style
 
 from controller.Controller import Controller
+from controller.DocController import DocController
 
 
 class Test:
@@ -18,7 +19,7 @@ class Test:
         print("\033[01m## Creation ##\033[0m")
         test_operation("all needed attributes",
                        False,
-                       lambda: Controller.create_document(
+                       lambda: DocController.create_document(
                            {"title": "title",
                             "subject": "Subject1",
                             "type": "type",
@@ -27,7 +28,7 @@ class Test:
 
         test_operation("all needed attributes",
                        False,
-                       lambda: Controller.create_document(
+                       lambda: DocController.create_document(
                            {"title": "title",
                             "subject": "Subject2",
                             "type": "type",
@@ -37,7 +38,7 @@ class Test:
 
         test_operation("needed + nonexistent attributes",
                        False,
-                       lambda: Controller.create_document(
+                       lambda: DocController.create_document(
                            {"title": "another title",
                             "subject": "Subject3",
                             "type": "type",
@@ -48,7 +49,7 @@ class Test:
 
         test_operation("needed argument missing",
                        True,
-                       lambda: Controller.create_document(
+                       lambda: DocController.create_document(
                            {"title": "another title"}))
 
     @staticmethod
@@ -56,36 +57,36 @@ class Test:
         print("\n\033[01m## Reading ##\033[0m")
 
         test_operation("all documents", False,
-                       lambda: Controller.get_documents({}))
+                       lambda: DocController.get_documents({}))
 
         test_operation("specific documents", False,
-                       lambda: Controller.get_documents(
+                       lambda: DocController.get_documents(
                            {"keyword": "description",
                             'refDateStart': '2018-12-03'}))
 
         test_operation("document with existing id", False,
-                       lambda: Controller.get_document_by_id(1))
+                       lambda: DocController.get_document_by_id(1))
 
         test_operation("document with non existing id", True,
-                       lambda: Controller.get_document_by_id(-1))
+                       lambda: DocController.get_document_by_id(-1))
 
     @staticmethod
     def update_documents():
         print("\n\033[01m## Updating ##\033[0m")
         test_operation("existing document", False,
-                       lambda: Controller.update_document(1, {
+                       lambda: DocController.update_document(1, {
                            'positionX': 12,
                            'description': "description of a document"
                        }))
 
         test_operation("existing document", False,
-                       lambda: Controller.update_document(1, {
+                       lambda: DocController.update_document(1, {
                            'positionX': 12,
                            'description': "another description"
                        }))
 
         test_operation("existing document", True,
-                       lambda: Controller.update_document(-1, {
+                       lambda: DocController.update_document(-1, {
                            'positionX': 12,
                            'description': "description of a document"
                        }))
@@ -94,9 +95,9 @@ class Test:
     def delete_documents():
         print("\n\033[01m## Deletion ##\033[0m")
         test_operation("existing document", False,
-                       lambda: Controller.delete_documents(2))
+                       lambda: DocController.delete_documents(2))
         test_operation("existing document", True,
-                       lambda: Controller.delete_documents(2))
+                       lambda: DocController.delete_documents(2))
 
 
 def display_error(error=True):
