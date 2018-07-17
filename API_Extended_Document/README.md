@@ -193,17 +193,61 @@ Configure the logger of the application
 **db_config.py**
 Configure the application by using the *config.yml* file.
 
-## Installation
+## Installation (test and production)
 
-Python and postgreSQL must be installed on the server
+### Install Python and PostgreSQL
+
+First, you need to [install Python](https://www.python.org/downloads/).
+
+PostgreSQL is also needed and can be install using [this tutorial](https://www.postgresql.org/docs/9.3/static/tutorial-install.html)
+
+### Clone this repository
+
+You need to clone this repository by typing, if you have a ssh key:
+```
+git clone git@github.com:MEPP-team/UDV-server.git
+```
+or otherwise:
+```
+git clone https://github.com/MEPP-team/UDV-server.git
+```
+
+### Create a virtual environment
+
+When they are both installed, will create a virtual env in which we put the python intereter and our dependencies:
+```
+python3 -m venv tutorial-env
+```
+
+On linux, if it fails try:
+```
+sudo apt-get install python3-venv
+```
+
+We need the to enter in the virtual environment, 
+- on **Windows**:
+  ```
+  venv\Scripts\activate.bat
+  ```
+- On **Unix**:
+  ```
+  source venv/bin/activate
+  ```
+
+### Install packages
 
 Required packages for the application:
-- **sqlalchemy**
-- **Flask**
-- **PyYAML**
+- [**psycopg2**](http://initd.org/psycopg/)
+- [**Sqlalchemy**](https://www.sqlalchemy.org/)
+- [**Flask**](http://flask.pocoo.org/)
+- [**PyYAML**](https://pyyaml.org/wiki/PyYAMLDocumentation)
+- [**Colorama**](https://pypi.org/project/colorama/)
 
 ```
-pip install sqlalchemy
-pip install Flask
-pip install PyYAML
+pip3 install psycopg2
+pip3 install sqlalchemy
+pip3 install Flask
+pip3 install flask_cors
+pip3 install colorama
+pip3 install PyYAML
 ```
