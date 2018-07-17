@@ -9,10 +9,17 @@ API Extended Document (AED) is developed in python and is based on an **MVC** (M
 Persistance of objects (documents) to the DataBase is obtained through the usage of the [sqlalchemy library](https://www.sqlalchemy.org) [**ORM**](https://en.wikipedia.org/wiki/Object-relational_mapping).
 In order to wrap the (CRUD) service within an HTTP protocol (to deal with the requests and send responses to the client), AED uses [flask library](http://flask.pocoo.org/docs/1.0/).
 
-You can find below the the class diagram of the application:
+
+**ExtendedDocument** is the heart of the application, we can create, read, update and delete them.
+On top of that, in order to respond to the 
+[need 07](https://github.com/MEPP-team/RICT/blob/87610d01d87f5c6dfc2873c28de59b06b33aa31f/Doc/Devel/Needs/Need007.md)
+and the [need 25](https://github.com/MEPP-team/RICT/blob/87610d01d87f5c6dfc2873c28de59b06b33aa31f/Doc/Devel/Needs/Need025.md), 
+we have also the possibility to attach an **ExtendedDocument** to one or several **Guided Tours**.
+
+You can find below the the class diagram of the application: 
 ![](https://raw.githubusercontent.com/wiki/MEPP-team/UDV-server/ExtendedDocumentClassDiagram.png)
 
-In addition of this diagram, you can find the database diagram, used in relation with the class diagram:
+In addition, you can find the database diagram, used in relation with the class diagram:  
 ![](https://raw.githubusercontent.com/wiki/MEPP-team/UDV-server/ExtendedDocumentDatabaseDiagram.png)
 
 ## MVC Architecture
@@ -21,6 +28,8 @@ In addition of this diagram, you can find the database diagram, used in relation
 A (UDV oriented) document is composed of two main parts :
 - the **MetaData** of the document such as having a title, a description, etc.
 - the **Visualisation** data that can allow e.g. to display the document   at a specified spatial position when realising a rendering of a City.
+
+Furthermore, we have a Many to Many relationship between **ExtendedDocument** and **GuidedTour**, that is why we have created the class **ExtendeDocGuideTour**. It can link a document to a guided tour. A document can be associated several times to the same guided tour. A guided tour has a beginning and an end, so the notion or order is very important, hence we have the attribute **doc_position**, that defines the order of each document in the guided tour.
 
 Additionally, in order to relate (link) those two parts AED uses another entity called **ExtendedDocument**.
 
