@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 # coding: utf8
+
 import sys
 from json import dumps
 
-import persistence_unit.PersistenceUnit as pUnit
+from sqlalchemy import func
+
 from controller.Controller import Controller
+import persistence_unit.PersistenceUnit as pUnit
 from entities.ExtendedDocument import ExtendedDocument
 from entities.GuidedTour import GuidedTour
+from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
 
 
 class TourController:
@@ -15,8 +19,8 @@ class TourController:
     No instance is needed because all its methods are static.
     This methods are used to make a CRUD operation,
     by making a query or a transaction with the DB by using
-    the decorators '~persistence_unit.PersistenceUnit.make_a_query'
-    and make_a_transaction
+    the decorators 'make_a_query' and 'make_a_transaction' from
+    'persistence_unit.PersistenceUnit'
     """
     keyword_attr = ["title", "description"]
 
@@ -47,13 +51,17 @@ class TourController:
         tour_id = args[0]
         doc_id = args[1]
 
-        document = session.query(ExtendedDocument).filter(
-            ExtendedDocument.id == doc_id).one()
-        guided_tour = session.query(GuidedTour).filter(
-            GuidedTour.id == tour_id).one()
+        query_result = session.query(
+            func.max(ExtendedDocGuidedTour.doc_position).label(
+                "doc_number")).filter(
+            ExtendedDocGuidedTour.tour_id == tour_id).one()
 
-        guided_tour.extendedDocs.append(document)
-        session.add(guided_tour)
+        doc_number = query_result.doc_number
+        if not doc_number:
+            doc_number = 0
+
+        session.add(
+            ExtendedDocGuidedTour(tour_id, doc_id, doc_number + 1))
 
     @staticmethod
     @pUnit.make_a_transaction
@@ -76,14 +84,3 @@ class TourController:
         a_tour = session.query(GuidedTour).filter(
             GuidedTour.id == an_id).one()
         session.delete(a_tour)
-
-
-if __name__ == "__main__":
-    sys.stdout = open('../file.json', 'w')
-    # Controller.recreate_tables()
-    TourController.create_tour("second", "second guided tour ever make")
-
-    print(dumps(TourController.get_tours({})))
-    print(dumps(TourController.get_tour_by_id(1)))
-    # TourController.add_document(1, 3)"""
-    # TourController.remove_document(1, 1)

@@ -3,6 +3,7 @@
 
 from sqlalchemy import or_, and_
 
+from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
 from util.log import *
 from util.db_config import *
 from entities.MetaData import MetaData

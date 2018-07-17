@@ -4,7 +4,6 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String
 
-from entities.ExtendedDocGuidedTour import DocumentTour
 from util.db_config import Base
 from util.serialize import serialize
 
@@ -16,8 +15,8 @@ class GuidedTour(Base):
     name = Column(String)
     description = Column(String)
 
-    extendedDocs = relationship('ExtendedDocument',
-                                secondary=DocumentTour)
+    extendedDocs = relationship('ExtendedDocGuidedTour',
+                                cascade="all, delete-orphan")
 
     def __init__(self, name, description):
         self.name = name
@@ -38,9 +37,5 @@ class GuidedTour(Base):
     def serialize(self):
         serialized_object = {}
         for attr in self.get_all_attr():
-
-            try:
-                serialized_object[attr] = serialize(getattr(self, attr))
-            except AttributeError:
-                serialized_object[attr] = getattr(self, attr)
+            serialized_object[attr] = serialize(getattr(self, attr))
         return serialized_object

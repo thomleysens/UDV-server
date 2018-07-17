@@ -7,6 +7,7 @@ from sqlalchemy.orm import relationship
 from util.db_config import Base
 from entities.MetaData import MetaData
 from entities.Visualisation import Visualisation
+from util.serialize import serialize
 
 
 class ExtendedDocument(Base):
@@ -16,6 +17,7 @@ class ExtendedDocument(Base):
     metaData = relationship("MetaData",
                             uselist=False,
                             cascade="all, delete-orphan")
+
     visualization = relationship("Visualisation",
                                  uselist=False,
                                  cascade="all, delete-orphan")
@@ -33,10 +35,7 @@ class ExtendedDocument(Base):
     def serialize(self):
         serialized_object = {}
         for attr in self.get_all_attr():
-            try:
-                serialized_object[attr] = getattr(self, attr).serialize()
-            except AttributeError:
-                serialized_object[attr] = getattr(self, attr)
+            serialized_object[attr] = serialize(getattr(self, attr))
         return serialized_object
 
     def update(self, attributes):

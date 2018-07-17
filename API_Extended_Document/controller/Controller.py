@@ -4,6 +4,10 @@
 import persistence_unit.PersistenceUnit as pUnit
 from util.db_config import *
 
+from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
+from entities.GuidedTour import GuidedTour
+from entities.ExtendedDocument import ExtendedDocument
+
 
 class Controller:
     """

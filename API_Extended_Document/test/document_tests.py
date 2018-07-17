@@ -100,8 +100,7 @@ class DocumentTest:
 
 
 if __name__ == "__main__":
-    Controller.create_tables()
-    # Controller.recreate_tables()
+    Controller.recreate_tables()
     DocumentTest.create_documents()
     DocumentTest.read_documents()
     DocumentTest.update_documents()

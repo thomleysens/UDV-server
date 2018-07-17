@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding: utf8
+import sys
 
 from controller.Controller import Controller
 from controller.DocController import DocController
@@ -73,7 +74,7 @@ class GuidedTourTest:
                        lambda: TourController.get_tours())
 
         test_operation(GuidedTourTest, "tour with existing id", False,
-                       lambda: TourController.get_tour_by_id(1))
+                       lambda: TourController.get_tour_by_id(2))
 
         test_operation(GuidedTourTest, "tour with non existing id",
                        True,
@@ -83,6 +84,10 @@ class GuidedTourTest:
     def update_tours():
         print("\n\033[01m## Updating ##\033[0m")
         test_operation(GuidedTourTest, "adding existing document",
+                       False,
+                       lambda: TourController.add_document(1, 1))
+
+        test_operation(GuidedTourTest, "adding twice existing document",
                        False,
                        lambda: TourController.add_document(1, 1))
 
@@ -102,9 +107,9 @@ class GuidedTourTest:
     def delete_tours():
         print("\n\033[01m## Deletion ##\033[0m")
         test_operation(GuidedTourTest, "existing document", False,
-                       lambda: TourController.delete_tour(2))
+                       lambda: TourController.delete_tour(3))
         test_operation(GuidedTourTest, "existing document", True,
-                       lambda: DocController.delete_documents(2))
+                       lambda: TourController.delete_tour(3))
 
 
 if __name__ == "__main__":
@@ -117,9 +122,6 @@ if __name__ == "__main__":
     GuidedTourTest.delete_tours()
     GuidedTourTest.read_tours()
 
-    """Test.read_documents()
-    Test.delete_documents()
-    Test.read_documents()"""
     print("\n\n\033[04mSuccess\033[01m: ",
           GuidedTourTest.nb_tests_succeed, "/",
           GuidedTourTest.nb_tests, sep="")
