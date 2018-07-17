@@ -10,10 +10,10 @@ Persistance of objects (documents) to the DataBase is obtained through the usage
 In order to wrap the (CRUD) service within an HTTP protocol (to deal with the requests and send responses to the client), AED uses [flask library](http://flask.pocoo.org/docs/1.0/).
 
 You can find below the the class diagram of the application:
-![](wiki/ExtendeDocumentClassDiagram.png)
+![](ExtendeDocumentClassDiagram.png)
 
 In addition of this diagram, you can find the database diagram, used in relation with the class diagram:
-![](wiki/ExtendeDocumentDatabaseDiagram.png)
+![](ExtendeDocumentDatabaseDiagram.png)
 
 ## MVC Architecture
 
