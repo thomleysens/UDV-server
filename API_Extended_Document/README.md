@@ -2,10 +2,18 @@
 
 # Introduction
 
-The goal of the API **Extended Document** is to handle documents and achieve all the [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) on the backend side.
+The goal of the API **Extended Document** is to handle documents needed from the front-end in [UDV](https://github.com/MEPP-team/UDV).
+
+It achieve all the [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) on the backend side.
 API Extended Document (AED) is developed in python and is based on an **MVC** (Model, View, Controller) architecture.
 Persistance of objects (documents) to the DataBase is obtained through the usage of the [sqlalchemy library](https://www.sqlalchemy.org) [**ORM**](https://en.wikipedia.org/wiki/Object-relational_mapping).
 In order to wrap the (CRUD) service within an HTTP protocol (to deal with the requests and send responses to the client), AED uses [flask library](http://flask.pocoo.org/docs/1.0/).
+
+You can find below the the class diagram of the application:
+![](wiki/ExtendeDocumentClassDiagram.png)
+
+In addition of this diagram, you can find the database diagram, used in relation with the class diagram:
+![](wiki/ExtendeDocumentDatabaseDiagram.png)
 
 ## MVC Architecture
 
@@ -16,8 +24,6 @@ A (UDV oriented) document is composed of two main parts :
 
 Additionally, in order to relate (link) those two parts AED uses another entity called **ExtendedDocument**.
 
-You can find below the scheme of the DB
-![](Pictures/DocumentTypeObjectClassDiagram.png)
 
 ### Controller
 The controller is used to interact with the entities. It can realize all the CRUD (Create, Read, Update, Delete) operations.
@@ -30,7 +36,7 @@ In the application, the view is called **web_api.py** and can intercept web requ
 ## ORM (Object Relational Mapping)
 
 ### Description
-ORM is a way to crate a strong interaction between the objects and the Database : when an object is modified, the modification can be easily persisted to the DB without the need to write any SQL request.
+ORM is a way to crate a strong interaction between the objects to be persist and the Database : when an object is modified, the modification can be easily persisted to the DB without the need to write any SQL request.
 Such a feature can reduce the complexity of the code since it offers to increase its abstraction level by making it independent from the particular technology of the chosen concrete DB (postgreSQL, Oracle, MySQL...).
 
 ### How to
