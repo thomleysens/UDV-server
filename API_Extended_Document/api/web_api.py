@@ -19,11 +19,11 @@ def index():
     return '''
     <!doctype html>
     <html>
-      <body>        
+      <body>
         <h1 style="text-align:center"> Welcome on API-ExtendedDocument </h1>
         <div style="text-align:center">
           <p> This application was developped by MEEP team </p>
-          <a href="https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document" 
+          <a href="https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document"
              style="text-align:center"> Find us on Github! </a>
         </div>
       </body>
@@ -101,6 +101,7 @@ def upload_file(doc_id):
 import os
 @app.route('/documents_directory/<filename>')
 def get_uploaded_file(filename):
+    print(safe_join(os.getcwd(), app.config['UPLOAD_FOLDER']))
     return send_from_directory(safe_join(os.getcwd(), app.config['UPLOAD_FOLDER']), filename)
 
 

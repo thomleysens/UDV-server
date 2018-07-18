@@ -23,7 +23,7 @@ class Test:
                             "subject": "Subject1",
                             "type": "type",
                             "description": "a description",
-                            "link": "1.gif"}))
+                            "link": "1.jpg"}))
 
         test_operation("all needed attributes",
                        False,
