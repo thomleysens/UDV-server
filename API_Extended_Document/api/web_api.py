@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-from flask import Flask, send_from_directory, redirect, request
+from flask import Flask, send_from_directory, redirect, request, safe_join
 from flask.json import jsonify
 from flask_cors import CORS
 
@@ -16,11 +16,19 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return redirect(("https://github.com/laurenttainturier/"
-                     "UDV-server/tree/master/API_Extended_Document"))
-    # @TODO: To be replace with :
-    # return redirect(("https://github.com/MEEP-Team/"
-    #                  "UDV-server/tree/master/API_Extended_Document"))
+    return '''
+    <!doctype html>
+    <html>
+      <body>        
+        <h1 style="text-align:center"> Welcome on API-ExtendedDocument </h1>
+        <div style="text-align:center">
+          <p> This application was developped by MEEP team </p>
+          <a href="https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document" 
+             style="text-align:center"> Find us on Github! </a>
+        </div>
+      </body>
+    </html>
+    '''
 
 
 @app.route('/addDocument', methods=['POST'])
@@ -90,10 +98,10 @@ def upload_file(doc_id):
     </form>
     '''
 
-
-@app.route('/documents_repository/<filename>')
+import os
+@app.route('/documents_directory/<filename>')
 def get_uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    return send_from_directory(safe_join(os.getcwd(), app.config['UPLOAD_FOLDER']), filename)
 
 
 if __name__ == '__main__':
