@@ -16,11 +16,21 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return redirect(("https://github.com/laurenttainturier/"
-                     "UDV-server/tree/master/API_Extended_Document"))
-    # @TODO: To be replace with :
-    # return redirect(("https://github.com/MEEP-Team/"
-    #                  "UDV-server/tree/master/API_Extended_Document"))
+    return ''' 
+    <!doctype html>  
+    <html>  
+      <body>          
+        <h1 style="text-align:center">  
+          Welcome on API-ExtendedDocument 
+        </h1>  
+        <div style="text-align:center">  
+          <p> This application was developed by MEEP team </p>  
+          <a href="https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document"   
+             style="text-align:center"> Find us on Github! </a>  
+        </div>  
+      </body>  
+    </html>  
+    '''
 
 
 @app.route('/addDocument', methods=['POST'])
