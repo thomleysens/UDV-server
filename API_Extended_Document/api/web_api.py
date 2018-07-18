@@ -98,10 +98,8 @@ def upload_file(doc_id):
     </form>
     '''
 
-import os
-@app.route('/documents_directory/<filename>')
+@app.route('/documents_repository/<filename>')
 def get_uploaded_file(filename):
-    print(safe_join(os.getcwd(), app.config['UPLOAD_FOLDER']))
     return send_from_directory(safe_join(os.getcwd(), app.config['UPLOAD_FOLDER']), filename)
 
 
