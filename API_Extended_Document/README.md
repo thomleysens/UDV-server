@@ -239,10 +239,10 @@ Enter in the virtual environment,
   source venv/bin/activate
   ```
   
-  To quit the virtual environment, just type:
-  ```
-  deactivate
-  ```
+To quit the virtual environment, just type:
+```
+deactivate
+```
 
 ### Install packages
 
@@ -263,3 +263,44 @@ pip3 install PyYAML
 ```
 
 ### Create a postgres DataBase
+
+You need to create a postgres database, the default configuration is 
+```
+ordbms: postgresql
+user: postgres
+password: password
+host: localhost
+port: 5432
+dbname: extendedDoc
+```
+It can be esily modify by changing the 
+[**config.yml**](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/util/config.yml) file.
+
+### Execution
+
+In the following you need to be in the **virtual environment**.
+
+To verify everything works find, you can execute the tests files, located in the folder [**test**](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/test/unit_test.py)
+
+By default, python will not find the local packages (such as **test** or **api**), you need to add the location of **API_Extended_Document** to the environment variable **PYTHONPATH** .
+- On **Linux**:
+  ```
+  export PYTHONPATH="."
+  ```
+- On **Windows**:
+  ```
+  set PYTHONPATH=.
+  ```
+"." corresponds to the location of API_Extended_Document and can be replaced by any other relative or even absolute path to this directory.
+
+Then you can run any test file located in the **test** directory, for instance:
+```
+python3 test/document_tests.py
+```
+
+If you want the server to run you can then type:
+```
+python3 api/web_api.py
+```
+
+**Warning**: In windows '/' is replaced by '\\'
