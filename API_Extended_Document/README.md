@@ -221,7 +221,7 @@ cd UDV-server/API_Extended_Document
 
 Then, create a virtual env in which we put the python intereter and our dependencies:
 ```
-python3 -m venv tutorial-env
+python3 -m venv venv
 ```
 
 On linux, if it fails try to run the command below first:
@@ -229,7 +229,7 @@ On linux, if it fails try to run the command below first:
 sudo apt-get install python3-venv
 ```
 
-We need the to enter in the virtual environment, 
+Enter in the virtual environment, 
 - on **Windows**:
   ```
   venv\Scripts\activate.bat
@@ -237,6 +237,11 @@ We need the to enter in the virtual environment,
 - On **Unix**:
   ```
   source venv/bin/activate
+  ```
+  
+  To quit the virtual environment, just type:
+  ```
+  deactivate
   ```
 
 ### Install packages
@@ -256,3 +261,5 @@ pip3 install flask_cors
 pip3 install colorama
 pip3 install PyYAML
 ```
+
+### Create a postgres DataBase
