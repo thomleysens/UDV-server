@@ -212,14 +212,19 @@ or otherwise:
 git clone https://github.com/MEPP-team/UDV-server.git
 ```
 
+Then you need to go to the directory **API_Extended_Document** :
+```
+cd UDV-server/API_Extended_Document
+```
+
 ### Create a virtual environment
 
-When they are both installed, will create a virtual env in which we put the python intereter and our dependencies:
+Then, create a virtual env in which we put the python intereter and our dependencies:
 ```
 python3 -m venv tutorial-env
 ```
 
-On linux, if it fails try:
+On linux, if it fails try to run the command below first:
 ```
 sudo apt-get install python3-venv
 ```
