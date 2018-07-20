@@ -2,6 +2,9 @@
 # coding: utf8
 
 import logging
+import os
+
+print(os.getcwd())
 
 default_formatter = '[%(levelname)s] %(asctime)s : %(message)s'
 
