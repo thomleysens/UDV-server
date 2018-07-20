@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # coding: utf8
+
 from json import dumps
 
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey, String
 from sqlalchemy.orm import relationship
 
 from util.db_config import Base
@@ -15,12 +16,16 @@ class ExtendedDocGuidedTour(Base):
     id = Column(Integer, primary_key=True)
     tour_id = Column(Integer,
                      ForeignKey("guided_tour.id"))
+
+    # Cannot deletion on relationship because it's
     doc_id = Column(Integer,
                     ForeignKey("extended_document.id",
                                ondelete="CASCADE"))
 
     doc_position = Column(Integer)
     document = relationship("ExtendedDocument")
+    text1 = Column(String)
+    text2 = Column(String)
 
     def __init__(self, tour_id, doc_id, doc_position):
         self.tour_id = tour_id

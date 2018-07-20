@@ -43,6 +43,7 @@ class TourController:
     @staticmethod
     @pUnit.make_a_transaction
     def get_tours(session, *args):
+        # @TODO: research like for ExtendedDoc could be set up
         return session.query(GuidedTour).all()
 
     @staticmethod
@@ -62,6 +63,7 @@ class TourController:
 
         session.add(
             ExtendedDocGuidedTour(tour_id, doc_id, doc_number + 1))
+        return TourController.get_tour_by_id(tour_id)
 
     @staticmethod
     @pUnit.make_a_transaction

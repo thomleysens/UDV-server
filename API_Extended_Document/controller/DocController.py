@@ -99,6 +99,8 @@ class DocController:
         document.update(attributes)
         session.add(document)
 
+        return document
+
     @staticmethod
     @pUnit.make_a_transaction
     def delete_documents(session, *args):

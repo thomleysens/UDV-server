@@ -92,6 +92,10 @@ class GuidedTourTest:
                        False,
                        lambda: TourController.add_document(1, 1))
 
+        test_operation(GuidedTourTest, "adding twice existing document",
+                       True,
+                       lambda: TourController.add_document(1))
+
         test_operation(GuidedTourTest, "adding existing document",
                        False,
                        lambda: TourController.add_document(1, 2))
@@ -103,6 +107,10 @@ class GuidedTourTest:
         test_operation(GuidedTourTest, "adding non existing document",
                        True,
                        lambda: TourController.add_document(1, 3))
+
+        test_operation(GuidedTourTest, "adding non existing document",
+                       True,
+                       lambda: TourController.add_document(-1, 3))
 
     @staticmethod
     def delete_tours():
