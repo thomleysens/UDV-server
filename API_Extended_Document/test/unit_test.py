@@ -23,7 +23,7 @@ class Test:
                             "subject": "Subject1",
                             "type": "type",
                             "description": "a description",
-                            "link": "1.gif"}))
+                            "link": "1.jpg"}))
 
         test_operation("all needed attributes",
                        False,
@@ -101,10 +101,10 @@ class Test:
 
 def display_error(error=True):
     if error:
-        print(f"{Fore.RED}[ error ]", end=" ")
+        print(Fore.RED, "[ error ]", end=" ")
     else:
-        print(f"{Fore.GREEN}[success]", end=" ")
-    print(f"{Style.RESET_ALL}", end="")
+        print(Fore.GREEN, "[success]", end=" ")
+    print(Style.RESET_ALL, end="")
 
 
 def format_display(old_function):
@@ -123,10 +123,10 @@ def format_display(old_function):
             display_error(expecting_error)
             display_error(happened_error)
             print("{:<32}".format(description + ":"), end="")
-            print(f"{Fore.RED}", str(exception).replace("\n", ""),
+            print(Fore.RED, str(exception).replace("\n", ""),
                   end="")
-            print(f"{Fore.BLUE}", function_result, sep="")
-            print(f"{Style.RESET_ALL}", sep="", end="")
+            print(Fore.BLUE, function_result, sep="")
+            print(Style.RESET_ALL, sep="", end="")
 
             Test.nb_tests += 1
             if expecting_error == happened_error:
@@ -148,5 +148,5 @@ if __name__ == "__main__":
     Test.read_documents()
     Test.delete_documents()
     Test.read_documents()
-    print("\n\n\033[04mSuccess\033[01m: ", Test.nb_tests_succeed, "/",
-          Test.nb_tests, sep="")
+    print("\n\n\033[04mSuccess", Style.RESET_ALL, ": ", Test.nb_tests_succeed, "/",
+          Test.nb_tests, sep="", end="\n\n")

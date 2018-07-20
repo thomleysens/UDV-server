@@ -5,7 +5,7 @@ import os
 
 from util.log import info_logger
 
-UPLOAD_FOLDER = '..\\upload'
+UPLOAD_FOLDER = 'upload'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 

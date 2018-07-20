@@ -1,6 +1,6 @@
 ordbms: postgresql
 user: postgres
-password: password
+password: postgres
 host: localhost
 port: 5432
-dbname: extendedDoc
+dbname: extendeddoc
