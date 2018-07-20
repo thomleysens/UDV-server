@@ -299,6 +299,9 @@ By default, python will not find the local packages (such as **test** or **api**
   ```
 "." corresponds to the location of API_Extended_Document and can be replaced by any other relative or even absolute path to this directory.
 
+FIXME
+export EXTENDED_DOC_PASSWORD='passwd'
+
 Then you can run any test file located in the **test** directory, for instance:
 ```
 python3 test/document_tests.py
