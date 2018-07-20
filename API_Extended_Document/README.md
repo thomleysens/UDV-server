@@ -263,18 +263,24 @@ pip3 install PyYAML
 ```
 
 ### Create a postgres DataBase
+You need to create a postgres database e.g. with
+```
+(root)$ sudo su postgres
+(postgres)$ createuser citydb_user
+(postgres)$ createdb -O citydb_user extendedDoc
+(postgres)$ exit
+```
+an reflect this configuration in your [**config.yml**](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/util/config.yml) file located in the `util/` sub-directory.
 
-You need to create a postgres database, the default configuration is 
 ```
 ordbms: postgresql
-user: postgres
+user: citydb_user
 password: password
 host: localhost
 port: 5432
 dbname: extendedDoc
 ```
-It can be esily modify by changing the 
-[**config.yml**](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/util/config.yml) file.
+Note that the port number is (usually) configured in `/etc/postgresql/9.X/main/postgresql.conf`.
 
 ### Execution
 
@@ -292,6 +298,9 @@ By default, python will not find the local packages (such as **test** or **api**
   set PYTHONPATH=.
   ```
 "." corresponds to the location of API_Extended_Document and can be replaced by any other relative or even absolute path to this directory.
+
+FIXME
+export EXTENDED_DOC_PASSWORD='passwd'
 
 Then you can run any test file located in the **test** directory, for instance:
 ```
