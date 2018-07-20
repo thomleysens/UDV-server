@@ -29,9 +29,9 @@ def make_a_transaction(old_function):
         session = Session()
         response = None
         try:
-            document = old_function(session, *args)
+            obj = old_function(session, *args)
             session.commit()
-            response = serialize(document)
+            response = serialize(obj)
         except Exception as e:
             info_logger.error(e)
             raise e
@@ -47,8 +47,8 @@ def make_a_query(old_function):
         session = Session()
         response = None
         try:
-            document = old_function(session, attr)
-            response = serialize(document)
+            obj = old_function(session, attr)
+            response = serialize(obj)
         except Exception as e:
             info_logger.error(e)
             raise e

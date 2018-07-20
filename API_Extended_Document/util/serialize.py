@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-from entity.ExtendedDocument import ExtendedDocument
 
+def serialize(objects_to_serialize):
+    try:
+        return objects_to_serialize.serialize()
 
-def serialize(document):
-    if type(document) is list:
-        doc_lists = []
-        for doc in document:
-            doc_lists.append(doc.serialize())
-        return doc_lists
-    elif type(document) is ExtendedDocument:
-        return document.serialize()
+    except AttributeError:
+        try:
+            doc_lists = []
+            for obj in objects_to_serialize:
+                doc_lists.append(obj.serialize())
+            return doc_lists
+
+        except (TypeError, AttributeError):
+            return objects_to_serialize
