@@ -263,18 +263,23 @@ pip3 install PyYAML
 ```
 
 ### Create a postgres DataBase
+You need to create a postgres database e.g. with
+```
+(root)$ sudo su postgres
+(postgres)$ createuser citydb_user
+(postgres)$ createdb -O citydb_user extendedDoc
+(postgres)$ exit
+```
+an reflect this configuration in your [**config.yml**](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/util/config.yml) file located in the `util/` sub-directory.
 
-You need to create a postgres database, the default configuration is 
 ```
 ordbms: postgresql
-user: postgres
+user: citydb_user
 password: password
 host: localhost
 port: 5432
 dbname: extendedDoc
 ```
-It can be esily modify by changing the 
-[**config.yml**](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/util/config.yml) file.
 
 ### Execution
 
