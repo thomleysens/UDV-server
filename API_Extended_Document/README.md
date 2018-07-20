@@ -299,9 +299,9 @@ By default, python will not find the local packages (such as **test** or **api**
   ```
 "." corresponds to the location of API_Extended_Document and can be replaced by any other relative or even absolute path to this directory.
 
-FIXME
-export EXTENDED_DOC_PASSWORD='passwd'
+FIXME le password est finalement dans util/config.ym
 
+### Test installation with a local flask server
 Then you can run any test file located in the **test** directory, for instance:
 ```
 python3 test/document_tests.py
@@ -313,3 +313,24 @@ python3 api/web_api.py
 ```
 
 **Warning**: In windows '/' is replaced by '\\'
+
+### Configure and run uWSGI
+ * Edit and adpat `Deployment/conf/API_Extended_Document.uwsgi.yml` to obtain something similar to
+   ```
+   uwsgi:
+     virtualenv: /home/citydb_user/Demos/DocumentDemo/venv          <--- Adapt this
+     master: true
+     uid: citydb_user
+     gid: citydb_user
+     socket: /tmp/Api_Extended_Document-server.sock
+     chmod-socket: 666
+     module: api.web_api:app
+     processes: 1
+     enable-threads: true
+     protocol: uwsgi
+     need-app: true
+     catch-exceptions: true
+     log-maxsize: 10000000
+     logto2: /home/citydb_user/Demos/DocumentDemo/uWSGI-server.log  <--- Adapt this
+   ```
+ * Launch the uWSGI server `uwsgi --yml Deployment/API_Extended_Document.uwsgi.yml --http-socket :9090
