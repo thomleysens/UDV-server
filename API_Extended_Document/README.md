@@ -280,6 +280,7 @@ host: localhost
 port: 5432
 dbname: extendedDoc
 ```
+Note that the port number is (usually) configured in `/etc/postgresql/9.X/main/postgresql.conf`.
 
 ### Execution
 
