@@ -62,7 +62,7 @@ It is a software like [PhpMyAdmin](https://www.phpmyadmin.net/) but for PostgreS
 By default, it is installed with PostgreSQL: `Program Files (x86)\PostgreSQL\X.X\pgAdminX\bin\pgAdminX.exe`*
 
 Then modify the [**config.yml**](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/util/config.yml) 
-file located in the `util/` sub-directory to reflect your onfiguration. 
+file located in the [`util/`](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/util) sub-directory to reflect your onfiguration. 
 If you have created a new database as below, no change is needed but verify anyway everything are correct
 
 ```
@@ -83,7 +83,7 @@ and in `Program Files (x86)\PostgreSQL\X.X\data\postgresql.conf` on Windows
 ## Tests
 
 To verify everything works find, you can execute the tests files, located in the folder 
-[**test**](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/test/unit_test.py)
+[**test**](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/test)
 
 By default, python will not find the local packages (such as **test** or **api**), 
 you need to add the location of **API_Extended_Document** to the environment variable **PYTHONPATH** .
@@ -93,7 +93,11 @@ you need to add the location of **API_Extended_Document** to the environment var
 `.` corresponds to the location of **API_Extended_Document** and can be replaced 
 by any path to this directory.
 
-Then you can run any test file located in the **test** directory, for instance: `python3 test/document_tests.py`
+Then you can run any test file located in the **test** directory, for instance: 
+```
+python3 test/document_tests.py
+python3 test/guided_tour_tests.py
+```
 
 *Note: It is a good practice to launch the tests before running the server, because it ensures everything works find and 
 is a way to have some data in the database and facilitate the tests with the front.*
