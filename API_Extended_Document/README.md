@@ -10,17 +10,21 @@ Persistance of objects (documents) to the DataBase is obtained through the usage
 In order to wrap the (CRUD) service within an HTTP protocol (to deal with the requests and send responses to the client), AED uses [flask library](http://flask.pocoo.org/docs/1.0/).
 
 
-**ExtendedDocument** is the heart of the application, we can create, read, update and delete them.
+**ExtendedDocument** is an object, that correspond to a document associated with some metadata and other visualization data.
+It is in the heart of the application, we can create, read, update and delete them.
 On top of that, in order to respond to the 
 [need 07](https://github.com/MEPP-team/RICT/blob/87610d01d87f5c6dfc2873c28de59b06b33aa31f/Doc/Devel/Needs/Need007.md)
 and the [need 25](https://github.com/MEPP-team/RICT/blob/87610d01d87f5c6dfc2873c28de59b06b33aa31f/Doc/Devel/Needs/Need025.md), 
 we have also the possibility to attach an **ExtendedDocument** to one or several **Guided Tours**.
 
 You can find below the the class diagram of the application: 
-![](https://raw.githubusercontent.com/wiki/MEPP-team/UDV-server/ExtendedDocumentClassDiagram.png)
+![](https://raw.githubusercontent.com/wiki/MEPP-team/UDV-server/DocumentWithTourClassDiagram.png)
 
 In addition, you can find the database diagram, used in relation with the class diagram:  
 ![](https://raw.githubusercontent.com/wiki/MEPP-team/UDV-server/ExtendedDocumentDatabaseDiagram.png)
+*Note: This diagram was automaticaaly create using [DataGrip](https://www.jetbrains.com/datagrip/) developed by JetBrains.*
+
+The sources can be find on the [wiki](https://github.com/MEPP-team/UDV-server/wiki)
 
 ## MVC Architecture
 
@@ -48,115 +52,23 @@ In the application, the view is called **web_api.py** and can intercept web requ
 ORM is a way to crate a strong interaction between the objects to be persist and the Database : when an object is modified, the modification can be easily persisted to the DB without the need to write any SQL request.
 Such a feature can reduce the complexity of the code since it offers to increase its abstraction level by making it independent from the particular technology of the chosen concrete DB (postgreSQL, Oracle, MySQL...).
 
-### How to
+### How to?
 **How can we share inheritance or foreign key notion between an object and a DB ?**
 
 Although the implementation is not required to write sql requests, it still needs to indicate the relationship between the DB and the object directly in their python code.
 For that we use the [sqlalchemy library](htps://www.sqlalchemy.org) that in turn uses the [psycorpg2](http://initd.org/psycopg/docs/) (as an adapter/connector) to communicate with the PostgreSQL DataBase.
-A complete tutorial about ORM with sqlalchemy can be found [here](https://docs.sqlalchemy.org/en/latest/orm/tutorial.html)
 
-#### A simple example
-We define a class called **ExtendedDocument**. This class has an associated table in the DB called **extended_document**. The (primitive) types (e.g. Integer, String or Float) of the attributes of that class need to be specified. This class has an id, which is the primary key of **extended_document**.
-The corresponding code snippet goes
-```python
-class ExtendedDocument(Base):
-    __tablename__ = "extended_document"
-
-    id = Column(Integer, primary_key=True)
-    attribute1 = Column(String)
-    attribute2 = Column(Float, nullable=False)
-```
-
-**Caution**
-The notion of class attribute and object attribute can easily be mistaken with this definition.
-
-```python
-class ExtendedDocument(Base):
-    attribute1 = 1
-    attribute2 = Column(Float, nullable=False)
-    self.attribute3 = 3
-```
-
-**attribute1** is a class attribute when both **attribute2** and **attribute3** are instance attribute. **Attribute3** is not present in the DB.
-
-To create a relationship between two classes, we create a **foreign key** for the DB.
-For the object approach, you can define an explicit attribute in one class if it is a non reversible relationship, or define an attribute in both classes otherwise.
-
-For instance to indicate that **MetaData** owns a foreign key which is an id of **ExtendedDocument**
-```python
-id = Column(Integer, ForeignKey('extended_document.id'), primary_key=True)
-```
-
-In our example we have a relationship **One To One** between **metadata** and **extended_document** and its navigability is only from **extended_document** to **metadata**. We just have to precise in **ExtendedDocument**:
-```python
-metaData = relationship("MetaData", uselist=False, cascade="all, delete-orphan")
-```
-Extended_Document has an attribute metaData, the parameter *uselist* specify that we have only one instance of **MetaData**,, the attribute cascade simplify operations on metaData directly from ExtendedDocument (such as the deletion).
+We tried to make a [résumé](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/entities/README.md) of what we use from SQLAlchemy, however a lot of things are not broached and can be find 
+[here](http://docs.sqlalchemy.org/en/latest/orm/tutorial.html).
 
 ## Web Application
 
 ### Flask
 
 [flask](http://flask.pocoo.org/docs/1.0/) is a micro web framework developped in python. This framework allows us to interpret HTTP request (mainly GET and POST methods) and send appropriate response to the client.
-To understand this framework, a tutorial can be found [here](http://flask.pocoo.org/docs/1.0/quickstart/#a-minimal-application).
-
-#### Minimal applicaton
-We can create a file named **web_api.py** which contains the following code:
-```python
-from flask import Flask
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return 'index'
-```
-First, we import the library and create an instance of Flask (called app).
-When a user accesses the route '<server-host>/' the function sends 'index' as a response.
-
-- During deployment, [follow the instruction](http://flask.pocoo.org/docs/1.0/deploying/#deployment) depending on your server.
-- During development, to start the server, you need to execute the instructions below:
-    - On **Linux**
-        ```
-        $ export FLASK_APP=web_api.py
-        $ flask run
-        ```
-    - On **Windows** command prompt
-        ```
-        C:\path\to\app>set FLASK_APP=web_api.py
-        C:\path\to\app>flask run
-        ```
-
-#### Variables
-
-You can specify variable name in the url by following the format *<var-type:var-name>*
-
-```python
-@app.route('/deleteDocument/<int:doc_id>')
-def delete_document(doc_id):
-    Controller.delete_documents(doc_id)
-    return 'success'
-```
-
-#### Request Data
-
-You can specify which method is expected when accessing to a specific route
-```python
-@app.route('/getDocument/<int:doc_id>', methods=['GET', 'POST'])
-```
-Data send with GET and POST methods are stored in a MultiDict; this a set of keys and values and it can exist several times the same key. Its structure is as follow:
-```python
-{"key1": "value1", "key2": "value2", "key1": "value3"}
-```
-
-**GET** You can access parameters by using
-```python
-request.args
-```
-
-**POST** You can access parameters by using
-```python
-request.form
-```
+Some complementary information are available in 
+[api folder](https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document/api)
+Moreover, you can find a tutorial [here](http://flask.pocoo.org/docs/1.0/quickstart/#a-minimal-application).
 
 ## Other directories
 
