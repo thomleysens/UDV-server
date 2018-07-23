@@ -11,7 +11,7 @@ or otherwise: `git clone https://github.com/MEPP-team/UDV-server.git`
 
 Then you need to go to the directory **API_Extended_Document**: `cd UDV-server/API_Extended_Document`
 
-***Warning**: In windows `/` is replaced by `\`*
+*Note: In windows `/` is replaced by `\`*
 
 # Create a virtual environment
 
@@ -27,6 +27,8 @@ Enter in the virtual environment,
 - on **Windows**: `venv\Scripts\activate.bat`
   
 To quit the virtual environment, just type:   `deactivate`
+
+***Warning**: Unless explicitly, in the following you need to be in the **virtual environment**.*
 
 # Install packages
 
@@ -77,8 +79,6 @@ and in `Program Files (x86)\PostgreSQL\X.X\data\postgresql.conf` on Windows
 *Note: the exact location can change depending on your own configuration.*
 
 # Execution
-
-*In the following you need to be in the **virtual environment**.*
 
 ## Tests
 
