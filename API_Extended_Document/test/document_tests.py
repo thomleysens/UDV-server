@@ -15,91 +15,94 @@ class DocumentTest:
 
     @staticmethod
     def create_documents():
-        print("\033[01m## Creation ##\033[0m")
-        test_operation(DocumentTest, "all needed attributes",
-                       False,
-                       lambda: DocController.create_document(
-                           {"title": "title",
-                            "subject": "Subject1",
-                            "type": "type",
-                            "description": "a description",
-                            "link": "1.gif"}))
+        print('\033[01m## Creation ##\033[0m')
 
-        test_operation(DocumentTest, "all needed attributes",
-                       False,
-                       lambda: DocController.create_document(
-                           {"title": "title",
-                            "subject": "Subject2",
-                            "type": "type",
-                            "description": "a description",
-                            "link": "2.gif",
-                            "refDate": "2019-02-05"}))
+        make_test(lambda: DocController.create_document({
+            'title': 'title',
+            'subject': 'Subject1',
+            'type': 'type',
+            'description': 'a description',
+            'link': '1.gif'
+        }))(DocumentTest, 'all needed attributes', False)
 
-        test_operation(DocumentTest, "needed + nonexistent attributes",
-                       False,
-                       lambda: DocController.create_document(
-                           {"title": "another title",
-                            "subject": "Subject3",
-                            "type": "type",
-                            "non_attr": "non_value",
-                            "refDate": "2018-12-03",
-                            "description": "an other description",
-                            "link": "3.png"}))
+        make_test(lambda: DocController.create_document({
+            'title': 'title',
+            'subject': 'Subject1',
+            'type': 'type',
+            'description': 'a description',
+            'link': '1.gif'}))(
+            DocumentTest, 'all needed attributes', False)
 
-        test_operation(DocumentTest, "needed argument missing",
-                       True,
-                       lambda: DocController.create_document(
-                           {"title": "another title"}))
+        make_test(lambda: DocController.create_document({
+            'title': 'title',
+            'subject': 'Subject2',
+            'type': 'type',
+            'description': 'a description',
+            'link': '2.gif',
+            'refDate': '2019-02-05'
+        }))(DocumentTest, 'all needed attributes', False)
+
+        make_test(lambda: DocController.create_document({
+            'title': 'another title',
+            'subject': 'Subject3',
+            'type': 'type',
+            'non_attr': 'non_value',
+            'refDate': '2018-12-03',
+            'description': 'an other description',
+            'link': '3.png'
+        }))(DocumentTest, 'needed + nonexistent attributes', False)
+
+        make_test(lambda: DocController.create_document({
+            'title': 'another title'
+        }))(DocumentTest, 'needed argument missing', True)
 
     @staticmethod
     def read_documents():
-        print("\n\033[01m## Reading ##\033[0m")
+        print('\n\033[01m## Reading ##\033[0m')
 
-        test_operation(DocumentTest, "all documents", False,
-                       lambda: DocController.get_documents({}))
+        make_test(lambda: DocController.get_documents({}))(
+            DocumentTest, 'all documents', False)
 
-        test_operation(DocumentTest, "specific documents", False,
-                       lambda: DocController.get_documents(
-                           {"keyword": "description",
-                            'refDateStart': '2018-12-03'}))
+        make_test(lambda: DocController.get_documents({
+            'keyword': 'description',
+            'refDateStart': '2018-12-03'
+        }))(DocumentTest, 'specific documents', False)
 
-        test_operation(DocumentTest, "document with existing id", False,
-                       lambda: DocController.get_document_by_id(1))
+        make_test(lambda: DocController.get_document_by_id(1))(
+            DocumentTest, 'document with existing id', False)
 
-        test_operation(DocumentTest, "document with non existing id", True,
-                       lambda: DocController.get_document_by_id(-1))
+        make_test(lambda: DocController.get_document_by_id(-1))(
+            DocumentTest, 'document with non existing id', True)
 
     @staticmethod
     def update_documents():
-        print("\n\033[01m## Updating ##\033[0m")
-        test_operation(DocumentTest, "existing document", False,
-                       lambda: DocController.update_document(1, {
-                           'positionX': 12,
-                           'description': "description of a document"
-                       }))
+        print('\n\033[01m## Updating ##\033[0m')
+        make_test(lambda: DocController.update_document(1, {
+            'positionX': 12,
+            'description': 'description of a document'
+        }))(DocumentTest, 'existing document', False)
 
-        test_operation(DocumentTest, "existing document", False,
-                       lambda: DocController.update_document(1, {
-                           'positionX': 12,
-                           'description': "another description"
-                       }))
+        make_test(lambda: DocController.update_document(1, {
+            'positionX': 12,
+            'description': 'another description'
+        }))(DocumentTest, 'existing document', False)
 
-        test_operation(DocumentTest, "existing document", True,
-                       lambda: DocController.update_document(-1, {
-                           'positionX': 12,
-                           'description': "description of a document"
-                       }))
+        make_test(lambda: DocController.update_document(-1, {
+            'positionX': 12,
+            'description': 'description of a document'
+        }))(DocumentTest, 'existing document', True)
 
     @staticmethod
     def delete_documents():
-        print("\n\033[01m## Deletion ##\033[0m")
-        test_operation(DocumentTest, "existing document", False,
-                       lambda: DocController.delete_documents(2))
-        test_operation(DocumentTest, "existing document", True,
-                       lambda: DocController.delete_documents(2))
+        print('\n\033[01m## Deletion ##\033[0m')
+        make_test(lambda: DocController.delete_documents(2))(
+            DocumentTest, 'existing document', False)
+
+        make_test(lambda: DocController.delete_documents(2))(
+            DocumentTest, 'non existing document', True)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     Controller.recreate_tables()
     DocumentTest.create_documents()
     DocumentTest.read_documents()
@@ -107,5 +110,6 @@ if __name__ == "__main__":
     DocumentTest.read_documents()
     DocumentTest.delete_documents()
     DocumentTest.read_documents()
-    print("\n\n\033[04mSuccess\033[01m: ", DocumentTest.nb_tests_succeed, "/",
-          DocumentTest.nb_tests, sep="")
+    print('\n\n\033[04mSuccess\033[01m: ',
+          DocumentTest.nb_tests_succeed, '/',
+          DocumentTest.nb_tests, sep='')

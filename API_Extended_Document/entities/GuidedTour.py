@@ -22,6 +22,17 @@ class GuidedTour(Base):
         self.name = name
         self.description = description
 
+    def update(self, new_values):
+        for attKey, attVal in new_values.items():
+            if hasattr(self, attKey):
+                setattr(self, attKey, attVal)
+        return self
+
+    def update_document(self, doc_position, new_values):
+        for document in self.extendedDocs:
+            if document.doc_position == doc_position:
+                return document.update(new_values)
+
     @classmethod
     def get_attr(cls, attr_name):
         if hasattr(cls, attr_name):

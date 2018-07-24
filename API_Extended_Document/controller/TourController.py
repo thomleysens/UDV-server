@@ -67,6 +67,33 @@ class TourController:
 
     @staticmethod
     @pUnit.make_a_transaction
+    def update(session, *args):
+        tour_id = args[0]
+        attributes = args[1]
+
+        guided_tour = session.query(GuidedTour) \
+            .filter(GuidedTour.id == tour_id).one()
+        guided_tour.update(attributes)
+        session.add(guided_tour)
+
+        return guided_tour
+
+    @staticmethod
+    @pUnit.make_a_transaction
+    def update_document(session, *args):
+        tour_id = args[0]
+        doc_id = args[1]
+        attributes = args[2]
+
+        guided_tour = session.query(GuidedTour) \
+            .filter(GuidedTour.id == tour_id).one()
+        guided_tour.update_document(doc_id, attributes)
+        session.add(guided_tour)
+
+        return guided_tour
+
+    @staticmethod
+    @pUnit.make_a_transaction
     def remove_document(session, *args):
         tour_id = args[0]
         doc_id = args[1]

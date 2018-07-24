@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-import sys
 
 from controller.Controller import Controller
 from controller.DocController import DocController
@@ -19,106 +18,98 @@ class GuidedTourTest:
     @staticmethod
     def create_tours():
         print("\033[01m## Creation of tours ##\033[0m")
-        test_operation(GuidedTourTest, "all needed attributes",
-                       False,
-                       lambda: TourController.create_tour(
-                           "First tour",
-                           "This is the first guided tour"))
+        make_test(lambda: TourController.create_tour(
+            "First tour",
+            "This is the first guided tour"
+        ))(GuidedTourTest, "all needed attributes", False)
 
-        test_operation(GuidedTourTest, "all needed attributes",
-                       False,
-                       lambda: TourController.create_tour(
-                           "Second tour",
-                           "This is the second guided tour"))
+        make_test(lambda: TourController.create_tour(
+            "Second tour",
+            "This is the second guided tour"
+        ))(GuidedTourTest, "all needed attributes", False)
 
-        test_operation(GuidedTourTest,
-                       "needed + nonexistent attributes",
-                       False,
-                       lambda: TourController.create_tour(
-                           "Third tour",
-                           "This is the third guided tour"))
+        make_test(lambda: TourController.create_tour(
+            "Third tour",
+            "This is the third guided tour"
+        ))(GuidedTourTest, "all needed attributes", False)
 
-        test_operation(GuidedTourTest, "needed argument missing",
-                       True,
-                       lambda: TourController.create_tour())
+        make_test(lambda: TourController.create_tour(
+        ))(GuidedTourTest, "needed argument missing", True)
 
     @staticmethod
     def create_documents():
         print("\n\033[01m## Creation of documents ##\033[0m")
-        test_operation(GuidedTourTest, "all needed attributes",
-                       False,
-                       lambda: DocController.create_document(
-                           {"title": "title",
-                            "subject": "Subject1",
-                            "type": "type",
-                            "description": "a description",
-                            "link": "1.gif"}))
+        make_test(lambda: DocController.create_document({
+            "title": "title",
+            "subject": "Subject1",
+            "type": "type",
+            "description": "a description",
+            "link": "1.gif"
+        }))(GuidedTourTest, "all needed attributes", False)
 
-        test_operation(GuidedTourTest, "all needed attributes",
-                       False,
-                       lambda: DocController.create_document(
-                           {"title": "title2",
-                            "subject": "Subject2",
-                            "type": "type",
-                            "description": "a description",
-                            "link": "1.gif"}))
+        make_test(lambda: DocController.create_document({
+            "title": "title2",
+            "subject": "Subject2",
+            "type": "type",
+            "description": "a description",
+            "link": "1.gif"
+        }))(GuidedTourTest, "all needed attributes", False)
 
     @staticmethod
     def read_tours():
         print("\n\033[01m## Reading ##\033[0m")
 
-        test_operation(GuidedTourTest, "all tours", False,
-                       lambda: TourController.get_tours())
+        make_test(lambda: TourController.get_tours())(
+            GuidedTourTest, "all tours", False)
 
         # @TODO: create method to filter docs
-        test_operation(GuidedTourTest, "specific tour", False,
-                       lambda: TourController.get_tours())
+        make_test(lambda: TourController.get_tours())(
+            GuidedTourTest, "specific tour", False)
 
-        test_operation(GuidedTourTest, "tour with existing id", False,
-                       lambda: TourController.get_tour_by_id(2))
+        make_test(lambda: TourController.get_tour_by_id(2))(
+            GuidedTourTest, "tour with existing id", False)
 
-        test_operation(GuidedTourTest, "tour with non existing id",
-                       True,
-                       lambda: TourController.get_tour_by_id(-1))
+        make_test(lambda: TourController.get_tour_by_id(-1))(
+            GuidedTourTest, "tour with non existing id", True)
 
     @staticmethod
     def update_tours():
         print("\n\033[01m## Updating ##\033[0m")
-        test_operation(GuidedTourTest, "adding existing document",
-                       False,
-                       lambda: TourController.add_document(1, 1))
+        make_test(lambda: TourController.add_document(1, 1))(
+            GuidedTourTest, "adding existing document", False)
 
-        test_operation(GuidedTourTest, "adding twice existing document",
-                       False,
-                       lambda: TourController.add_document(1, 1))
+        make_test(lambda: TourController.add_document(1, 1))(
+            GuidedTourTest, "adding twice existing document", False)
 
-        test_operation(GuidedTourTest, "adding twice existing document",
-                       True,
-                       lambda: TourController.add_document(1))
+        make_test(lambda: TourController.add_document(1, 2))(
+            GuidedTourTest, "adding existing document", False)
 
-        test_operation(GuidedTourTest, "adding existing document",
-                       False,
-                       lambda: TourController.add_document(1, 2))
+        make_test(lambda: TourController.add_document(2, 1))(
+            GuidedTourTest, "adding existing document", False)
 
-        test_operation(GuidedTourTest, "adding existing document",
-                       False,
-                       lambda: TourController.add_document(2, 1))
+        make_test(lambda: TourController.add_document(1, 3))(
+            GuidedTourTest, "adding non existing document", True)
 
-        test_operation(GuidedTourTest, "adding non existing document",
-                       True,
-                       lambda: TourController.add_document(1, 3))
+        make_test(lambda: TourController.add_document(-1, 3))(
+            GuidedTourTest, "adding non existing document", True)
 
-        test_operation(GuidedTourTest, "adding non existing document",
-                       True,
-                       lambda: TourController.add_document(-1, 3))
+        make_test(lambda: TourController.update(1, {
+            'title': 'this is a new title',
+            'description': 'new description'
+        }))(GuidedTourTest, "updating existing guided tour", False)
+
+        make_test(lambda: TourController.update_document(1, 1, {
+            'text1': 'this is a text'
+        }))(GuidedTourTest, "updating guided tour document", False)
 
     @staticmethod
     def delete_tours():
         print("\n\033[01m## Deletion ##\033[0m")
-        test_operation(GuidedTourTest, "existing document", False,
-                       lambda: TourController.delete_tour(3))
-        test_operation(GuidedTourTest, "existing document", True,
-                       lambda: TourController.delete_tour(3))
+        make_test(lambda: TourController.delete_tour(3))(
+            GuidedTourTest, "existing document", False)
+
+        make_test(lambda: TourController.delete_tour(3))(
+            GuidedTourTest, "existing document", True)
 
 
 if __name__ == "__main__":

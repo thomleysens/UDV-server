@@ -3,8 +3,6 @@
 
 from colorama import init, Fore, Style
 
-init(convert=True)
-
 
 def display_error(error=True):
     if error:
@@ -14,16 +12,15 @@ def display_error(error=True):
     print(Style.RESET_ALL, end="")
 
 
-def format_display(old_function):
-    def new_function(TestClass, description, expecting_error,
-                     function_to_test):
+def make_test(old_function):
+    def new_function(TestClass, description, expecting_error):
         happened_error = False
         function_result = ""
         exception = ""
         try:
-            function_result = old_function(function_to_test)
+            function_result = old_function()
         except Exception as e:
-            exception = str(e)[:50] + '..' if len(str(e)) > 50 else e
+            exception = e
             happened_error = True
         finally:
             display_error(expecting_error != happened_error)
@@ -40,8 +37,3 @@ def format_display(old_function):
                 TestClass.nb_tests_succeed += 1
 
     return new_function
-
-
-@format_display
-def test_operation(function_to_test):
-    return function_to_test()

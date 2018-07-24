@@ -26,11 +26,18 @@ class ExtendedDocGuidedTour(Base):
     document = relationship("ExtendedDocument")
     text1 = Column(String)
     text2 = Column(String)
+    title = Column(String)
 
     def __init__(self, tour_id, doc_id, doc_position):
         self.tour_id = tour_id
         self.doc_id = doc_id
         self.doc_position = doc_position
+
+    def update(self, new_values):
+        for attKey, attVal in new_values.items():
+            if hasattr(self, attKey):
+                setattr(self, attKey, attVal)
+        return self
 
     @classmethod
     def get_attr(cls, attr_name):
