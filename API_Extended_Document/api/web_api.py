@@ -19,25 +19,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
 
-@app.route('/')
-def index():
-    return ''' 
-    <!doctype html>  
-    <html>  
-      <body>          
-        <h1 style="text-align:center">  
-          Welcome on API-ExtendedDocument 
-        </h1>  
-        <div style="text-align:center">  
-          <p> This application was developed by MEEP team </p>  
-          <a href="https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document"   
-             style="text-align:center"> Find us on Github! </a>  
-        </div>  
-      </body>  
-    </html>  
-    '''
-
-
 def send_response(old_function):
     def new_function(*args, **kwargs):
         try:
@@ -56,6 +37,25 @@ def send_response(old_function):
 @send_response
 def make_operation(operation_to_make):
     return operation_to_make()
+
+
+@app.route('/')
+def index():
+    return ''' 
+    <!doctype html>  
+    <html>  
+      <body>          
+        <h1 style="text-align:center">  
+          Welcome on API-ExtendedDocument 
+        </h1>  
+        <div style="text-align:center">  
+          <p> This application was developed by MEEP team </p>  
+          <a href="https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document"   
+             style="text-align:center"> Find us on Github! </a>  
+        </div>  
+      </body>  
+    </html>  
+    '''
 
 
 @app.route('/addDocument', methods=['POST'])
