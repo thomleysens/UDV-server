@@ -1,0 +1,15 @@
+uwsgi:
+    virtualenv: /home/citydb_user/Demos/DocumentDemo/venv
+    master: true
+    uid: citydb_user
+    gid: citydb_user
+    socket: /tmp/Api_Extended_Document-server.sock
+    chmod-socket: 666
+    module: api.web_api:app
+    processes: 1
+    enable-threads: true
+    protocol: uwsgi
+    need-app: true
+    catch-exceptions: true
+    log-maxsize: 10000000
+    logto2: /home/citydb_user/Demos/DocumentDemo/uWSGI-server.log
