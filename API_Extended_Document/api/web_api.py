@@ -44,7 +44,7 @@ def index():
           Welcome on API-ExtendedDocument 
         </h1>  
         <div style="text-align:center">  
-          <p> This application was developed by MEEP team </p>  
+          <p> This application was developed by MEPP team </p>  
           <a href="https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document"   
              style="text-align:center"> Find us on Github! </a>  
         </div>  
