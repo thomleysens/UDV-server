@@ -3,7 +3,6 @@
 
 import sqlalchemy.exc
 import sqlalchemy.orm
-import psycopg2
 
 from flask import Flask, send_from_directory, request, safe_join
 from flask.json import jsonify
@@ -23,20 +22,16 @@ def send_response(old_function):
     def new_function(*args, **kwargs):
         try:
             return jsonify(old_function(*args, **kwargs))
-        except psycopg2.IntegrityError:
+        except sqlalchemy.exc.IntegrityError:
             return 'integrity error', 422
         except sqlalchemy.orm.exc.NoResultFound:
             return 'no result found', 204
         except Exception as e:
+            print(e)
             info_logger.error(e)
             return "unexpected error", 500
 
     return new_function
-
-
-@send_response
-def make_operation(operation_to_make):
-    return operation_to_make()
 
 
 @app.route('/')
@@ -128,7 +123,14 @@ def add_document_to_guided_tour():
         lambda: TourController.add_document(tour_id, doc_id))()
 
 
-@app.route('/editGuidedTourDocument/<int:tour_id>', methods=['GET', 'POST'])
+@app.route('/editGuidedTour/<int:tour_id>', methods=['POST'])
+def update_guided_tour(tour_id):
+    return send_response(
+        lambda: TourController.update(
+            tour_id, request.form))()
+
+
+@app.route('/editGuidedTourDocument/<int:tour_id>', methods=['POST'])
 def update_guided_tour_document(tour_id):
     doc_position = int(request.form.get('doc_position'))
     return send_response(
