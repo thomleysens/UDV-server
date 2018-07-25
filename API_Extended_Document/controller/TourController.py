@@ -36,9 +36,9 @@ class TourController:
     @staticmethod
     @pUnit.make_a_query
     def get_tour_by_id(session, *args):
-        doc_id = args[0]
+        tour_id = args[0]
         return session.query(GuidedTour).filter(
-            GuidedTour.id == doc_id).one()
+            GuidedTour.id == tour_id).one()
 
     @staticmethod
     @pUnit.make_a_transaction
@@ -63,7 +63,9 @@ class TourController:
 
         session.add(
             ExtendedDocGuidedTour(tour_id, doc_id, doc_number + 1))
-        return TourController.get_tour_by_id(tour_id)
+
+        return session.query(GuidedTour).filter(
+            GuidedTour.id == tour_id).one()
 
     @staticmethod
     @pUnit.make_a_transaction

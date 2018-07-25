@@ -168,7 +168,7 @@ def upload_file(doc_id):
     '''
 
 
-@app.route('/documents_repository/<filename>')
+@app.route('/getFile/<filename>')
 def get_uploaded_file(filename):
     return send_from_directory(
         safe_join(os.getcwd(), app.config['UPLOAD_FOLDER']), filename)
