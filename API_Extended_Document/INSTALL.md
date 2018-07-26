@@ -140,6 +140,15 @@ A more detailed set up can be find on its server and its documentation.
      log-maxsize: 10000000
      logto2: /home/citydb_user/Demos/DocumentDemo/uWSGI-server.log  <--- Adapt this
    ```
-   
+
  * Fom the directory which contains the `Deployment` directory
  * Launch the uWSGI server `(venv) $ uwsgi --yml Deployment/API_Extended_Document.uwsgi.yml --http-socket :9090`
+
+### Save the documents located in the Database
+
+To be sure to save your files, you can save tables into csv files:
+```
+psql extendedDoc -c “COPY extended_document TO ‘/tmp/extended_document-Id.csv’ DELIMITER ‘,’ CSV HEADER;”
+psql extendedDoc -c “COPY visualisation TO ‘/tmp/extended_document-visualisation.csv’ DELIMITER ‘,’ CSV HEADER;” (edited)
+psql extendedDoc -c “COPY metadata TO ‘/tmp/extended_document-metadata.csv’ DELIMITER ‘,’ CSV HEADER;”
+```
