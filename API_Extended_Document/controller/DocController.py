@@ -108,5 +108,6 @@ class DocController:
         an_id = args[0]
         a_doc = session.query(ExtendedDocument).filter(
             ExtendedDocument.id == an_id).one()
+        # we also remove the associated image located in 'UPLOAD_FOLDER' directory
         os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
         session.delete(a_doc)
