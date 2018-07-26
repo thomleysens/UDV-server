@@ -48,6 +48,9 @@ pip3 install colorama
 pip3 install PyYAML
 ```
 
+Alternatively you can use: `pip3 install -r Deployment/requirements.txt` where `requirements.txt` contains the preceding packages.
+
+
 # Create a postgres DataBase
 You need to create a postgres database for instance on linux with
 ```
@@ -137,4 +140,6 @@ A more detailed set up can be find on its server and its documentation.
      log-maxsize: 10000000
      logto2: /home/citydb_user/Demos/DocumentDemo/uWSGI-server.log  <--- Adapt this
    ```
- * Launch the uWSGI server `uwsgi --yml Deployment/API_Extended_Document.uwsgi.yml --http-socket :9090`
+   
+ * Fom the directory which contains the `Deployment` directory
+ * Launch the uWSGI server `(venv) $ uwsgi --yml Deployment/API_Extended_Document.uwsgi.yml --http-socket :9090`
