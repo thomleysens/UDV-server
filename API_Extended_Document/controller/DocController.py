@@ -5,6 +5,7 @@ from sqlalchemy import or_, and_
 
 from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
 from util.log import *
+from util.upload import UPLOAD_FOLDER
 from util.db_config import *
 from entities.MetaData import MetaData
 from entities.ExtendedDocument import ExtendedDocument
@@ -107,4 +108,5 @@ class DocController:
         an_id = args[0]
         a_doc = session.query(ExtendedDocument).filter(
             ExtendedDocument.id == an_id).one()
+        os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
         session.delete(a_doc)
