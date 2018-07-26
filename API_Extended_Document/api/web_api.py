@@ -3,7 +3,6 @@
 
 import sqlalchemy.exc
 import sqlalchemy.orm
-import psycopg2
 
 from flask import Flask, send_from_directory, request, safe_join
 from flask.json import jsonify
@@ -23,20 +22,16 @@ def send_response(old_function):
     def new_function(*args, **kwargs):
         try:
             return jsonify(old_function(*args, **kwargs))
-        except psycopg2.IntegrityError:
+        except sqlalchemy.exc.IntegrityError:
             return 'integrity error', 422
         except sqlalchemy.orm.exc.NoResultFound:
             return 'no result found', 204
         except Exception as e:
+            print(e)
             info_logger.error(e)
             return "unexpected error", 500
 
     return new_function
-
-
-@send_response
-def make_operation(operation_to_make):
-    return operation_to_make()
 
 
 @app.route('/')
@@ -49,7 +44,7 @@ def index():
           Welcome on API-ExtendedDocument 
         </h1>  
         <div style="text-align:center">  
-          <p> This application was developed by MEEP team </p>  
+          <p> This application was developed by MEPP team </p>  
           <a href="https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document"   
              style="text-align:center"> Find us on Github! </a>  
         </div>  
@@ -71,7 +66,7 @@ def create_document():
                                               {"link": filename})
         return document
 
-    return make_operation(creation)
+    return send_response(creation)()
 
 
 @app.route('/addGuidedTour')
@@ -81,40 +76,40 @@ def create_guided_tour():
     if name is None or description is None:
         return 'parameter is missing', 400
 
-    return make_operation(
-        lambda: TourController.create_tour(name, description))
+    return send_response(
+        lambda: TourController.create_tour(name, description))()
 
 
 @app.route('/getDocument/<int:doc_id>', methods=['GET', 'POST'])
 def get_document(doc_id):
-    return make_operation(
-        lambda: DocController.get_document_by_id(doc_id))
+    return send_response(
+        lambda: DocController.get_document_by_id(doc_id))()
 
 
 @app.route('/getGuidedTour/<int:tour_id>')
 def get_guided_tour(tour_id):
-    return make_operation(
-        lambda: TourController.get_tour_by_id(tour_id))
+    return send_response(
+        lambda: TourController.get_tour_by_id(tour_id))()
 
 
 @app.route('/getDocuments', methods=['GET', 'POST'])
 def get_documents():
-    return make_operation(
+    return send_response(
         lambda: DocController.get_documents(
             {key: request.args.get(key)
-             for key in request.args.keys()}))
+             for key in request.args.keys()}))()
 
 
 @app.route('/getGuidedTours', methods=['GET', 'POST'])
 def get_all_guided_tours():
-    return make_operation(
-        lambda: TourController.get_tours())
+    return send_response(
+        lambda: TourController.get_tours())()
 
 
 @app.route('/editDocument/<int:doc_id>', methods=['POST'])
 def update_document(doc_id):
-    return make_operation(
-        lambda: DocController.update_document(doc_id, request.form))
+    return send_response(
+        lambda: DocController.update_document(doc_id, request.form))()
 
 
 @app.route('/addDocumentToGuidedTour')
@@ -124,20 +119,35 @@ def add_document_to_guided_tour():
     if doc_id is None or tour_id is None:
         return 'parameter is missing', 400
 
-    return make_operation(
-        lambda: TourController.add_document(tour_id, doc_id))
+    return send_response(
+        lambda: TourController.add_document(tour_id, doc_id))()
+
+
+@app.route('/editGuidedTour/<int:tour_id>', methods=['POST'])
+def update_guided_tour(tour_id):
+    return send_response(
+        lambda: TourController.update(
+            tour_id, request.form))()
+
+
+@app.route('/editGuidedTourDocument/<int:tour_id>', methods=['POST'])
+def update_guided_tour_document(tour_id):
+    doc_position = int(request.form.get('doc_position'))
+    return send_response(
+        lambda: TourController.update_document(
+            tour_id, doc_position, request.form))()
 
 
 @app.route('/deleteGuidedTour/<int:doc_id>')
 def delete_tour(doc_id):
-    return make_operation(
-        lambda: TourController.delete_tour(doc_id))
+    return send_response(
+        lambda: TourController.delete_tour(doc_id))()
 
 
 @app.route('/deleteDocument/<int:doc_id>')
 def delete_document(doc_id):
-    return make_operation(
-        lambda: DocController.delete_documents(doc_id))
+    return send_response(
+        lambda: DocController.delete_documents(doc_id))()
 
 
 @app.route('/uploadFile/<int:doc_id>', methods=['GET', 'POST'])
@@ -158,7 +168,7 @@ def upload_file(doc_id):
     '''
 
 
-@app.route('/documents_repository/<filename>')
+@app.route('/getFile/<filename>')
 def get_uploaded_file(filename):
     return send_from_directory(
         safe_join(os.getcwd(), app.config['UPLOAD_FOLDER']), filename)
