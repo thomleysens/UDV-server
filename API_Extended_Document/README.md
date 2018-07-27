@@ -50,7 +50,7 @@ In the application, the view is called **web_api.py** and can intercept web requ
 ## ORM (Object Relational Mapping)
 
 ### Description
-ORM is a way to crate a strong interaction between the objects to be persist and the Database : when an object is modified, the modification can be easily persisted to the DB without the need to write any SQL request.
+ORM is a way to crate a strong interaction between objects that should be persisted and a DataBase (DB) : when an object is modified, the modification can be easily persisted to the DB without the need to write any SQL request.
 Such a feature can reduce the complexity of the code since it offers to increase its abstraction level by making it independent from the particular technology of the chosen concrete DB (postgreSQL, Oracle, MySQL...).
 
 ### How to?
@@ -59,7 +59,7 @@ Such a feature can reduce the complexity of the code since it offers to increase
 Although the implementation is not required to write sql requests, it still needs to indicate the relationship between the DB and the object directly in their python code.
 For that we use the [sqlalchemy library](htps://www.sqlalchemy.org) that in turn uses the [psycorpg2](http://initd.org/psycopg/docs/) (as an adapter/connector) to communicate with the PostgreSQL DataBase.
 
-We tried to make a [résumé](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/entities/README.md) of what we use from SQLAlchemy, however a lot of things are not broached and can be find 
+We tried to make a [résumé](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/entities/README.md) of what we use from SQLAlchemy, however a lot of things are not broached and can be found 
 [here](http://docs.sqlalchemy.org/en/latest/orm/tutorial.html).
 
 ## Web Application
@@ -74,22 +74,21 @@ Moreover, you can find a tutorial [here](http://flask.pocoo.org/docs/1.0/quickst
 ## Other directories
 
 **log**
-This directory contains information of what happen during the execution of the application :
+This directory collects some information of what happens during the execution of the application :
 - **info.log** : information about the global application execution
 - **sqlalchemy.log** : operations between the DB and python
 
 **persistence_unit**
-This directory contains some methods to facilitate interaction between the
-DB and the python objects and reduce lines of code when persisting objects.
+This directory contains some methods to facilitate the interaction between the DB and the python objects and reduce lines of code when persisting objects.
 
 **test**
-This directory is used to make tests, in order to be sure the application works well
+The test directory is used to make tests, in order to assert that the application works well.
 
 **db_config**
 This directory global script and file to configure the application
 
 **config.yml**
-This file is used to specify information about the database. To use the **yml** format we use the python library named [PyYAML](https://pyyaml.org/wiki/PyYAMLDocumentation)
+This file is used to specify information about the database. In order to use the **yml** format we use the python library named [PyYAML](https://pyyaml.org/wiki/PyYAMLDocumentation). The `config.yml` file has the following form:
 
 ```
 ordbms: <type of DB>
@@ -101,8 +100,8 @@ dbname: <name of the database>
 ```
 
 **log.py**
-Configure the logger of the application
+Defines the configuration of the logger of the ADE application
 
 **db_config.py**
-Configure the application by using the *config.yml* file.
+Configures the application by using the *config.yml* file.
 
