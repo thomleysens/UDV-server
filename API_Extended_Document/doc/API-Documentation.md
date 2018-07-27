@@ -1,7 +1,7 @@
 # Preamble
 
 This document presents all the functionalities provided by the API Extended Document.
-This API is available on this [[server|http://rict.liris.cnrs.fr:9095/]].
+This API is available on this [server](http://rict.liris.cnrs.fr:9095/).
 
 ***Note***: 
 In the following, we consider that the default route is `http://rict.liris.cnrs.fr:9095`.
@@ -375,3 +375,5 @@ They should have been like this:
 | `PUT`    | [/guidedtour/`tour_id`](#editguidedtour)                  | Edit the guided tour with the id `tour_id`  |                                
 | `PUT`    | [/guidedtour/`tour_id`/document](#editguidedtourdocument) | Edit a document associated with `tour_id`   |                                
 | `DELETE` | [/guidedtour/`tour_id`](#deleteguidedtour)                | Delete the tour with the id `tour_id`       |
+
+***Note***: You can use the **PUT** method in the same way than a **Post** method (parameters are stored in `request.form` dictionary.
