@@ -1,0 +1,24 @@
+{
+  "idDocument": 40,
+  "metadata": {
+    "id": 40,
+    "title": "Titre du document",
+    "subject": "Sujet du document",
+    "description": "Description du document",
+    "refDate": "2018-05-18",
+    "publicationDate": "2018-05-5",
+    "type": "pdf",
+    "link": "1.pdf",
+    "originalName": "fichier.pdf"
+  },
+  "visualization": {
+    "id": 36,
+    "quaternionX": 1.2,
+    "quaternionY": null,
+    "quaternionZ": null,
+    "quaternionW": null,
+    "positionX": 2.5,
+    "positionY": 2.3,
+    "positionZ": null
+  }
+}

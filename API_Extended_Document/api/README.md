@@ -26,7 +26,7 @@ if __name__ == '__main__':
     it avoids conflicts when running on a production server.*
 
 
-***Note**: `app.route()` is what we call in python a [decorator](https://wiki.python.org/moin/PythonDecorators)*
+***Note**: `app.route()` is what we call in python a [decorator](../doc/Decorators.md)*
 
 - During deployment, [follow the instruction](http://flask.pocoo.org/docs/1.0/deploying/#deployment) depending on your server.
 - During development, to start the server, you need to execute the instructions below:

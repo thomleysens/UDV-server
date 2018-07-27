@@ -21,7 +21,7 @@ We tried to make a résumé of what we use from **SQLAlchemy**, however a lot of
 
 In the following we create three classes : `ExtendedDocument`, `Metadata` and `ExtendedDocGuidedTour`.
 
-![](https://raw.githubusercontent.com/wiki/MEPP-team/UDV-server/ORM_Example.png)
+![](../doc/ORM_Example.png)
 
 First of all we define the class `ExtendedDocument`. 
 This class has an associated table in the DB called `extended_document`. 

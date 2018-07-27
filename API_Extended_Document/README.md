@@ -18,13 +18,13 @@ and the [need 25](https://github.com/MEPP-team/RICT/blob/87610d01d87f5c6dfc2873c
 we have also the possibility to attach an **ExtendedDocument** to one or several **Guided Tours**.
 
 You can find below the the class diagram of an Extended Document as used within the API Extended Document (AED) application: 
-![](https://raw.githubusercontent.com/wiki/MEPP-team/UDV-server/DocumentWithTourClassDiagram.png)
+![](doc/DocumentWithTourClassDiagram.png)
 
 In addition, you can find the database diagram, used in relation with the class diagram:  
-![](https://raw.githubusercontent.com/wiki/MEPP-team/UDV-server/ExtendedDocumentDatabaseDiagram.png)
-*Note: This diagram was automaticaaly create using [DataGrip](https://www.jetbrains.com/datagrip/) developed by JetBrains.*
+![](doc/ExtendedDocumentDatabaseDiagram.png)
+*Note: This diagram was automatically create using [DataGrip](https://www.jetbrains.com/datagrip/) developed by JetBrains.*
 
-The sources of the API Extended Document application can be found on the [UDV sever git repository](https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document)
+The sources of the API Extended Document application can be found on the [UDV sever git repository](.)
 
 ## MVC Architecture
 The AED application uses an [Model View Controller (MVC)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) architecture that is described in this chapter.

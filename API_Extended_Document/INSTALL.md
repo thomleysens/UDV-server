@@ -64,8 +64,8 @@ You need to create a postgres database for instance on linux with
 It is a software like [PhpMyAdmin](https://www.phpmyadmin.net/) but for PostgreSQL database.
 By default, it is installed with PostgreSQL: `Program Files (x86)\PostgreSQL\X.X\pgAdminX\bin\pgAdminX.exe`*
 
-Then modify the [**config.yml**](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/util/config.yml) 
-file located in the [`util/`](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/util) sub-directory to reflect your onfiguration. 
+Then modify the [**config.yml**](util/config.yml) 
+file located in the [`util/`](util) sub-directory to reflect your onfiguration. 
 If you have created a new database as below, no change is needed but verify anyway everything are correct
 
 ```
@@ -86,7 +86,7 @@ and in `Program Files (x86)\PostgreSQL\X.X\data\postgresql.conf` on Windows
 ## Tests
 
 To verify everything works find, you can execute the tests files, located in the folder 
-[**test**](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/test)
+[**test**](test)
 
 By default, python will not find the local packages (such as **test** or **api**), 
 you need to add the location of **API_Extended_Document** to the environment variable **PYTHONPATH** .

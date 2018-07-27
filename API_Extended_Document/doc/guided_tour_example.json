@@ -1,0 +1,73 @@
+{
+  "id": 1,
+  "name": "Name of the guided tour",
+  "description": "Description of the guided tour",
+  "extendedDocs": [
+    {
+      "id": 1,
+      "doc_id": 40,
+      "tour_id": 1,
+      "text1": "text 1",
+      "text2": "text 2",
+      "title": null,
+      "doc_position": 1,
+      "document": {
+        "idDocument": 40,
+        "metadata": {
+          "id": 40,
+          "title": "Titre du document",
+          "subject": "Sujet du document",
+          "description": "Description du document",
+          "refDate": "2018-05-18",
+          "publicationDate": "2018-05-5",
+          "type": "pdf",
+          "link": "1.pdf",
+          "originalName": "fichier.pdf"
+        },
+        "visualization": {
+          "id": 40,
+          "quaternionX": 1.2,
+          "quaternionY": null,
+          "quaternionZ": null,
+          "quaternionW": null,
+          "positionX": 2.5,
+          "positionY": 2.3,
+          "positionZ": null
+        }
+      }
+    },
+    {
+      "id": 1,
+      "doc_id": 36,
+      "tour_id": 1,
+      "text1": "text 1",
+      "text2": "text 2",
+      "title": "Title of the document",
+      "doc_position": 1,
+      "document": {
+        "idDocument": 36,
+        "metadata": {
+          "id": 36,
+          "title": "Titre du document",
+          "subject": "Sujet du document",
+          "description": "Description du document",
+          "refDate": "2018-05-18",
+          "publicationDate": "2018-05-5",
+          "type": "pdf",
+          "link": "1.pdf",
+          "originalName": "fichier.pdf"
+        },
+        "visualization": {
+          "id": 36,
+          "quaternionX": 1.2,
+          "quaternionY": null,
+          "quaternionZ": null,
+          "quaternionW": null,
+          "positionX": 2.5,
+          "positionY": 2.3,
+          "positionZ": null
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "idDocument": 47,
+    "metadata": {
+      "id": 47,
+      "title": "Document 1",
+      "subject": "",
+      "description": "",
+      "refDate": "2018-05-18",
+      "publicationDate": "2018-05-5",
+      "type": "pdf",
+      "link": "6f629ec80da1b0077b134626c8a9c415.pdf",
+      "originalName": "document1.pdf"
+    },
+    "visualization": {
+      "id": 43,
+      "quaternionX": 1.2,
+      "quaternionY": null,
+      "quaternionZ": null,
+      "quaternionW": null,
+      "positionX": null,
+      "positionY": 2.3,
+      "positionZ": null
+    }
+  },
+  {
+    "idDocument": 48,
+    "metadata": {
+      "id": 48,
+      "title": "Document 2",
+      "subject": "",
+      "description": "",
+      "refDate": "2018-05-18",
+      "publicationDate": "2018-05-5",
+      "type": "pdf",
+      "link": "7aea2b98f628c72f50661d672b05b987.pdf",
+      "originalName": "document2.pdf"
+    },
+    "visualization": {
+      "id": 44,
+      "quaternionX": 1.2,
+      "quaternionY": null,
+      "quaternionZ": null,
+      "quaternionW": null,
+      "positionX": null,
+      "positionY": 2.3,
+      "positionZ": null
+    }
+  }
+]
