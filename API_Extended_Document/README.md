@@ -67,8 +67,8 @@ We tried to make a [résumé](https://github.com/MEPP-team/UDV-server/blob/maste
 ### Flask
 
 [flask](http://flask.pocoo.org/docs/1.0/) is a micro web framework developped in python. This framework allows us to interpret HTTP request (mainly GET and POST methods) and send appropriate response to the client.
-Some complementary information are available in 
-[api folder](https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document/api)
+Some complementary information (concerning the Flask part of the ADE application) is available in 
+the [api folder](api/README.md).
 Moreover, you can find a tutorial [here](http://flask.pocoo.org/docs/1.0/quickstart/#a-minimal-application).
 
 ## Other directories
