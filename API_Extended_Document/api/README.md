@@ -42,8 +42,7 @@ if __name__ == '__main__':
         ```
 
 ### Variables
-
-You can specify variable name in the url by following the format *<var-type:var-name>*
+Flask allows to specify a variable name in the url by following the format *<var-type:var-name>*
 
 ```python
 @app.route('/deleteDocument/<int:doc_id>')
