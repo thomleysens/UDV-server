@@ -18,10 +18,10 @@ and the [need 25](https://github.com/MEPP-team/RICT/blob/87610d01d87f5c6dfc2873c
 we have also the possibility to attach an **ExtendedDocument** to one or several **Guided Tours**.
 
 You can find below the the class diagram of an Extended Document as used within the API Extended Document (AED) application: 
-![](doc/DocumentWithTourClassDiagram.png)
+![](doc/GuidedTour_ClassDiagram.png)
 
 In addition, you can find the database diagram, used in relation with the class diagram:  
-![](doc/ExtendedDocumentDatabaseDiagram.png)
+![](doc/Document_DatabaseDiagram.png)
 *Note: This diagram was automatically create using [DataGrip](https://www.jetbrains.com/datagrip/) developed by JetBrains.*
 
 The sources of the API Extended Document application can be found on the [UDV sever git repository](.)
