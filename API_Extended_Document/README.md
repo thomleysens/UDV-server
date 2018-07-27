@@ -59,7 +59,7 @@ Such a feature can reduce the complexity of the code since it offers to increase
 Although the implementation is not required to write sql requests, it still needs to indicate the relationship between the DB and the object directly in their python code.
 For that we use the [sqlalchemy library](htps://www.sqlalchemy.org) that in turn uses the [psycorpg2](http://initd.org/psycopg/docs/) (as an adapter/connector) to communicate with the PostgreSQL DataBase.
 
-We tried to make a [résumé](https://github.com/MEPP-team/UDV-server/blob/master/API_Extended_Document/entities/README.md) of what we use from SQLAlchemy, however a lot of things are not broached and can be found 
+We tried to make a [résumé](entities/README.md) of what we use from SQLAlchemy, however a lot of things are not broached and can be found 
 [here](http://docs.sqlalchemy.org/en/latest/orm/tutorial.html).
 
 ## Web Application
