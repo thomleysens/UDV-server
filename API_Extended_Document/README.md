@@ -107,18 +107,14 @@ Configures the application by using the *config.yml* file.
 
 # Other documentations
 
-## How to use the API
-
+- **How to use the API**
 You can find [here](API-Documentation.md) the documentation of the API which describes mainly the routes to commuicate with the server.
 
-## Installation
-
+- **Installation**
 To install the application both on UNIX and Windows, go to this [file](INSTALL.md).
 
-## Decorator
-
+- **Decorator**
 We use several times decortors in the application, in order to simplify the code and make it more readable. However it is not a very obvious thing to understand, that is why we made a [tutorial](doc/Decorators.md) to understand what it is and how we use them.
 
-## Diagram
-
+- **Diagram**
 The diagram were mostly made with [Visual Paradigm](https://visual-paradigm.com/), for further information on how you can modify them, go [there](doc/Class-diagrams.md).
