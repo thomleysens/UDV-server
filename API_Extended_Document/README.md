@@ -108,7 +108,7 @@ Configures the application by using the *config.yml* file.
 # Other documentations
 
 - **How to use the API**
-You can find [here](API-Documentation.md) the documentation of the API which describes mainly the routes to commuicate with the server.
+You can find [here](doc/API-Documentation.md) the documentation of the API which describes mainly the routes to commuicate with the server.
 
 - **Installation**
 To install the application both on UNIX and Windows, go to this [file](INSTALL.md).
