@@ -10,7 +10,7 @@ Persistance of objects (documents) to the DataBase is obtained through the usage
 In order to wrap the (CRUD) service within an HTTP protocol (to deal with the requests and send responses to the client), AED uses the [flask library](http://flask.pocoo.org/docs/1.0/).
 
 
-**ExtendedDocument** is an object, that correspond to a document associated with some metadata and other visualization data.
+**ExtendedDocument** is an object, that correspond to a (raw) document (e.g. a picture, a map, a graphic) associated with some metadata and other visualization data.
 It is in the heart of the application, we can create, read, update and delete them.
 On top of that, in order to respond to the 
 [need 07](https://github.com/MEPP-team/RICT/blob/87610d01d87f5c6dfc2873c28de59b06b33aa31f/Doc/Devel/Needs/Need007.md)
