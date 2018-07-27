@@ -55,14 +55,15 @@ def delete_document(doc_id):
 
 You can specify which method is expected when accessing to a specific route
 ```python
-@app.route('/getDocument/<int:doc_id>', methods=['GET', 'POST'])
+@app.route('/getDocument/<int:doc_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 ```
 
 To access data sent with these methods, use for
 - **GET**: `request.args`
 - **POST**: `request.form`
+- **DELETE**: `request.form`
 
-Data send with GET and POST methods are stored in a MultiDict: 
+Data send with GET, POST and PUT methods are stored in a MultiDict: 
 this a set of keys and values and it can exist several times the same key. Its structure is as follow:
 ```python
 {"key1": "value1", "key2": "value2", "key1": "value3"}

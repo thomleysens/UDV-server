@@ -1,7 +1,7 @@
 # Preamble
 
 This document presents all the functionalities provided by the API Extended Document.
-This API is available on this [[server|http://rict.liris.cnrs.fr:9095/]].
+This API is available on this [server](http://rict.liris.cnrs.fr:9095/).
 
 ***Note***: 
 In the following, we consider that the default route is `http://rict.liris.cnrs.fr:9095`.
@@ -43,7 +43,7 @@ The routes presented in the following will remain valid.
 | **200** | Everything is fine                   |
 | **204** | No result were found                 |
 | **400** | At least one parameter is missing    |
-| **404** | The resource does not exist         |
+| **404** | The resource does not exist          |
 | **405** | Method not allowed                   |
 | **422** | SQL integrity error (not null, etc.) |
 | **500** | An internal error happen             |
@@ -275,10 +275,10 @@ GET
 
 ### Parameters
 
-| Needed | Parameter       | Type   | Description                    |
-| ------ | --------------- | ------ | ------------------------------ |
-| ✔️     | **tour_id**      | string | ID of the guided tour        |
-| ✔️     | **doc_id** | string | ID of the document  |
+| Needed | Parameter   | Type   | Description           |
+| ------ | ----------- | ------ | --------------------- |
+| ✔️     | **tour_id** | string | ID of the guided tour |
+| ✔️     | **doc_id**  | string | ID of the document    |
 
 *Go back to the [list](#guided-tour-functionalities)*
 
@@ -339,8 +339,8 @@ GET
 
 ### Variable
 
-| Name       | Type     | Description          |
-| ---------- | -------- | -------------------- |
+| Name        | Type     | Description          |
+| ----------- | -------- | -------------------- |
 | **tour_id** | Integer | Id of the guided tour|
 
 *Go back to the [list](#guided-tour-functionalities)*
@@ -350,11 +350,9 @@ GET
 
 ## Route names
 
-The names of the routes are not relevant and do not respect the 
+The names of the routes are not relevant and do not respect totally the 
 [REST specifications](https://msdn.microsoft.com/en-us/library/dd203052.aspx). 
-They should have been like this:
-
-### Extended Document
+You can find a tutorial about [Flask and REST](https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask) to get more information on how we can be modify the API.
 
 | Method   | Route                                       | Description                                    |
 | -------- | ------------------------------------------- | ---------------------------------------------- |
@@ -375,3 +373,5 @@ They should have been like this:
 | `PUT`    | [/guidedtour/`tour_id`](#editguidedtour)                  | Edit the guided tour with the id `tour_id`  |                                
 | `PUT`    | [/guidedtour/`tour_id`/document](#editguidedtourdocument) | Edit a document associated with `tour_id`   |                                
 | `DELETE` | [/guidedtour/`tour_id`](#deleteguidedtour)                | Delete the tour with the id `tour_id`       |
+
+***Note***: You can use the **PUT** method in the same way than a **POST** method (parameters are stored in `request.form` dictionary).
