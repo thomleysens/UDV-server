@@ -11,7 +11,7 @@ In order to wrap the (CRUD) service within an HTTP protocol (to deal with the re
 
 
 **ExtendedDocument** is an object, that correspond to a (raw) document (e.g. a picture, a map, a graphic) associated with some metadata and other visualization data.
-It is in the heart of the application, we can create, read, update and delete them.
+The ability to attach Extended Documents (and more generally information) to city objects is a key feature of the UDV application, and we can thus create, read, update and delete Extended Documents.
 On top of that, in order to respond to the 
 [need 07](https://github.com/MEPP-team/RICT/blob/87610d01d87f5c6dfc2873c28de59b06b33aa31f/Doc/Devel/Needs/Need007.md)
 and the [need 25](https://github.com/MEPP-team/RICT/blob/87610d01d87f5c6dfc2873c28de59b06b33aa31f/Doc/Devel/Needs/Need025.md), 
