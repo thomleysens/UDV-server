@@ -11,13 +11,13 @@ In order to wrap the (CRUD) service within an HTTP protocol (to deal with the re
 
 
 **ExtendedDocument** is an object, that correspond to a (raw) document (e.g. a picture, a map, a graphic) associated with some metadata and other visualization data.
-The ability to attach Extended Documents (and more generally information) to city objects is a key feature of UDV. The API Extended Document application (acting on the backend side) thus offers to create, read, update and delete Extended Documents.
+The ability to attach Extended Documents (and more generally information) to city objects is a key feature of UDV. The API Extended Document (AED) application (acting on the backend side) thus offers to create, read, update and delete Extended Documents.
 On top of that, in order to respond to the 
 [need 07](https://github.com/MEPP-team/RICT/blob/87610d01d87f5c6dfc2873c28de59b06b33aa31f/Doc/Devel/Needs/Need007.md)
 and the [need 25](https://github.com/MEPP-team/RICT/blob/87610d01d87f5c6dfc2873c28de59b06b33aa31f/Doc/Devel/Needs/Need025.md), 
 we have also the possibility to attach an **ExtendedDocument** to one or several **Guided Tours**.
 
-You can find below the the class diagram of the application: 
+You can find below the the class diagram of an Extended Document as used within the API Extended Document (AED) application: 
 ![](https://raw.githubusercontent.com/wiki/MEPP-team/UDV-server/DocumentWithTourClassDiagram.png)
 
 In addition, you can find the database diagram, used in relation with the class diagram:  
