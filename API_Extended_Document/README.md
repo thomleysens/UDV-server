@@ -1,4 +1,4 @@
-# Description of the application
+# Description of the API Extended Document application
 
 # Introduction
 
@@ -24,7 +24,7 @@ In addition, you can find the database diagram, used in relation with the class 
 ![](https://raw.githubusercontent.com/wiki/MEPP-team/UDV-server/ExtendedDocumentDatabaseDiagram.png)
 *Note: This diagram was automaticaaly create using [DataGrip](https://www.jetbrains.com/datagrip/) developed by JetBrains.*
 
-The sources can be find on the [wiki](https://github.com/MEPP-team/UDV-server/wiki)
+The sources of the API Extended Document application can be found on the [UDV sever git repository](https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document)
 
 ## MVC Architecture
 
