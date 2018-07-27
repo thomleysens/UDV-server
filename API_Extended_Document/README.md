@@ -27,15 +27,16 @@ In addition, you can find the database diagram, used in relation with the class 
 The sources of the API Extended Document application can be found on the [UDV sever git repository](https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document)
 
 ## MVC Architecture
+The AED application uses an [Model View Controller (MVC)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) architecture that is described in this chapter.
 
 ### Model (entity)
 A (UDV oriented) document is composed of two main parts :
 - the **MetaData** of the document such as having a title, a description, etc.
 - the **Visualisation** data that can allow e.g. to display the document   at a specified spatial position when realising a rendering of a City.
 
-Furthermore, we have a Many to Many relationship between **ExtendedDocument** and **GuidedTour**, that is why we have created the class **ExtendeDocGuideTour**. It can link a document to a guided tour. A document can be associated several times to the same guided tour. A guided tour has a beginning and an end, so the notion or order is very important, hence we have the attribute **doc_position**, that defines the order of each document in the guided tour.
+In order to relate (link) those two parts, the MetaData and the Visualisation classes, AED uses a third entity called **ExtendedDocument**.
 
-Additionally, in order to relate (link) those two parts AED uses another entity called **ExtendedDocument**.
+On top of ExtendedDocument, AED implements the notion of **GuidedTour**. Because the relationship between **ExtendedDocument** and **GuidedTour** is a Many to Many type, AED defines the **ExtendeDocGuideTour** class. **ExtendeDocGuideTour** can link a document to a GuidedTour. Note that an ExtendedDocument can be associated several times to the same guided tour. Since a Guided Tour has a beginning and an end, the notion or order is thus important, and we hence have the attribute **doc_position**, that defines the order of each document in the guided tour.
 
 
 ### Controller
