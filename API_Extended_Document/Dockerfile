@@ -3,8 +3,8 @@ FROM python:3.6
 RUN mkdir -p api
 WORKDIR api
 
-COPY Deployment/requirements.txt .
-RUN pip install -r ./Deployment/requirements.txt
+COPY requirements.txt .
+RUN pip install -r ./requirements.txt
 
 COPY . ./
 ENV PYTHONPATH /api
