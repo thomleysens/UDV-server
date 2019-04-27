@@ -4,7 +4,7 @@ RUN mkdir -p api
 WORKDIR api
 
 COPY requirements.txt .
-RUN pip install -r ./Deployment/requirements.txt
+RUN pip install -r ./requirements.txt
 
 COPY . ./
 ENV PYTHONPATH /api
