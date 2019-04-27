@@ -3,7 +3,7 @@ FROM python:3.6
 RUN mkdir -p api
 WORKDIR api
 
-COPY requirements.txt .
+COPY Deployment/requirements.txt .
 RUN pip install -r ./Deployment/requirements.txt
 
 COPY . ./
