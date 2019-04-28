@@ -8,8 +8,8 @@ from flask import Flask, send_from_directory, request, safe_join
 from flask.json import jsonify
 from flask_cors import CORS
 
+from controller.Controller import Controller
 from controller.TourController import TourController
-from util.log import *
 from util.upload import *
 from controller.DocController import DocController
 
@@ -175,4 +175,5 @@ def get_uploaded_file(filename):
 
 
 if __name__ == '__main__':
+    Controller.create_tables()
     app.run(debug=True, host='0.0.0.0')

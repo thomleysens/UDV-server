@@ -4,9 +4,9 @@
 from sqlalchemy import Column, Integer
 from sqlalchemy.orm import relationship
 
-from util.db_config import Base
 from entities.MetaData import MetaData
 from entities.Visualisation import Visualisation
+from util.db_config import Base
 from util.serialize import serialize
 
 

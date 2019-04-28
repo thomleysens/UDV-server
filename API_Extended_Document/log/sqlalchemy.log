@@ -1,0 +1,41 @@
+[INFO] 2019-04-28 15:35:39,143 : select version()
+[INFO] 2019-04-28 15:35:39,143 : {}
+[INFO] 2019-04-28 15:35:39,144 : select current_schema()
+[INFO] 2019-04-28 15:35:39,145 : {}
+[INFO] 2019-04-28 15:35:39,145 : SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
+[INFO] 2019-04-28 15:35:39,146 : {}
+[INFO] 2019-04-28 15:35:39,146 : SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
+[INFO] 2019-04-28 15:35:39,146 : {}
+[INFO] 2019-04-28 15:35:39,147 : show standard_conforming_strings
+[INFO] 2019-04-28 15:35:39,147 : {}
+[INFO] 2019-04-28 15:35:39,176 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-04-28 15:35:39,176 : {'name': 'guided_tour'}
+[INFO] 2019-04-28 15:35:39,178 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-04-28 15:35:39,178 : {'name': 'metadata'}
+[INFO] 2019-04-28 15:35:39,179 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-04-28 15:35:39,179 : {'name': 'visualisation'}
+[INFO] 2019-04-28 15:35:39,180 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-04-28 15:35:39,180 : {'name': 'extended_document'}
+[INFO] 2019-04-28 15:35:39,181 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-04-28 15:35:39,181 : {'name': 'extended_doc_guided_tour'}
+[INFO] 2019-04-28 15:36:02,118 : BEGIN (implicit)
+[INFO] 2019-04-28 15:36:02,119 : SELECT extended_document.id AS extended_document_id 
+FROM extended_document JOIN metadata ON extended_document.id = metadata.id
+[INFO] 2019-04-28 15:36:02,119 : {}
+[INFO] 2019-04-28 15:36:02,131 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+FROM metadata 
+WHERE metadata.id = %(param_1)s
+[INFO] 2019-04-28 15:36:02,132 : {'param_1': 1}
+[INFO] 2019-04-28 15:36:02,136 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+FROM visualisation 
+WHERE visualisation.id = %(param_1)s
+[INFO] 2019-04-28 15:36:02,137 : {'param_1': 1}
+[INFO] 2019-04-28 15:36:02,140 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+FROM metadata 
+WHERE metadata.id = %(param_1)s
+[INFO] 2019-04-28 15:36:02,140 : {'param_1': 2}
+[INFO] 2019-04-28 15:36:02,141 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+FROM visualisation 
+WHERE visualisation.id = %(param_1)s
+[INFO] 2019-04-28 15:36:02,142 : {'param_1': 2}
+[INFO] 2019-04-28 15:36:02,142 : ROLLBACK
