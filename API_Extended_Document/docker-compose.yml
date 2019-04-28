@@ -3,7 +3,7 @@ services:
   postgres:
     restart: always
     image: postgres:10
-    container_name: yearbook_db
+    container_name: extended_doc_db
     environment:
       - POSTGRES_USER=${user}
       - POSTGRES_PASSWORD=${password}
@@ -13,7 +13,7 @@ services:
     ports:
       - 5432:5432
   app:
-    container_name: yearbook_api
+    container_name: extended_doc_api
     build: .
     ports:
       - 5000:5000
