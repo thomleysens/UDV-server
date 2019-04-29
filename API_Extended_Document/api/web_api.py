@@ -10,8 +10,10 @@ from flask_cors import CORS
 
 from controller.Controller import Controller
 from controller.TourController import TourController
-from util.upload import *
+from controller.UserController import UserController
 from controller.DocController import DocController
+from util.upload import *
+from util.encryption import *
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -36,20 +38,20 @@ def send_response(old_function):
 
 @app.route('/')
 def index():
-    return ''' 
-    <!doctype html>  
-    <html>  
-      <body>          
-        <h1 style="text-align:center">  
-          Welcome on API-ExtendedDocument 
-        </h1>  
-        <div style="text-align:center">  
-          <p> This application was developed by MEPP team </p>  
-          <a href="https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document"   
-             style="text-align:center"> Find us on Github! </a>  
-        </div>  
-      </body>  
-    </html>  
+    return '''
+    <!doctype html>
+    <html>
+      <body>
+        <h1 style="text-align:center">
+          Welcome on API-ExtendedDocument
+        </h1>
+        <div style="text-align:center">
+          <p> This application was developed by MEPP team </p>
+          <a href="https://github.com/MEPP-team/UDV-server/tree/master/API_Extended_Document"
+             style="text-align:center"> Find us on Github! </a>
+        </div>
+      </body>
+    </html>
     '''
 
 
@@ -79,11 +81,27 @@ def create_guided_tour():
     return send_response(
         lambda: TourController.create_tour(name, description))()
 
+@app.route('/addUser', methods=['POST'])
+def create_user():
+    #TODO : Add some verifications
+    print('argument  ',{key: request.form.get(key) for key in request.form.keys()})
+    return send_response(
+        lambda: UserController.create_user({key: request.form.get(key) for key in request.form.keys()}))()
+
+@app.route('/login', methods=['POST'])
+def login():
+    return send_response(
+        lambda: UserController.login({key: request.form.get(key) for key in request.form.keys()}))()
 
 @app.route('/getDocument/<int:doc_id>', methods=['GET', 'POST'])
 def get_document(doc_id):
     return send_response(
         lambda: DocController.get_document_by_id(doc_id))()
+
+@app.route('/getUser/<int:user_id>', methods=['GET', 'POST'])
+def get_user(user_id):
+    return send_response(
+        lambda: UserController.get_user_by_id(user_id))()
 
 
 @app.route('/getGuidedTour/<int:tour_id>')

@@ -7,6 +7,7 @@ from util.db_config import *
 from entities.GuidedTour import GuidedTour
 from entities.ExtendedDocument import ExtendedDocument
 from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
+from entities.User import User
 
 
 class Controller:
