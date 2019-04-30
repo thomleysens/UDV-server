@@ -3,6 +3,7 @@
 
 import sqlalchemy.exc
 import sqlalchemy.orm
+import jwt
 
 from flask import Flask, send_from_directory, request, safe_join
 from flask.json import jsonify
@@ -26,6 +27,8 @@ def send_response(old_function):
             return 'integrity error', 422
         except sqlalchemy.orm.exc.NoResultFound:
             return 'no result found', 204
+        except jwt.exceptions.InvalidSignatureError:
+            return 'Authentification failed', 403
         except Exception as e:
             print(e)
             info_logger.error(e)
