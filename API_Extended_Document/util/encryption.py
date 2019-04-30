@@ -7,6 +7,7 @@ import base64
 import hashlib
 import random
 import string
+import jwt
 
 from passlib.hash import pbkdf2_sha256
 
@@ -77,7 +78,11 @@ def decode_base64(string):
 
 
 if __name__ == '__main__':
-    print(jwt_decode(jwt_encode({
+    encoded_JWT = jwt.encode({
         'id': 1,
         'username': 'cool'
-    })))
+    }, VarConfig.get()['password'], algorithm='HS256')
+    decoded_JWT = jwt.decode(encoded_JWT,VarConfig.get()['password'], algorithms=['HS256'])
+    print(encoded_JWT)
+    print(decoded_JWT)
+
