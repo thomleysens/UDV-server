@@ -11,10 +11,11 @@ class JwtTest:
 
     def encodeDocument():
         print('\033[01m## Creation ##\033[0m')
-        #
-        make_test(lambda: jwt.encode({
+        messageEncoded = jwt.encode({
         'id': 1,
-        'username': 'cool'}, 'password', algorithm='HS256'))(JwtTest, 'Encode message', False)
+        'username': 'cool'}, 'password', algorithm='HS256')
+        make_test(lambda: messageEncoded == 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJjb29sIn0.NDGSRaFbrGwQNQ4Us9aZLmrwp8rzWEuN2iIb70XEs5E')\
+            (JwtTest, 'Encode message', False)
 
     def decodeDocument():
         print('\033[01m## Creation ##\033[0m')
