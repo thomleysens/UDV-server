@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String
 
 from util.db_config import Base

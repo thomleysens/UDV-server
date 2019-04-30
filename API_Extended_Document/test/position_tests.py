@@ -11,8 +11,6 @@ class PositionTest:
     nb_tests = 0
     nb_tests_succeed = 0
 
-    # @TODO: create a method to check the success of uploading a file
-
     @staticmethod
     def read_positions():
         print('\n\033[01m## Reading ##\033[0m')
