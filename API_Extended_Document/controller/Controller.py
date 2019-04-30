@@ -2,13 +2,12 @@
 # coding: utf8
 
 import persistence_unit.PersistenceUnit as pUnit
-from entities.Position import Position
 from util.db_config import *
-
 from entities.GuidedTour import GuidedTour
 from entities.Position import Position
 from entities.ExtendedDocument import ExtendedDocument
 from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
+
 
 class Controller:
     """
