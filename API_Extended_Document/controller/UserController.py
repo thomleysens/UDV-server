@@ -3,9 +3,9 @@
 
 import sqlalchemy.orm
 from time import time
+import jwt
 
 from util.Exception import LoginError
-from util.encryption import jwt_encode
 from util.encryption import is_password_valid
 
 from controller.Controller import Controller
@@ -57,9 +57,10 @@ class UserController:
                     'exp': exp
                 }
                 return {
-                    "token": jwt_encode(payload)
+                    "token": jwt.encode(payload, password, algorithm='HS256')
                 }
         except sqlalchemy.orm.exc.NoResultFound:
             pass
 
             raise LoginError
+
