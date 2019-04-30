@@ -9,4 +9,4 @@ RUN pip install -r ./requirements.txt
 COPY . ./
 ENV PYTHONPATH /api
 
-CMD python api/web_api.py
+CMD python test/jwt_tests.py
