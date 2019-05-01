@@ -51,9 +51,13 @@ class UserController:
             if is_password_valid(user.password,password):
                 exp = time() + 24 * 3600
                 payload = {
-                    'id': user.id,
-                    'username': user.username,
-                    'exp': exp
+                    'id'       : user.id,
+                    'username' : user.username,
+                    'firstName': user.firstName,
+                    'lastName' : user.lastName,
+                    'email'    : user.email,
+                    'position' : str(user.position.serialize()),
+                    'exp'      : exp
                 }
                 return {
                     "token": jwt.encode(payload, password, algorithm='HS256').decode('utf-8')
