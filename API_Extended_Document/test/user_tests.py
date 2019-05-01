@@ -24,6 +24,14 @@ class UserTest:
             'email': 'John_Doe@mail.com'
         }))(UserTest, 'Normal Creation case', False)
 
+        make_test(lambda: UserController.create_user({
+            'username': '   ',
+            'password': 'pwd',
+            'firstName': 'John',
+            'lastName': 'Doe',
+            'email': 'John_Doe@mail.com'
+        }))(UserTest, 'Empty username', True)
+
 
         make_test(lambda: UserController.create_user({
             'username': 'John_Doe1',
@@ -125,6 +133,11 @@ class UserTest:
         }))(UserTest, 'Login with wrong username', True)
 
         make_test(lambda: UserController.login({
+            'username': 'Jane',
+            'password': 'pwd'
+        }))(UserTest, 'Login with inexisting username', True)
+
+        make_test(lambda: UserController.login({
             'username': '',
             'password': 'pwd'
         }))(UserTest, 'Login with empty username', True)
@@ -132,6 +145,9 @@ class UserTest:
         make_test(lambda: UserController.login({
             'password': 'pwd'
         }))(UserTest, 'Login with missing username', True)
+
+        make_test(lambda: UserController.login({
+        }))(UserTest, 'Login with all missing fields', True)
 
         make_test(lambda: UserController.login({
         }))(UserTest, 'Login with all missing fields', True)

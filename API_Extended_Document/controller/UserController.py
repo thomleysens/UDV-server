@@ -29,7 +29,7 @@ class UserController:
         user = User()
         user.set_position(session.query(Position).filter(Position.label == Position.getClearanceLevel(0)).one())
         user.update(args[0])
-        session.add(user) 
+        session.add(user)
         return user
 
     @staticmethod
@@ -56,7 +56,7 @@ class UserController:
                     'exp': exp
                 }
                 return {
-                    "token": jwt.encode(payload, password, algorithm='HS256')
+                    "token": jwt.encode(payload, password, algorithm='HS256').decode('utf-8')
                 }
         except sqlalchemy.orm.exc.NoResultFound:
             pass

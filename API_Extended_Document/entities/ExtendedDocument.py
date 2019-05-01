@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 from entities.MetaData import MetaData
@@ -14,6 +14,11 @@ class ExtendedDocument(Base):
     __tablename__ = "extended_document"
 
     id = Column(Integer, primary_key=True)
+
+    user_id = Column(Integer,
+                    ForeignKey("user.id"),
+                    nullable=False)
+
     metaData = relationship("MetaData",
                             uselist=False,
                             cascade="all, delete-orphan")
