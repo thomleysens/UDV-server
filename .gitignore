@@ -4,3 +4,7 @@ UDV_server.egg-info
 log/*
 API_Extended_Document/Dockerfile
 venv
+API_Extended_Document/**/__pycache__/*
+API_Extended_Document/log/*
+API_Extended_Document/Dockerfile
+API_Extended_Document/postgres-data/*
