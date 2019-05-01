@@ -9,6 +9,7 @@ from util.upload import UPLOAD_FOLDER
 from util.db_config import *
 from entities.MetaData import MetaData
 from entities.ExtendedDocument import ExtendedDocument
+from entities.ToValidateDoc import ToValidateDoc
 import persistence_unit.PersistenceUnit as pUnit
 
 
@@ -29,6 +30,20 @@ class DocController:
         attributes = args[0]
         document = ExtendedDocument(attributes)
         document.update(attributes)
+        session.add(document)
+        return document
+
+    @staticmethod
+    @pUnit.make_a_transaction
+    def validate_document(session, *args):
+        attributes = args[0]
+        id = attributes["id"]
+        document = session.query(ExtendedDocument).filter(
+            ExtendedDocument.id == id).one()
+        to_validate = session.query(ToValidateDoc).filter(
+            ToValidateDoc.id_to_validate == id).one()
+        document.validate(attributes)
+        session.delete(to_validate)
         session.add(document)
         return document
 

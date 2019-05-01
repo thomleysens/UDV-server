@@ -40,6 +40,10 @@ class ExtendedDocument(Base):
         else:
             self.to_validate_doc = ToValidateDoc()
 
+    def validate(self, attributes):
+            self.valid_doc = ValidDoc()
+            self.valid_doc.update(attributes)
+
     def get_all_attr(self):
         return {i for i in dir(self)
                 if not (i.startswith('_')

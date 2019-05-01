@@ -58,8 +58,24 @@ class DocumentTest:
 
         make_test(lambda: DocController.create_document({
             'title': 'another title',
+            'subject': 'Subject4',
+            'type': 'type',
+            'non_attr': 'non_value',
+            'refDate': '2018-12-02',
+            'description': 'an other description',
+            'link': '4.png',
+            'validation' : 0
+        }))(DocumentTest, 'needed + nonexistent attributes', False)
+
+        make_test(lambda: DocController.create_document({
+            'title': 'another title',
             'validation' : 0
         }))(DocumentTest, 'needed argument missing', True)
+
+        print('\033[01m## validation ##\033[0m')
+        make_test(lambda: DocController.validate_document({
+            'id': 5
+        }))(DocumentTest, 'document validation', False)
 
     @staticmethod
     def read_documents():
