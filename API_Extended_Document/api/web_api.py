@@ -30,7 +30,9 @@ def send_response(old_function):
             return 'integrity error', 422
         except sqlalchemy.orm.exc.NoResultFound:
             return 'no result found', 204
-        except jwt.exceptions.InvalidSignatureError:
+        except LoginError:
+            return 'unauthorized', 401
+        except (AuthError, jwt.exceptions.InvalidSignatureError):
             return 'Authentification failed', 403
         except Exception as e:
             print(e)
@@ -85,22 +87,32 @@ def create_guided_tour():
     return send_response(
         lambda: TourController.create_tour(name, description))()
 
+
 @app.route('/addUser', methods=['POST'])
 def create_user():
-    #TODO : Add some verifications
-    print('argument  ',{key: request.form.get(key) for key in request.form.keys()})
+    # TODO : Add some verifications
+    print('argument  ',
+          {key: request.form.get(key) for key in request.form.keys()})
     return send_response(
-        lambda: UserController.create_user({key: request.form.get(key) for key in request.form.keys()}))()
+        lambda: UserController.create_user(
+            {key: request.form.get(key) for key in
+             request.form.keys()}))()
+
 
 @app.route('/login', methods=['POST'])
 def login():
+    print('login')
     return send_response(
-        lambda: UserController.login({key: request.form.get(key) for key in request.form.keys()}))()
+        lambda: UserController.login(
+            {key: request.form.get(key) for key in
+             request.form.keys()}))()
+
 
 @app.route('/getDocument/<int:doc_id>', methods=['GET', 'POST'])
 def get_document(doc_id):
     return send_response(
         lambda: DocController.get_document_by_id(doc_id))()
+
 
 @app.route('/getUser/<int:user_id>', methods=['GET', 'POST'])
 def get_user(user_id):
