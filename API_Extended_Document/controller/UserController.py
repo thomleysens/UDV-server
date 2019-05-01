@@ -11,9 +11,7 @@ from util.encryption import is_password_valid
 from controller.Controller import Controller
 import persistence_unit.PersistenceUnit as pUnit
 from entities.User import User
-
-
-
+from entities.Position import Position
 
 class UserController:
     """
@@ -29,8 +27,9 @@ class UserController:
     @pUnit.make_a_transaction
     def create_user(session, *args):
         user = User()
+        user.set_position(session.query(Position).filter(Position.label == Position.getClearanceLevel(0)).one())
         user.update(args[0])
-        session.add(user)
+        session.add(user) 
         return user
 
     @staticmethod
@@ -63,4 +62,3 @@ class UserController:
             pass
 
             raise LoginError
-

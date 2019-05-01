@@ -41,6 +41,24 @@ class UserTest:
             'email': 'John_Doe@mail.com1'
         }))(UserTest, 'Missing Field', True)
 
+        make_test(lambda: UserController.create_user({
+            'username': 'John_Doe12',
+            'password': 'pwd',
+            'firstName': 'John',
+            'lastName':'Doe',
+            'email': 'John_Doe@mail.com12',
+            'fake:':'fake'
+        }))(UserTest, 'Add Erronate Ignored Field', False)
+
+        make_test(lambda: UserController.create_user({
+            'username': 'John_Doe123',
+            'password': 'pwd',
+            'firstName': 'John',
+            'lastName':'Doe',
+            'lastName':'Doe1',
+            'email': 'John_Doe@mail.com123',
+        }))(UserTest, 'Add Duplicate Param Takes the last one', False)
+
 
         make_test(lambda: UserController.create_user({
             'username': 'John_Doe',
@@ -75,6 +93,8 @@ class UserTest:
             'email': 'John_Doe1234@mail.com'
         }))(UserTest, 'Other normal case with unordered fields', False)
 
+    @staticmethod
+    def login():
         make_test(lambda: UserController.login({
             'username': 'John_Doe',
             'password': 'pwd'
@@ -119,6 +139,7 @@ class UserTest:
 if __name__ == '__main__':
     Controller.recreate_tables()
     UserTest.create_user()
+    UserTest.login()
     print('\n\n\033[04mSuccessTest\033[01m: ',
           UserTest.nb_tests_succeed, '/',
           UserTest.nb_tests, sep='')

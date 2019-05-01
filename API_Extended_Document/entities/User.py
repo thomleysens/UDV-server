@@ -6,6 +6,8 @@ import unicodedata
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
+from entities.Position import Position
+
 from util.db_config import Base
 from util.encryption import encrypt
 from util.encryption import *
@@ -21,6 +23,9 @@ class User(Base):
     lastName = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
 
+    position_id = Column(Integer, ForeignKey(Position.id))
+    position = relationship(Position,
+                            uselist=False)
 
     def update(self, new_values):
         for attKey, attVal in new_values.items():
@@ -32,6 +37,10 @@ class User(Base):
         if 'password' in new_values:
             self.password = encrypt(new_values['password'])
         return self
+
+    def set_position(self, position):
+        self.position = position
+        self.position_id = position.id
 
     @classmethod
     def get_attr(cls, attr_name):
