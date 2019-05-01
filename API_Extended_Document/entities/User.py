@@ -7,6 +7,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from entities.Position import Position
+from entities.ExtendedDocument import ExtendedDocument
 
 from util.db_config import Base
 from util.encryption import encrypt
@@ -27,6 +28,9 @@ class User(Base):
     position = relationship(Position,
                             uselist=False)
 
+    documents = relationship('ExtendedDocument',
+                             cascade="all, delete-orphan")
+
     def update(self, new_values):
         for attKey, attVal in new_values.items():
             if hasattr(self, attKey):
@@ -42,6 +46,12 @@ class User(Base):
         self.position = position
         self.position_id = position.id
 
+    def set_documents(self, documents):
+        if(not(documents and is_valid_instances(documents))):
+            return
+        else:
+            self.documents = documents.copy()
+
     @classmethod
     def get_attr(cls, attr_name):
         if hasattr(cls, attr_name):
@@ -53,6 +63,22 @@ class User(Base):
                 if not (i.startswith('_')
                         or callable(getattr(self, i))
                         or i == "metadata")}
+
+    def is_valid_instance(self,obj):
+        is_valid = True
+        for attr in self.get_all_attr():
+            if(not(attr in obj.keys() and position[str(attr)])):
+                is_valid = False
+                break
+        return is_valid
+
+    def is_valid_instances(self,objs):
+        is_valid = True
+        for obj in objs:
+            if(not(is_valid_instance(obj))):
+                is_valid = False
+                break
+        return is_valid
 
     def serialize(self):
         serialized_object = {}

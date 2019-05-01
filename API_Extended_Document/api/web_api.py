@@ -15,6 +15,7 @@ from controller.UserController import UserController
 from controller.DocController import DocController
 from util.upload import *
 from util.encryption import *
+from util.Exception import *
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
