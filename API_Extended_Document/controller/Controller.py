@@ -7,6 +7,7 @@ from entities.GuidedTour import GuidedTour
 from entities.Position import Position
 from entities.ExtendedDocument import ExtendedDocument
 from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
+from entities.User import User
 
 
 class Controller:
