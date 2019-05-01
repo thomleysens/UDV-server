@@ -27,7 +27,7 @@ class DocController:
     @pUnit.make_a_transaction
     def create_document(session, *args):
         attributes = args[0]
-        document = ExtendedDocument()
+        document = ExtendedDocument(attributes)
         document.update(attributes)
         session.add(document)
         return document

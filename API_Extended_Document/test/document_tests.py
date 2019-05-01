@@ -22,7 +22,8 @@ class DocumentTest:
             'subject': 'Subject1',
             'type': 'type',
             'description': 'a description',
-            'link': '1.gif'
+            'link': '1.gif',
+            'validation' : 0
         }))(DocumentTest, 'all needed attributes', False)
 
         make_test(lambda: DocController.create_document({
@@ -30,7 +31,8 @@ class DocumentTest:
             'subject': 'Subject1',
             'type': 'type',
             'description': 'a description',
-            'link': '1.gif'}))(
+            'link': '1.gif',
+            'validation' : 1}))(
             DocumentTest, 'all needed attributes', False)
 
         make_test(lambda: DocController.create_document({
@@ -39,7 +41,8 @@ class DocumentTest:
             'type': 'type',
             'description': 'a description',
             'link': '2.gif',
-            'refDate': '2019-02-05'
+            'refDate': '2019-02-05',
+            'validation' : 0
         }))(DocumentTest, 'all needed attributes', False)
 
         make_test(lambda: DocController.create_document({
@@ -49,11 +52,13 @@ class DocumentTest:
             'non_attr': 'non_value',
             'refDate': '2018-12-03',
             'description': 'an other description',
-            'link': '3.png'
+            'link': '3.png',
+            'validation' : 1
         }))(DocumentTest, 'needed + nonexistent attributes', False)
 
         make_test(lambda: DocController.create_document({
-            'title': 'another title'
+            'title': 'another title',
+            'validation' : 0
         }))(DocumentTest, 'needed argument missing', True)
 
     @staticmethod
@@ -79,17 +84,20 @@ class DocumentTest:
         print('\n\033[01m## Updating ##\033[0m')
         make_test(lambda: DocController.update_document(1, {
             'positionX': 12,
-            'description': 'description of a document'
+            'description': 'description of a document',
+            'validation' : 0
         }))(DocumentTest, 'existing document', False)
 
         make_test(lambda: DocController.update_document(1, {
             'positionX': 12,
-            'description': 'another description'
+            'description': 'another description',
+            'validation' : 0
         }))(DocumentTest, 'existing document', False)
 
         make_test(lambda: DocController.update_document(-1, {
             'positionX': 12,
-            'description': 'description of a document'
+            'description': 'description of a document',
+            'validation' : 0
         }))(DocumentTest, 'existing document', True)
 
     @staticmethod

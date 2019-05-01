@@ -1,0 +1,12 @@
+[ERROR] 2019-05-01 13:33:31,787 : (psycopg2.errors.NotNullViolation) null value in column "subject" violates not-null constraint
+DETAIL:  Failing row contains (5, another title, null, null, null, null, null, null, null).
+
+[SQL: INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)]
+[parameters: {'id': 5, 'title': 'another title', 'subject': None, 'description': None, 'refDate': None, 'publicationDate': None, 'type': None, 'link': None, 'originalName': None}]
+(Background on this error at: http://sqlalche.me/e/gkpj)
+[ERROR] 2019-05-01 13:33:31,848 : No row was found for one()
+[ERROR] 2019-05-01 13:33:31,894 : No row was found for one()
+[ERROR] 2019-05-01 13:33:31,938 : No row was found for one()
+[ERROR] 2019-05-01 13:33:31,941 : [Errno 2] No such file or directory: 'upload/1.gif'
+[ERROR] 2019-05-01 13:33:31,945 : [Errno 2] No such file or directory: 'upload/1.gif'
+[ERROR] 2019-05-01 13:33:32,003 : No row was found for one()
