@@ -105,6 +105,18 @@ class DocController:
         return query.all()
 
     @staticmethod
+    @pUnit.make_a_query
+    def get_documents_to_validate(session, *args):
+        """
+        This method si used to get documents to validate
+        """
+
+        query = session.query(ExtendedDocument).join(
+            ToValidateDoc)
+
+        return query.all()
+
+    @staticmethod
     @pUnit.make_a_transaction
     def update_document(session, *args):
         doc_id = args[0]

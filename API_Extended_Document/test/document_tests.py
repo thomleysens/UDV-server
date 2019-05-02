@@ -89,6 +89,9 @@ class DocumentTest:
             'refDateStart': '2018-12-03'
         }))(DocumentTest, 'specific documents', False)
 
+        make_test(lambda: DocController.get_documents_to_validate({
+        }))(DocumentTest, 'to validate documents', False)
+
         make_test(lambda: DocController.get_document_by_id(1))(
             DocumentTest, 'document with existing id', False)
 

@@ -1,86 +1,86 @@
-[INFO] 2019-05-01 16:08:19,236 : select version()
-[INFO] 2019-05-01 16:08:19,237 : {}
-[INFO] 2019-05-01 16:08:19,238 : select current_schema()
-[INFO] 2019-05-01 16:08:19,238 : {}
-[INFO] 2019-05-01 16:08:19,240 : SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
-[INFO] 2019-05-01 16:08:19,240 : {}
-[INFO] 2019-05-01 16:08:19,241 : SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
-[INFO] 2019-05-01 16:08:19,241 : {}
-[INFO] 2019-05-01 16:08:19,242 : show standard_conforming_strings
-[INFO] 2019-05-01 16:08:19,242 : {}
-[INFO] 2019-05-01 16:08:19,331 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,331 : {'name': 'guided_tour'}
-[INFO] 2019-05-01 16:08:19,333 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,333 : {'name': 'position'}
-[INFO] 2019-05-01 16:08:19,334 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,334 : {'name': 'metadata'}
-[INFO] 2019-05-01 16:08:19,335 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,336 : {'name': 'visualisation'}
-[INFO] 2019-05-01 16:08:19,337 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,337 : {'name': 'valid_doc'}
-[INFO] 2019-05-01 16:08:19,338 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,338 : {'name': 'to_validate_doc'}
-[INFO] 2019-05-01 16:08:19,339 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,339 : {'name': 'extended_document'}
-[INFO] 2019-05-01 16:08:19,340 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,340 : {'name': 'extended_doc_guided_tour'}
-[INFO] 2019-05-01 16:08:19,341 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,342 : {'name': 'user'}
-[INFO] 2019-05-01 16:08:19,343 : 
+[INFO] 2019-05-02 06:14:50,670 : select version()
+[INFO] 2019-05-02 06:14:50,670 : {}
+[INFO] 2019-05-02 06:14:50,672 : select current_schema()
+[INFO] 2019-05-02 06:14:50,672 : {}
+[INFO] 2019-05-02 06:14:50,674 : SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
+[INFO] 2019-05-02 06:14:50,674 : {}
+[INFO] 2019-05-02 06:14:50,675 : SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
+[INFO] 2019-05-02 06:14:50,675 : {}
+[INFO] 2019-05-02 06:14:50,675 : show standard_conforming_strings
+[INFO] 2019-05-02 06:14:50,675 : {}
+[INFO] 2019-05-02 06:14:50,764 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,764 : {'name': 'guided_tour'}
+[INFO] 2019-05-02 06:14:50,766 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,766 : {'name': 'position'}
+[INFO] 2019-05-02 06:14:50,767 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,768 : {'name': 'metadata'}
+[INFO] 2019-05-02 06:14:50,769 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,769 : {'name': 'visualisation'}
+[INFO] 2019-05-02 06:14:50,770 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,770 : {'name': 'valid_doc'}
+[INFO] 2019-05-02 06:14:50,771 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,771 : {'name': 'to_validate_doc'}
+[INFO] 2019-05-02 06:14:50,772 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,772 : {'name': 'extended_document'}
+[INFO] 2019-05-02 06:14:50,773 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,773 : {'name': 'extended_doc_guided_tour'}
+[INFO] 2019-05-02 06:14:50,774 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,774 : {'name': 'user'}
+[INFO] 2019-05-02 06:14:50,775 : 
 DROP TABLE extended_doc_guided_tour
-[INFO] 2019-05-01 16:08:19,343 : {}
-[INFO] 2019-05-01 16:08:19,345 : COMMIT
-[INFO] 2019-05-01 16:08:19,350 : 
+[INFO] 2019-05-02 06:14:50,775 : {}
+[INFO] 2019-05-02 06:14:50,778 : COMMIT
+[INFO] 2019-05-02 06:14:50,786 : 
 DROP TABLE to_validate_doc
-[INFO] 2019-05-01 16:08:19,350 : {}
-[INFO] 2019-05-01 16:08:19,351 : COMMIT
-[INFO] 2019-05-01 16:08:19,354 : 
+[INFO] 2019-05-02 06:14:50,786 : {}
+[INFO] 2019-05-02 06:14:50,787 : COMMIT
+[INFO] 2019-05-02 06:14:50,790 : 
 DROP TABLE valid_doc
-[INFO] 2019-05-01 16:08:19,354 : {}
-[INFO] 2019-05-01 16:08:19,355 : COMMIT
-[INFO] 2019-05-01 16:08:19,358 : 
+[INFO] 2019-05-02 06:14:50,790 : {}
+[INFO] 2019-05-02 06:14:50,791 : COMMIT
+[INFO] 2019-05-02 06:14:50,793 : 
 DROP TABLE visualisation
-[INFO] 2019-05-01 16:08:19,358 : {}
-[INFO] 2019-05-01 16:08:19,359 : COMMIT
-[INFO] 2019-05-01 16:08:19,362 : 
+[INFO] 2019-05-02 06:14:50,793 : {}
+[INFO] 2019-05-02 06:14:50,794 : COMMIT
+[INFO] 2019-05-02 06:14:50,797 : 
 DROP TABLE metadata
-[INFO] 2019-05-01 16:08:19,362 : {}
-[INFO] 2019-05-01 16:08:19,363 : COMMIT
-[INFO] 2019-05-01 16:08:19,366 : 
+[INFO] 2019-05-02 06:14:50,797 : {}
+[INFO] 2019-05-02 06:14:50,798 : COMMIT
+[INFO] 2019-05-02 06:14:50,801 : 
 DROP TABLE "user"
-[INFO] 2019-05-01 16:08:19,366 : {}
-[INFO] 2019-05-01 16:08:19,367 : COMMIT
-[INFO] 2019-05-01 16:08:19,370 : 
+[INFO] 2019-05-02 06:14:50,801 : {}
+[INFO] 2019-05-02 06:14:50,803 : COMMIT
+[INFO] 2019-05-02 06:14:50,805 : 
 DROP TABLE extended_document
-[INFO] 2019-05-01 16:08:19,371 : {}
-[INFO] 2019-05-01 16:08:19,372 : COMMIT
-[INFO] 2019-05-01 16:08:19,374 : 
+[INFO] 2019-05-02 06:14:50,806 : {}
+[INFO] 2019-05-02 06:14:50,807 : COMMIT
+[INFO] 2019-05-02 06:14:50,809 : 
 DROP TABLE position
-[INFO] 2019-05-01 16:08:19,374 : {}
-[INFO] 2019-05-01 16:08:19,376 : COMMIT
-[INFO] 2019-05-01 16:08:19,379 : 
+[INFO] 2019-05-02 06:14:50,809 : {}
+[INFO] 2019-05-02 06:14:50,810 : COMMIT
+[INFO] 2019-05-02 06:14:50,813 : 
 DROP TABLE guided_tour
-[INFO] 2019-05-01 16:08:19,379 : {}
-[INFO] 2019-05-01 16:08:19,380 : COMMIT
-[INFO] 2019-05-01 16:08:19,383 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,384 : {'name': 'guided_tour'}
-[INFO] 2019-05-01 16:08:19,385 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,385 : {'name': 'position'}
-[INFO] 2019-05-01 16:08:19,386 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,387 : {'name': 'metadata'}
-[INFO] 2019-05-01 16:08:19,388 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,388 : {'name': 'visualisation'}
-[INFO] 2019-05-01 16:08:19,389 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,389 : {'name': 'valid_doc'}
-[INFO] 2019-05-01 16:08:19,390 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,390 : {'name': 'to_validate_doc'}
-[INFO] 2019-05-01 16:08:19,391 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,391 : {'name': 'extended_document'}
-[INFO] 2019-05-01 16:08:19,392 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,392 : {'name': 'extended_doc_guided_tour'}
-[INFO] 2019-05-01 16:08:19,393 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
-[INFO] 2019-05-01 16:08:19,393 : {'name': 'user'}
-[INFO] 2019-05-01 16:08:19,395 : 
+[INFO] 2019-05-02 06:14:50,814 : {}
+[INFO] 2019-05-02 06:14:50,815 : COMMIT
+[INFO] 2019-05-02 06:14:50,818 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,818 : {'name': 'guided_tour'}
+[INFO] 2019-05-02 06:14:50,819 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,819 : {'name': 'position'}
+[INFO] 2019-05-02 06:14:50,820 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,820 : {'name': 'metadata'}
+[INFO] 2019-05-02 06:14:50,821 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,821 : {'name': 'visualisation'}
+[INFO] 2019-05-02 06:14:50,822 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,823 : {'name': 'valid_doc'}
+[INFO] 2019-05-02 06:14:50,823 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,824 : {'name': 'to_validate_doc'}
+[INFO] 2019-05-02 06:14:50,824 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,825 : {'name': 'extended_document'}
+[INFO] 2019-05-02 06:14:50,825 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,826 : {'name': 'extended_doc_guided_tour'}
+[INFO] 2019-05-02 06:14:50,827 : select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+[INFO] 2019-05-02 06:14:50,827 : {'name': 'user'}
+[INFO] 2019-05-02 06:14:50,829 : 
 CREATE TABLE guided_tour (
 	id SERIAL NOT NULL, 
 	name VARCHAR, 
@@ -89,9 +89,9 @@ CREATE TABLE guided_tour (
 )
 
 
-[INFO] 2019-05-01 16:08:19,395 : {}
-[INFO] 2019-05-01 16:08:19,426 : COMMIT
-[INFO] 2019-05-01 16:08:19,429 : 
+[INFO] 2019-05-02 06:14:50,829 : {}
+[INFO] 2019-05-02 06:14:50,856 : COMMIT
+[INFO] 2019-05-02 06:14:50,867 : 
 CREATE TABLE position (
 	id SERIAL NOT NULL, 
 	label VARCHAR, 
@@ -99,18 +99,18 @@ CREATE TABLE position (
 )
 
 
-[INFO] 2019-05-01 16:08:19,429 : {}
-[INFO] 2019-05-01 16:08:19,438 : COMMIT
-[INFO] 2019-05-01 16:08:19,441 : 
+[INFO] 2019-05-02 06:14:50,867 : {}
+[INFO] 2019-05-02 06:14:50,876 : COMMIT
+[INFO] 2019-05-02 06:14:50,879 : 
 CREATE TABLE extended_document (
 	id SERIAL NOT NULL, 
 	PRIMARY KEY (id)
 )
 
 
-[INFO] 2019-05-01 16:08:19,441 : {}
-[INFO] 2019-05-01 16:08:19,447 : COMMIT
-[INFO] 2019-05-01 16:08:19,450 : 
+[INFO] 2019-05-02 06:14:50,879 : {}
+[INFO] 2019-05-02 06:14:50,884 : COMMIT
+[INFO] 2019-05-02 06:14:50,887 : 
 CREATE TABLE "user" (
 	id SERIAL NOT NULL, 
 	username VARCHAR NOT NULL, 
@@ -124,9 +124,9 @@ CREATE TABLE "user" (
 )
 
 
-[INFO] 2019-05-01 16:08:19,451 : {}
-[INFO] 2019-05-01 16:08:19,469 : COMMIT
-[INFO] 2019-05-01 16:08:19,481 : 
+[INFO] 2019-05-02 06:14:50,888 : {}
+[INFO] 2019-05-02 06:14:50,904 : COMMIT
+[INFO] 2019-05-02 06:14:50,912 : 
 CREATE TABLE metadata (
 	id INTEGER NOT NULL, 
 	title VARCHAR NOT NULL, 
@@ -142,9 +142,9 @@ CREATE TABLE metadata (
 )
 
 
-[INFO] 2019-05-01 16:08:19,481 : {}
-[INFO] 2019-05-01 16:08:19,495 : COMMIT
-[INFO] 2019-05-01 16:08:19,499 : 
+[INFO] 2019-05-02 06:14:50,913 : {}
+[INFO] 2019-05-02 06:14:50,922 : COMMIT
+[INFO] 2019-05-02 06:14:50,926 : 
 CREATE TABLE visualisation (
 	id INTEGER NOT NULL, 
 	"quaternionX" FLOAT, 
@@ -159,9 +159,9 @@ CREATE TABLE visualisation (
 )
 
 
-[INFO] 2019-05-01 16:08:19,499 : {}
-[INFO] 2019-05-01 16:08:19,505 : COMMIT
-[INFO] 2019-05-01 16:08:19,508 : 
+[INFO] 2019-05-02 06:14:50,926 : {}
+[INFO] 2019-05-02 06:14:50,932 : COMMIT
+[INFO] 2019-05-02 06:14:50,935 : 
 CREATE TABLE valid_doc (
 	id_valid INTEGER NOT NULL, 
 	PRIMARY KEY (id_valid), 
@@ -169,9 +169,9 @@ CREATE TABLE valid_doc (
 )
 
 
-[INFO] 2019-05-01 16:08:19,508 : {}
-[INFO] 2019-05-01 16:08:19,514 : COMMIT
-[INFO] 2019-05-01 16:08:19,517 : 
+[INFO] 2019-05-02 06:14:50,935 : {}
+[INFO] 2019-05-02 06:14:50,941 : COMMIT
+[INFO] 2019-05-02 06:14:50,943 : 
 CREATE TABLE to_validate_doc (
 	id_to_validate INTEGER NOT NULL, 
 	PRIMARY KEY (id_to_validate), 
@@ -179,9 +179,9 @@ CREATE TABLE to_validate_doc (
 )
 
 
-[INFO] 2019-05-01 16:08:19,517 : {}
-[INFO] 2019-05-01 16:08:19,523 : COMMIT
-[INFO] 2019-05-01 16:08:19,527 : 
+[INFO] 2019-05-02 06:14:50,943 : {}
+[INFO] 2019-05-02 06:14:50,948 : COMMIT
+[INFO] 2019-05-02 06:14:50,951 : 
 CREATE TABLE extended_doc_guided_tour (
 	id SERIAL NOT NULL, 
 	tour_id INTEGER, 
@@ -196,812 +196,923 @@ CREATE TABLE extended_doc_guided_tour (
 )
 
 
-[INFO] 2019-05-01 16:08:19,527 : {}
-[INFO] 2019-05-01 16:08:19,541 : COMMIT
-[INFO] 2019-05-01 16:08:19,562 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,563 : SELECT position.id AS position_id, position.label AS position_label 
+[INFO] 2019-05-02 06:14:50,952 : {}
+[INFO] 2019-05-02 06:14:50,961 : COMMIT
+[INFO] 2019-05-02 06:14:50,981 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:50,982 : SELECT position.id AS position_id, position.label AS position_label 
 FROM position 
 WHERE position.label = %(label_1)s
-[INFO] 2019-05-01 16:08:19,563 : {'label_1': 'admin'}
-[INFO] 2019-05-01 16:08:19,566 : INSERT INTO position (label) VALUES (%(label)s) RETURNING position.id
-[INFO] 2019-05-01 16:08:19,566 : {'label': 'admin'}
-[INFO] 2019-05-01 16:08:19,567 : COMMIT
-[INFO] 2019-05-01 16:08:19,570 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,570 : SELECT position.id AS position_id, position.label AS position_label 
+[INFO] 2019-05-02 06:14:50,982 : {'label_1': 'admin'}
+[INFO] 2019-05-02 06:14:50,985 : INSERT INTO position (label) VALUES (%(label)s) RETURNING position.id
+[INFO] 2019-05-02 06:14:50,985 : {'label': 'admin'}
+[INFO] 2019-05-02 06:14:50,986 : COMMIT
+[INFO] 2019-05-02 06:14:50,989 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:50,989 : SELECT position.id AS position_id, position.label AS position_label 
 FROM position 
 WHERE position.label = %(label_1)s
-[INFO] 2019-05-01 16:08:19,571 : {'label_1': 'moderator'}
-[INFO] 2019-05-01 16:08:19,572 : INSERT INTO position (label) VALUES (%(label)s) RETURNING position.id
-[INFO] 2019-05-01 16:08:19,572 : {'label': 'moderator'}
-[INFO] 2019-05-01 16:08:19,572 : COMMIT
-[INFO] 2019-05-01 16:08:19,575 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,576 : SELECT position.id AS position_id, position.label AS position_label 
+[INFO] 2019-05-02 06:14:50,989 : {'label_1': 'moderator'}
+[INFO] 2019-05-02 06:14:50,991 : INSERT INTO position (label) VALUES (%(label)s) RETURNING position.id
+[INFO] 2019-05-02 06:14:50,991 : {'label': 'moderator'}
+[INFO] 2019-05-02 06:14:50,991 : COMMIT
+[INFO] 2019-05-02 06:14:50,994 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:50,995 : SELECT position.id AS position_id, position.label AS position_label 
 FROM position 
 WHERE position.label = %(label_1)s
-[INFO] 2019-05-01 16:08:19,576 : {'label_1': 'softModerator'}
-[INFO] 2019-05-01 16:08:19,577 : INSERT INTO position (label) VALUES (%(label)s) RETURNING position.id
-[INFO] 2019-05-01 16:08:19,577 : {'label': 'softModerator'}
-[INFO] 2019-05-01 16:08:19,578 : COMMIT
-[INFO] 2019-05-01 16:08:19,581 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,581 : SELECT position.id AS position_id, position.label AS position_label 
+[INFO] 2019-05-02 06:14:50,995 : {'label_1': 'softModerator'}
+[INFO] 2019-05-02 06:14:50,996 : INSERT INTO position (label) VALUES (%(label)s) RETURNING position.id
+[INFO] 2019-05-02 06:14:50,996 : {'label': 'softModerator'}
+[INFO] 2019-05-02 06:14:50,997 : COMMIT
+[INFO] 2019-05-02 06:14:50,999 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,000 : SELECT position.id AS position_id, position.label AS position_label 
 FROM position 
 WHERE position.label = %(label_1)s
-[INFO] 2019-05-01 16:08:19,581 : {'label_1': 'contributor'}
-[INFO] 2019-05-01 16:08:19,583 : INSERT INTO position (label) VALUES (%(label)s) RETURNING position.id
-[INFO] 2019-05-01 16:08:19,583 : {'label': 'contributor'}
-[INFO] 2019-05-01 16:08:19,584 : COMMIT
-[INFO] 2019-05-01 16:08:19,588 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,589 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
-[INFO] 2019-05-01 16:08:19,589 : {}
-[INFO] 2019-05-01 16:08:19,591 : INSERT INTO to_validate_doc (id_to_validate) VALUES (%(id_to_validate)s)
-[INFO] 2019-05-01 16:08:19,591 : {'id_to_validate': 1}
-[INFO] 2019-05-01 16:08:19,593 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
-[INFO] 2019-05-01 16:08:19,593 : {'id': 1, 'title': 'title', 'subject': 'Subject1', 'description': 'a description', 'refDate': None, 'publicationDate': None, 'type': 'type', 'link': '1.gif', 'originalName': None}
-[INFO] 2019-05-01 16:08:19,595 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
-[INFO] 2019-05-01 16:08:19,596 : {'id': 1, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
-[INFO] 2019-05-01 16:08:19,598 : COMMIT
-[INFO] 2019-05-01 16:08:19,601 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,602 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,000 : {'label_1': 'contributor'}
+[INFO] 2019-05-02 06:14:51,001 : INSERT INTO position (label) VALUES (%(label)s) RETURNING position.id
+[INFO] 2019-05-02 06:14:51,001 : {'label': 'contributor'}
+[INFO] 2019-05-02 06:14:51,002 : COMMIT
+[INFO] 2019-05-02 06:14:51,006 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,006 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
+[INFO] 2019-05-02 06:14:51,007 : {}
+[INFO] 2019-05-02 06:14:51,009 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
+[INFO] 2019-05-02 06:14:51,009 : {'id': 1, 'title': 'title', 'subject': 'Subject1', 'description': 'a description', 'refDate': None, 'publicationDate': None, 'type': 'type', 'link': '1.gif', 'originalName': None}
+[INFO] 2019-05-02 06:14:51,011 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
+[INFO] 2019-05-02 06:14:51,011 : {'id': 1, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
+[INFO] 2019-05-02 06:14:51,013 : INSERT INTO to_validate_doc (id_to_validate) VALUES (%(id_to_validate)s)
+[INFO] 2019-05-02 06:14:51,013 : {'id_to_validate': 1}
+[INFO] 2019-05-02 06:14:51,014 : COMMIT
+[INFO] 2019-05-02 06:14:51,017 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,018 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,602 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,605 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,018 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,021 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,605 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,607 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,021 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,023 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,608 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,610 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,023 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,024 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,610 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,613 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,025 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,028 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,613 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,614 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,616 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,616 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
-[INFO] 2019-05-01 16:08:19,617 : {}
-[INFO] 2019-05-01 16:08:19,618 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
-[INFO] 2019-05-01 16:08:19,618 : {'id': 2, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
-[INFO] 2019-05-01 16:08:19,619 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
-[INFO] 2019-05-01 16:08:19,619 : {'id': 2, 'title': 'title', 'subject': 'Subject1', 'description': 'a description', 'refDate': None, 'publicationDate': None, 'type': 'type', 'link': '1.gif', 'originalName': None}
-[INFO] 2019-05-01 16:08:19,620 : INSERT INTO valid_doc (id_valid) VALUES (%(id_valid)s)
-[INFO] 2019-05-01 16:08:19,620 : {'id_valid': 2}
-[INFO] 2019-05-01 16:08:19,621 : COMMIT
-[INFO] 2019-05-01 16:08:19,624 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,625 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,028 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,030 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,031 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,032 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
+[INFO] 2019-05-02 06:14:51,032 : {}
+[INFO] 2019-05-02 06:14:51,033 : INSERT INTO valid_doc (id_valid) VALUES (%(id_valid)s)
+[INFO] 2019-05-02 06:14:51,033 : {'id_valid': 2}
+[INFO] 2019-05-02 06:14:51,034 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
+[INFO] 2019-05-02 06:14:51,034 : {'id': 2, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
+[INFO] 2019-05-02 06:14:51,035 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
+[INFO] 2019-05-02 06:14:51,035 : {'id': 2, 'title': 'title', 'subject': 'Subject1', 'description': 'a description', 'refDate': None, 'publicationDate': None, 'type': 'type', 'link': '1.gif', 'originalName': None}
+[INFO] 2019-05-02 06:14:51,036 : COMMIT
+[INFO] 2019-05-02 06:14:51,039 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,040 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,625 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,626 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,040 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,041 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,626 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,627 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,041 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,042 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,627 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,628 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,042 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,043 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,628 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,629 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,043 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,044 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,630 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,631 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,633 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,633 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
-[INFO] 2019-05-01 16:08:19,633 : {}
-[INFO] 2019-05-01 16:08:19,634 : INSERT INTO to_validate_doc (id_to_validate) VALUES (%(id_to_validate)s)
-[INFO] 2019-05-01 16:08:19,634 : {'id_to_validate': 3}
-[INFO] 2019-05-01 16:08:19,635 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
-[INFO] 2019-05-01 16:08:19,635 : {'id': 3, 'title': 'title', 'subject': 'Subject2', 'description': 'a description', 'refDate': '2019-02-05', 'publicationDate': None, 'type': 'type', 'link': '2.gif', 'originalName': None}
-[INFO] 2019-05-01 16:08:19,636 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
-[INFO] 2019-05-01 16:08:19,637 : {'id': 3, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
-[INFO] 2019-05-01 16:08:19,637 : COMMIT
-[INFO] 2019-05-01 16:08:19,640 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,641 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,044 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,045 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,046 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,047 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
+[INFO] 2019-05-02 06:14:51,047 : {}
+[INFO] 2019-05-02 06:14:51,048 : INSERT INTO to_validate_doc (id_to_validate) VALUES (%(id_to_validate)s)
+[INFO] 2019-05-02 06:14:51,048 : {'id_to_validate': 3}
+[INFO] 2019-05-02 06:14:51,049 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
+[INFO] 2019-05-02 06:14:51,049 : {'id': 3, 'title': 'title', 'subject': 'Subject2', 'description': 'a description', 'refDate': '2019-02-05', 'publicationDate': None, 'type': 'type', 'link': '2.gif', 'originalName': None}
+[INFO] 2019-05-02 06:14:51,050 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
+[INFO] 2019-05-02 06:14:51,050 : {'id': 3, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
+[INFO] 2019-05-02 06:14:51,051 : COMMIT
+[INFO] 2019-05-02 06:14:51,053 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,054 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,641 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,642 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,054 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,055 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,642 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,643 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,055 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,056 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,643 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,644 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,056 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,057 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,644 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,645 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,057 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,058 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,645 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,646 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,648 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,648 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
-[INFO] 2019-05-01 16:08:19,648 : {}
-[INFO] 2019-05-01 16:08:19,650 : INSERT INTO valid_doc (id_valid) VALUES (%(id_valid)s)
-[INFO] 2019-05-01 16:08:19,650 : {'id_valid': 4}
-[INFO] 2019-05-01 16:08:19,651 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
-[INFO] 2019-05-01 16:08:19,651 : {'id': 4, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
-[INFO] 2019-05-01 16:08:19,652 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
-[INFO] 2019-05-01 16:08:19,652 : {'id': 4, 'title': 'another title', 'subject': 'Subject3', 'description': 'an other description', 'refDate': '2018-12-03', 'publicationDate': None, 'type': 'type', 'link': '3.png', 'originalName': None}
-[INFO] 2019-05-01 16:08:19,653 : COMMIT
-[INFO] 2019-05-01 16:08:19,656 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,656 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,058 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,059 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,060 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,061 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
+[INFO] 2019-05-02 06:14:51,061 : {}
+[INFO] 2019-05-02 06:14:51,062 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
+[INFO] 2019-05-02 06:14:51,062 : {'id': 4, 'title': 'another title', 'subject': 'Subject3', 'description': 'an other description', 'refDate': '2018-12-03', 'publicationDate': None, 'type': 'type', 'link': '3.png', 'originalName': None}
+[INFO] 2019-05-02 06:14:51,063 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
+[INFO] 2019-05-02 06:14:51,063 : {'id': 4, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
+[INFO] 2019-05-02 06:14:51,064 : INSERT INTO valid_doc (id_valid) VALUES (%(id_valid)s)
+[INFO] 2019-05-02 06:14:51,064 : {'id_valid': 4}
+[INFO] 2019-05-02 06:14:51,065 : COMMIT
+[INFO] 2019-05-02 06:14:51,068 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,068 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,656 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,658 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,068 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,069 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,658 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,659 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,069 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,070 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,659 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,660 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,071 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,071 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,660 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,661 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,071 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,072 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,661 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,662 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,663 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,664 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
-[INFO] 2019-05-01 16:08:19,664 : {}
-[INFO] 2019-05-01 16:08:19,665 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
-[INFO] 2019-05-01 16:08:19,665 : {'id': 5, 'title': 'another title', 'subject': 'Subject4', 'description': 'an other description', 'refDate': '2018-12-02', 'publicationDate': None, 'type': 'type', 'link': '4.png', 'originalName': None}
-[INFO] 2019-05-01 16:08:19,666 : INSERT INTO to_validate_doc (id_to_validate) VALUES (%(id_to_validate)s)
-[INFO] 2019-05-01 16:08:19,666 : {'id_to_validate': 5}
-[INFO] 2019-05-01 16:08:19,667 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
-[INFO] 2019-05-01 16:08:19,667 : {'id': 5, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
-[INFO] 2019-05-01 16:08:19,668 : COMMIT
-[INFO] 2019-05-01 16:08:19,670 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,671 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,072 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,073 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,075 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,075 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
+[INFO] 2019-05-02 06:14:51,075 : {}
+[INFO] 2019-05-02 06:14:51,076 : INSERT INTO to_validate_doc (id_to_validate) VALUES (%(id_to_validate)s)
+[INFO] 2019-05-02 06:14:51,076 : {'id_to_validate': 5}
+[INFO] 2019-05-02 06:14:51,077 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
+[INFO] 2019-05-02 06:14:51,077 : {'id': 5, 'title': 'another title', 'subject': 'Subject4', 'description': 'an other description', 'refDate': '2018-12-02', 'publicationDate': None, 'type': 'type', 'link': '4.png', 'originalName': None}
+[INFO] 2019-05-02 06:14:51,078 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
+[INFO] 2019-05-02 06:14:51,078 : {'id': 5, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
+[INFO] 2019-05-02 06:14:51,079 : COMMIT
+[INFO] 2019-05-02 06:14:51,081 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,082 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,671 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,672 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,082 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,083 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,672 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,673 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,083 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,084 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,673 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,674 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,084 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,085 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,674 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,675 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,085 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,086 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,675 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,676 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,678 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,678 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
-[INFO] 2019-05-01 16:08:19,678 : {}
-[INFO] 2019-05-01 16:08:19,679 : INSERT INTO to_validate_doc (id_to_validate) VALUES (%(id_to_validate)s)
-[INFO] 2019-05-01 16:08:19,679 : {'id_to_validate': 6}
-[INFO] 2019-05-01 16:08:19,680 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
-[INFO] 2019-05-01 16:08:19,680 : {'id': 6, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
-[INFO] 2019-05-01 16:08:19,681 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
-[INFO] 2019-05-01 16:08:19,681 : {'id': 6, 'title': 'another title', 'subject': None, 'description': None, 'refDate': None, 'publicationDate': None, 'type': None, 'link': None, 'originalName': None}
-[INFO] 2019-05-01 16:08:19,682 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,684 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,684 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,086 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,087 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,088 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,089 : INSERT INTO extended_document DEFAULT VALUES RETURNING extended_document.id
+[INFO] 2019-05-02 06:14:51,089 : {}
+[INFO] 2019-05-02 06:14:51,090 : INSERT INTO visualisation (id, "quaternionX", "quaternionY", "quaternionZ", "quaternionW", "positionX", "positionY", "positionZ") VALUES (%(id)s, %(quaternionX)s, %(quaternionY)s, %(quaternionZ)s, %(quaternionW)s, %(positionX)s, %(positionY)s, %(positionZ)s)
+[INFO] 2019-05-02 06:14:51,090 : {'id': 6, 'quaternionX': None, 'quaternionY': None, 'quaternionZ': None, 'quaternionW': None, 'positionX': None, 'positionY': None, 'positionZ': None}
+[INFO] 2019-05-02 06:14:51,091 : INSERT INTO to_validate_doc (id_to_validate) VALUES (%(id_to_validate)s)
+[INFO] 2019-05-02 06:14:51,091 : {'id_to_validate': 6}
+[INFO] 2019-05-02 06:14:51,091 : INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)
+[INFO] 2019-05-02 06:14:51,092 : {'id': 6, 'title': 'another title', 'subject': None, 'description': None, 'refDate': None, 'publicationDate': None, 'type': None, 'link': None, 'originalName': None}
+[INFO] 2019-05-02 06:14:51,092 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,094 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,094 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,684 : {'id_1': 5}
-[INFO] 2019-05-01 16:08:19,686 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,094 : {'id_1': 5}
+[INFO] 2019-05-02 06:14:51,096 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(id_to_validate_1)s
-[INFO] 2019-05-01 16:08:19,686 : {'id_to_validate_1': 5}
-[INFO] 2019-05-01 16:08:19,687 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,096 : {'id_to_validate_1': 5}
+[INFO] 2019-05-02 06:14:51,097 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,687 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,690 : INSERT INTO valid_doc (id_valid) VALUES (%(id_valid)s)
-[INFO] 2019-05-01 16:08:19,690 : {'id_valid': 5}
-[INFO] 2019-05-01 16:08:19,691 : DELETE FROM to_validate_doc WHERE to_validate_doc.id_to_validate = %(id_to_validate)s
-[INFO] 2019-05-01 16:08:19,691 : {'id_to_validate': 5}
-[INFO] 2019-05-01 16:08:19,692 : COMMIT
-[INFO] 2019-05-01 16:08:19,695 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,696 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,097 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,101 : INSERT INTO valid_doc (id_valid) VALUES (%(id_valid)s)
+[INFO] 2019-05-02 06:14:51,101 : {'id_valid': 5}
+[INFO] 2019-05-02 06:14:51,102 : DELETE FROM to_validate_doc WHERE to_validate_doc.id_to_validate = %(id_to_validate)s
+[INFO] 2019-05-02 06:14:51,102 : {'id_to_validate': 5}
+[INFO] 2019-05-02 06:14:51,103 : COMMIT
+[INFO] 2019-05-02 06:14:51,105 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,106 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,696 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,698 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,106 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,107 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,698 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,699 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,107 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,108 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,700 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,701 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,108 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,109 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,701 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,702 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,109 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,110 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,702 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,703 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,704 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,705 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,110 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,111 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,112 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,113 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document JOIN metadata ON extended_document.id = metadata.id
-[INFO] 2019-05-01 16:08:19,705 : {}
-[INFO] 2019-05-01 16:08:19,706 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,113 : {}
+[INFO] 2019-05-02 06:14:51,114 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,706 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,707 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,114 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,115 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,707 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,708 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,115 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,116 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,708 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,710 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,116 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,117 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,710 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,713 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,117 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,118 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,714 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,716 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,118 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,119 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,717 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,717 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,120 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,121 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,718 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,718 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,121 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,122 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,719 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,720 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,122 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,123 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,720 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,721 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,123 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,124 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,721 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,722 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,124 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,125 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,722 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,723 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,125 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,126 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,723 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,724 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,126 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,128 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,724 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,725 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,128 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,129 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,725 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,726 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,129 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,130 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,726 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,727 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,130 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,131 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,727 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,728 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,131 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,134 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,729 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,731 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,134 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,136 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,731 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,732 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,136 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,137 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,732 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,733 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,137 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,137 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,733 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,734 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,736 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,738 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,138 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,139 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,140 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,141 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document JOIN metadata ON extended_document.id = metadata.id 
 WHERE metadata."refDate" >= %(refDate_1)s AND (metadata.title ILIKE %(title_1)s OR metadata.description ILIKE %(description_1)s)
-[INFO] 2019-05-01 16:08:19,738 : {'refDate_1': '2018-12-03', 'title_1': '%description%', 'description_1': '%description%'}
-[INFO] 2019-05-01 16:08:19,740 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,141 : {'refDate_1': '2018-12-03', 'title_1': '%description%', 'description_1': '%description%'}
+[INFO] 2019-05-02 06:14:51,142 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,740 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,741 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,143 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,144 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,741 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,742 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,144 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,145 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,742 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,743 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,145 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,146 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,743 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,745 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,146 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,149 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,745 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,746 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,150 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,155 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,746 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,747 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,155 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,156 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,747 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,748 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,156 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,157 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,748 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,749 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,751 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,751 : SELECT extended_document.id AS extended_document_id 
-FROM extended_document 
-WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,752 : {'id_1': 1}
-[INFO] 2019-05-01 16:08:19,753 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,157 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,158 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,159 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,160 : SELECT extended_document.id AS extended_document_id 
+FROM extended_document JOIN to_validate_doc ON extended_document.id = to_validate_doc.id_to_validate
+[INFO] 2019-05-02 06:14:51,160 : {}
+[INFO] 2019-05-02 06:14:51,161 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,753 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,755 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,161 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,162 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,755 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,756 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,162 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,163 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,756 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,757 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,163 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,164 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,757 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,758 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,759 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,759 : SELECT extended_document.id AS extended_document_id 
-FROM extended_document 
-WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,759 : {'id_1': -1}
-[INFO] 2019-05-01 16:08:19,760 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,761 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,762 : SELECT extended_document.id AS extended_document_id 
-FROM extended_document 
-WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,762 : {'id_1': 1}
-[INFO] 2019-05-01 16:08:19,763 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,164 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,166 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,763 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,765 : UPDATE metadata SET description=%(description)s WHERE metadata.id = %(metadata_id)s
-[INFO] 2019-05-01 16:08:19,765 : {'description': 'description of a document', 'metadata_id': 1}
-[INFO] 2019-05-01 16:08:19,766 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
-FROM visualisation 
-WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,766 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,767 : UPDATE visualisation SET "positionX"=%(positionX)s WHERE visualisation.id = %(visualisation_id)s
-[INFO] 2019-05-01 16:08:19,768 : {'positionX': 12, 'visualisation_id': 1}
-[INFO] 2019-05-01 16:08:19,768 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,166 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,167 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,769 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,769 : COMMIT
-[INFO] 2019-05-01 16:08:19,781 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,782 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,167 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,168 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+FROM valid_doc 
+WHERE valid_doc.id_valid = %(param_1)s
+[INFO] 2019-05-02 06:14:51,168 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,169 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+FROM visualisation 
+WHERE visualisation.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,169 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,170 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,171 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,172 : SELECT extended_document.id AS extended_document_id 
+FROM extended_document 
+WHERE extended_document.id = %(id_1)s
+[INFO] 2019-05-02 06:14:51,172 : {'id_1': 1}
+[INFO] 2019-05-02 06:14:51,173 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+FROM metadata 
+WHERE metadata.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,173 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,174 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+FROM to_validate_doc 
+WHERE to_validate_doc.id_to_validate = %(param_1)s
+[INFO] 2019-05-02 06:14:51,175 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,175 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+FROM valid_doc 
+WHERE valid_doc.id_valid = %(param_1)s
+[INFO] 2019-05-02 06:14:51,176 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,176 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+FROM visualisation 
+WHERE visualisation.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,177 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,177 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,178 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,179 : SELECT extended_document.id AS extended_document_id 
+FROM extended_document 
+WHERE extended_document.id = %(id_1)s
+[INFO] 2019-05-02 06:14:51,179 : {'id_1': -1}
+[INFO] 2019-05-02 06:14:51,180 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,181 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,181 : SELECT extended_document.id AS extended_document_id 
+FROM extended_document 
+WHERE extended_document.id = %(id_1)s
+[INFO] 2019-05-02 06:14:51,181 : {'id_1': 1}
+[INFO] 2019-05-02 06:14:51,182 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+FROM metadata 
+WHERE metadata.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,183 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,184 : UPDATE metadata SET description=%(description)s WHERE metadata.id = %(metadata_id)s
+[INFO] 2019-05-02 06:14:51,185 : {'description': 'description of a document', 'metadata_id': 1}
+[INFO] 2019-05-02 06:14:51,186 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+FROM visualisation 
+WHERE visualisation.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,186 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,187 : UPDATE visualisation SET "positionX"=%(positionX)s WHERE visualisation.id = %(visualisation_id)s
+[INFO] 2019-05-02 06:14:51,187 : {'positionX': 12, 'visualisation_id': 1}
+[INFO] 2019-05-02 06:14:51,188 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+FROM to_validate_doc 
+WHERE to_validate_doc.id_to_validate = %(param_1)s
+[INFO] 2019-05-02 06:14:51,188 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,189 : COMMIT
+[INFO] 2019-05-02 06:14:51,198 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,198 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,782 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,784 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,198 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,200 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,785 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,786 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,200 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,201 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,786 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,788 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,202 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,204 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,788 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,789 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,204 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,205 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,789 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,790 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,791 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,792 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,205 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,206 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,207 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,207 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,792 : {'id_1': 1}
-[INFO] 2019-05-01 16:08:19,793 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,208 : {'id_1': 1}
+[INFO] 2019-05-02 06:14:51,209 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,793 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,794 : UPDATE metadata SET description=%(description)s WHERE metadata.id = %(metadata_id)s
-[INFO] 2019-05-01 16:08:19,794 : {'description': 'another description', 'metadata_id': 1}
-[INFO] 2019-05-01 16:08:19,795 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,209 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,210 : UPDATE metadata SET description=%(description)s WHERE metadata.id = %(metadata_id)s
+[INFO] 2019-05-02 06:14:51,210 : {'description': 'another description', 'metadata_id': 1}
+[INFO] 2019-05-02 06:14:51,211 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,795 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,797 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,211 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,217 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,797 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,798 : COMMIT
-[INFO] 2019-05-01 16:08:19,804 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,806 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,217 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,220 : COMMIT
+[INFO] 2019-05-02 06:14:51,223 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,223 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,807 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,808 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,224 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,225 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,809 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,810 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,225 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,226 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,810 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,812 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,226 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,227 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,812 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,815 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,227 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,228 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,815 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,818 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,821 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,821 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,228 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,229 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,230 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,231 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,821 : {'id_1': -1}
-[INFO] 2019-05-01 16:08:19,822 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,823 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,824 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,231 : {'id_1': -1}
+[INFO] 2019-05-02 06:14:51,232 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,233 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,234 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document JOIN metadata ON extended_document.id = metadata.id
-[INFO] 2019-05-01 16:08:19,824 : {}
-[INFO] 2019-05-01 16:08:19,825 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,234 : {}
+[INFO] 2019-05-02 06:14:51,235 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,826 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,827 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,235 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,236 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,827 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,828 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,236 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,237 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,828 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,829 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,237 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,238 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,829 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,832 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,238 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,240 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,832 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,833 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,240 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,241 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,834 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,835 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,241 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,242 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,835 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,836 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,242 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,243 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,836 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,837 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,243 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,244 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,837 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,838 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,244 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,245 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,839 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,839 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,246 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,246 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,840 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,841 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,247 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,247 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,841 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,842 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,248 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,249 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,842 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,843 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,249 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,250 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,843 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,844 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,250 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,251 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,844 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,845 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,251 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,252 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,845 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,846 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,252 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,253 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,846 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,847 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,253 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,254 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,848 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,848 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,255 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,255 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,848 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,849 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,256 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,257 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,850 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,851 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,852 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,853 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,257 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,258 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,259 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,260 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document JOIN metadata ON extended_document.id = metadata.id 
 WHERE metadata."refDate" >= %(refDate_1)s AND (metadata.title ILIKE %(title_1)s OR metadata.description ILIKE %(description_1)s)
-[INFO] 2019-05-01 16:08:19,853 : {'refDate_1': '2018-12-03', 'title_1': '%description%', 'description_1': '%description%'}
-[INFO] 2019-05-01 16:08:19,854 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,260 : {'refDate_1': '2018-12-03', 'title_1': '%description%', 'description_1': '%description%'}
+[INFO] 2019-05-02 06:14:51,261 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,854 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,855 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,262 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,263 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,855 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,856 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,263 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,264 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,857 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,857 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,264 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,265 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,858 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,859 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,265 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,266 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,859 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,860 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,266 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,267 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,860 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,861 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,267 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,268 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,861 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,862 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,268 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,269 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,862 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,863 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,864 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,864 : SELECT extended_document.id AS extended_document_id 
-FROM extended_document 
-WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,864 : {'id_1': 1}
-[INFO] 2019-05-01 16:08:19,866 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,269 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,270 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,271 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,272 : SELECT extended_document.id AS extended_document_id 
+FROM extended_document JOIN to_validate_doc ON extended_document.id = to_validate_doc.id_to_validate
+[INFO] 2019-05-02 06:14:51,272 : {}
+[INFO] 2019-05-02 06:14:51,273 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,866 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,867 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,273 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,274 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,867 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,868 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,274 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,275 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,868 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,869 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,275 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,276 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,869 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,870 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,871 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,871 : SELECT extended_document.id AS extended_document_id 
-FROM extended_document 
-WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,871 : {'id_1': -1}
-[INFO] 2019-05-01 16:08:19,872 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,873 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,874 : SELECT extended_document.id AS extended_document_id 
-FROM extended_document 
-WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,874 : {'id_1': 2}
-[INFO] 2019-05-01 16:08:19,875 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,276 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,277 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,875 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,876 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,877 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,878 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,277 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,278 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+FROM to_validate_doc 
+WHERE to_validate_doc.id_to_validate = %(param_1)s
+[INFO] 2019-05-02 06:14:51,278 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,279 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+FROM valid_doc 
+WHERE valid_doc.id_valid = %(param_1)s
+[INFO] 2019-05-02 06:14:51,279 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,280 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+FROM visualisation 
+WHERE visualisation.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,280 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,281 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,282 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,283 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,878 : {'id_1': 2}
-[INFO] 2019-05-01 16:08:19,879 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,283 : {'id_1': 1}
+[INFO] 2019-05-02 06:14:51,284 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,879 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,880 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,881 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,882 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,284 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,285 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+FROM to_validate_doc 
+WHERE to_validate_doc.id_to_validate = %(param_1)s
+[INFO] 2019-05-02 06:14:51,285 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,286 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+FROM valid_doc 
+WHERE valid_doc.id_valid = %(param_1)s
+[INFO] 2019-05-02 06:14:51,286 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,287 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+FROM visualisation 
+WHERE visualisation.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,287 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,288 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,289 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,290 : SELECT extended_document.id AS extended_document_id 
+FROM extended_document 
+WHERE extended_document.id = %(id_1)s
+[INFO] 2019-05-02 06:14:51,290 : {'id_1': -1}
+[INFO] 2019-05-02 06:14:51,291 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,292 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,292 : SELECT extended_document.id AS extended_document_id 
+FROM extended_document 
+WHERE extended_document.id = %(id_1)s
+[INFO] 2019-05-02 06:14:51,292 : {'id_1': 2}
+[INFO] 2019-05-02 06:14:51,294 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+FROM metadata 
+WHERE metadata.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,294 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,295 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,296 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,296 : SELECT extended_document.id AS extended_document_id 
+FROM extended_document 
+WHERE extended_document.id = %(id_1)s
+[INFO] 2019-05-02 06:14:51,296 : {'id_1': 2}
+[INFO] 2019-05-02 06:14:51,298 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+FROM metadata 
+WHERE metadata.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,298 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,299 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,300 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,302 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document JOIN metadata ON extended_document.id = metadata.id
-[INFO] 2019-05-01 16:08:19,882 : {}
-[INFO] 2019-05-01 16:08:19,883 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,303 : {}
+[INFO] 2019-05-02 06:14:51,305 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,884 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,885 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,305 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,306 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,885 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,886 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,306 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,307 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,886 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,887 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,307 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,308 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,887 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,888 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,308 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,310 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,888 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,889 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,310 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,311 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,889 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,890 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,311 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,312 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,890 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,891 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,312 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,313 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,891 : {'param_1': 2}
-[INFO] 2019-05-01 16:08:19,892 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,313 : {'param_1': 2}
+[INFO] 2019-05-02 06:14:51,314 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,892 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,893 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,314 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,315 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,893 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,894 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,316 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,316 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,894 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,895 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,317 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,317 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,895 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,897 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,318 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,319 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,897 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,898 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,319 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,320 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,898 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,899 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,320 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,321 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,899 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,900 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,321 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,323 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,900 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,901 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,323 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,324 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,901 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,902 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,324 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,326 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,902 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,903 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,326 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,327 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,903 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,904 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,327 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,328 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,904 : {'param_1': 5}
-[INFO] 2019-05-01 16:08:19,905 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,906 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,907 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,328 : {'param_1': 5}
+[INFO] 2019-05-02 06:14:51,329 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,330 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,331 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document JOIN metadata ON extended_document.id = metadata.id 
 WHERE metadata."refDate" >= %(refDate_1)s AND (metadata.title ILIKE %(title_1)s OR metadata.description ILIKE %(description_1)s)
-[INFO] 2019-05-01 16:08:19,907 : {'refDate_1': '2018-12-03', 'title_1': '%description%', 'description_1': '%description%'}
-[INFO] 2019-05-01 16:08:19,908 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,331 : {'refDate_1': '2018-12-03', 'title_1': '%description%', 'description_1': '%description%'}
+[INFO] 2019-05-02 06:14:51,333 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,909 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,910 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,333 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,334 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,910 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,911 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,334 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,335 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,911 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,912 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,335 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,336 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,912 : {'param_1': 3}
-[INFO] 2019-05-01 16:08:19,914 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,336 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,337 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,914 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,915 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,337 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,338 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,915 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,916 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,339 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,339 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,916 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,917 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,340 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,340 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,918 : {'param_1': 4}
-[INFO] 2019-05-01 16:08:19,918 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,920 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,920 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,340 : {'param_1': 4}
+[INFO] 2019-05-02 06:14:51,341 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,342 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,343 : SELECT extended_document.id AS extended_document_id 
+FROM extended_document JOIN to_validate_doc ON extended_document.id = to_validate_doc.id_to_validate
+[INFO] 2019-05-02 06:14:51,343 : {}
+[INFO] 2019-05-02 06:14:51,344 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+FROM metadata 
+WHERE metadata.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,345 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,345 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+FROM to_validate_doc 
+WHERE to_validate_doc.id_to_validate = %(param_1)s
+[INFO] 2019-05-02 06:14:51,346 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,347 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+FROM valid_doc 
+WHERE valid_doc.id_valid = %(param_1)s
+[INFO] 2019-05-02 06:14:51,347 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,348 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+FROM visualisation 
+WHERE visualisation.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,348 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,349 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+FROM metadata 
+WHERE metadata.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,349 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,350 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+FROM to_validate_doc 
+WHERE to_validate_doc.id_to_validate = %(param_1)s
+[INFO] 2019-05-02 06:14:51,351 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,351 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+FROM valid_doc 
+WHERE valid_doc.id_valid = %(param_1)s
+[INFO] 2019-05-02 06:14:51,352 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,352 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+FROM visualisation 
+WHERE visualisation.id = %(param_1)s
+[INFO] 2019-05-02 06:14:51,353 : {'param_1': 3}
+[INFO] 2019-05-02 06:14:51,353 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,354 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,355 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,920 : {'id_1': 1}
-[INFO] 2019-05-01 16:08:19,921 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
+[INFO] 2019-05-02 06:14:51,355 : {'id_1': 1}
+[INFO] 2019-05-02 06:14:51,356 : SELECT metadata.id AS metadata_id, metadata.title AS metadata_title, metadata.subject AS metadata_subject, metadata.description AS metadata_description, metadata."refDate" AS "metadata_refDate", metadata."publicationDate" AS "metadata_publicationDate", metadata.type AS metadata_type, metadata.link AS metadata_link, metadata."originalName" AS "metadata_originalName" 
 FROM metadata 
 WHERE metadata.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,921 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,922 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
+[INFO] 2019-05-02 06:14:51,356 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,357 : SELECT to_validate_doc.id_to_validate AS to_validate_doc_id_to_validate 
 FROM to_validate_doc 
 WHERE to_validate_doc.id_to_validate = %(param_1)s
-[INFO] 2019-05-01 16:08:19,923 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,923 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
+[INFO] 2019-05-02 06:14:51,357 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,358 : SELECT valid_doc.id_valid AS valid_doc_id_valid 
 FROM valid_doc 
 WHERE valid_doc.id_valid = %(param_1)s
-[INFO] 2019-05-01 16:08:19,924 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,924 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
+[INFO] 2019-05-02 06:14:51,358 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,360 : SELECT visualisation.id AS visualisation_id, visualisation."quaternionX" AS "visualisation_quaternionX", visualisation."quaternionY" AS "visualisation_quaternionY", visualisation."quaternionZ" AS "visualisation_quaternionZ", visualisation."quaternionW" AS "visualisation_quaternionW", visualisation."positionX" AS "visualisation_positionX", visualisation."positionY" AS "visualisation_positionY", visualisation."positionZ" AS "visualisation_positionZ" 
 FROM visualisation 
 WHERE visualisation.id = %(param_1)s
-[INFO] 2019-05-01 16:08:19,924 : {'param_1': 1}
-[INFO] 2019-05-01 16:08:19,925 : ROLLBACK
-[INFO] 2019-05-01 16:08:19,926 : BEGIN (implicit)
-[INFO] 2019-05-01 16:08:19,927 : SELECT extended_document.id AS extended_document_id 
+[INFO] 2019-05-02 06:14:51,360 : {'param_1': 1}
+[INFO] 2019-05-02 06:14:51,361 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,362 : BEGIN (implicit)
+[INFO] 2019-05-02 06:14:51,363 : SELECT extended_document.id AS extended_document_id 
 FROM extended_document 
 WHERE extended_document.id = %(id_1)s
-[INFO] 2019-05-01 16:08:19,927 : {'id_1': -1}
-[INFO] 2019-05-01 16:08:19,928 : ROLLBACK
+[INFO] 2019-05-02 06:14:51,363 : {'id_1': -1}
+[INFO] 2019-05-02 06:14:51,368 : ROLLBACK
