@@ -9,6 +9,8 @@ from util.upload import UPLOAD_FOLDER
 from util.db_config import *
 from entities.MetaData import MetaData
 from entities.ExtendedDocument import ExtendedDocument
+from entities.ToValidateDoc import ToValidateDoc
+from entities.ValidDoc import ValidDoc
 import persistence_unit.PersistenceUnit as pUnit
 
 
@@ -27,8 +29,22 @@ class DocController:
     @pUnit.make_a_transaction
     def create_document(session, *args):
         attributes = args[0]
-        document = ExtendedDocument()
+        document = ExtendedDocument(attributes)
         document.update(attributes)
+        session.add(document)
+        return document
+
+    @staticmethod
+    @pUnit.make_a_transaction
+    def validate_document(session, *args):
+        attributes = args[0]
+        id = attributes["id"]
+        document = session.query(ExtendedDocument).filter(
+            ExtendedDocument.id == id).one()
+        to_validate = session.query(ToValidateDoc).filter(
+            ToValidateDoc.id_to_validate == id).one()
+        document.validate(attributes)
+        session.delete(to_validate)
         session.add(document)
         return document
 
@@ -85,7 +101,19 @@ class DocController:
         query = session.query(ExtendedDocument).join(
             MetaData).filter_by(**attributes).filter(
             and_(*comparison_conditions)).filter(
-            or_(*keyword_conditions))
+            or_(*keyword_conditions)).join(ValidDoc)
+
+        return query.all()
+
+    @staticmethod
+    @pUnit.make_a_query
+    def get_documents_to_validate(session, *args):
+        """
+        This method si used to get documents to validate
+        """
+
+        query = session.query(ExtendedDocument).join(
+            ToValidateDoc)
 
         return query.all()
 
