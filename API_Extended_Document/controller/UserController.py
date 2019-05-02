@@ -6,7 +6,7 @@ from time import time
 import jwt
 
 from util.Exception import LoginError
-from util.encryption import is_password_valid
+from util.encryption import *
 
 from controller.Controller import Controller
 import persistence_unit.PersistenceUnit as pUnit
@@ -51,7 +51,7 @@ class UserController:
             if is_password_valid(user.password,password):
                 exp = time() + 24 * 3600
                 payload = {
-                    'id'       : user.id,
+                    'user_id'  : user.id,
                     'username' : user.username,
                     'firstName': user.firstName,
                     'lastName' : user.lastName,
@@ -59,8 +59,8 @@ class UserController:
                     'position' : str(user.position.serialize()),
                     'exp'      : exp
                 }
-                return {
-                    "token": jwt.encode(payload, password, algorithm='HS256').decode('utf-8')
+                return { 
+                    "token": jwt.encode(payload, VarConfig.get()['password'], algorithm='HS256').decode('utf-8')
                 }
         except sqlalchemy.orm.exc.NoResultFound:
             pass

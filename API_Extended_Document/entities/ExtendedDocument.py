@@ -9,7 +9,6 @@ from entities.Visualisation import Visualisation
 from util.db_config import Base
 from util.serialize import serialize
 
-
 class ExtendedDocument(Base):
     __tablename__ = "extended_document"
 
@@ -46,3 +45,7 @@ class ExtendedDocument(Base):
     def update(self, attributes):
         self.metaData.update(attributes)
         self.visualization.update(attributes)
+        for attKey, attVal in attributes.items():
+            if hasattr(self, attKey):
+                setattr(self, attKey, attVal)
+        return self

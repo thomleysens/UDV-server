@@ -5,9 +5,7 @@ import persistence_unit.PersistenceUnit as pUnit
 from util.db_config import *
 from entities.GuidedTour import GuidedTour
 from entities.Position import Position
-from entities.ExtendedDocument import ExtendedDocument
 from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
-from entities.User import User
 
 
 class Controller:
@@ -42,5 +40,3 @@ class Controller:
         Controller.create_position("moderator")
         Controller.create_position("softModerator")
         Controller.create_position("contributor")
-
-

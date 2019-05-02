@@ -28,7 +28,7 @@ class User(Base):
     position = relationship(Position,
                             uselist=False)
 
-    documents = relationship('ExtendedDocument',
+    extended_document = relationship('ExtendedDocument',
                              cascade="all, delete-orphan")
 
     def update(self, new_values):
@@ -50,7 +50,7 @@ class User(Base):
         if(not(documents and is_valid_instances(documents))):
             return
         else:
-            self.documents = documents.copy()
+            self.extended_document = documents.copy()
 
     @classmethod
     def get_attr(cls, attr_name):
@@ -75,7 +75,7 @@ class User(Base):
     def is_valid_instances(self,objs):
         is_valid = True
         for obj in objs:
-            if(not(is_valid_instance(obj))):
+            if(not(is_valid_instance(obj))): 
                 is_valid = False
                 break
         return is_valid

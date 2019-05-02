@@ -22,10 +22,23 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
 
-def send_response(old_function):
+def send_response(old_function, authorization_function=None,
+                  authorization=None, resource_id=None):
     def new_function(*args, **kwargs):
         try:
-            return jsonify(old_function(*args, **kwargs))
+            if authorization_function:
+                authorization_function(authorization, resource_id)
+            response = old_function(*args, **kwargs)
+            if response is None:
+                return '',204
+            if isinstance(response, (dict,list)):
+                return jsonify(response)
+            return response
+
+        except LoginError:
+            return 'unauthorized', 401
+        except AuthError:
+            return 'access denied', 403
         except sqlalchemy.exc.IntegrityError:
             return 'integrity error', 422
         except sqlalchemy.orm.exc.NoResultFound:
@@ -60,19 +73,34 @@ def index():
     </html>
     '''
 
+def is_connected(*args):
+    encoded_JWT = args[0]["Authentication"]
+    if jwt:
+        payload = jwt.decode(encoded_JWT,
+                            VarConfig.get()['password'],
+                            algorithms=['HS256'])
+        if payload:
+            return payload
+    raise LoginError
 
 @app.route('/addDocument', methods=['POST'])
 def create_document():
     def creation():
-        document = DocController.create_document(
-            {key: request.form.get(key) for key in request.form.keys()})
-
-        if request.files.get('link'):
-            filename = save_file(document["id"], request.files['link'])
-            if filename:
-                DocController.update_document(document["id"],
-                                              {"link": filename})
-        return document
+        payload = jwt.decode(request.form.get('Authentication'),
+                            VarConfig.get()['password'],
+                            algorithms=['HS256'])
+        if payload:
+            args = {key: request.form.get(key) for key in request.form.keys()}
+            args['user_id'] = payload['user_id']
+            document = DocController.create_document(args)
+            if request.files.get('link'):
+                filename = save_file(document["id"], request.files['link'])
+                if filename:
+                    DocController.update_document(document["id"],
+                                                  {"link": filename})
+            return document
+        else:
+            raise LoginError
 
     return send_response(creation)()
 
@@ -90,7 +118,6 @@ def create_guided_tour():
 @app.route('/addUser', methods=['POST'])
 def create_user():
     #TODO : Add some verifications
-    print('argument  ',{key: request.form.get(key) for key in request.form.keys()})
     return send_response(
         lambda: UserController.create_user({key: request.form.get(key) for key in request.form.keys()}))()
 

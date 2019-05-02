@@ -3,7 +3,9 @@
 
 from controller.Controller import Controller
 from controller.DocController import DocController
+from controller.UserController import UserController
 
+from test.user_tests import UserTest
 from test.test_functions import *
 
 
@@ -17,7 +19,16 @@ class DocumentTest:
     def create_documents():
         print('\033[01m## Creation ##\033[0m')
 
+        make_test(lambda: UserController.create_user({
+            'username': 'John_Doe',
+            'password': 'pwd',
+            'firstName': 'John',
+            'lastName': 'Doe',
+            'email': 'John_Doe@mail.com'
+        }))(UserTest, 'Normal Creation case', False)
+
         make_test(lambda: DocController.create_document({
+            'user_id' : 1,
             'title': 'title',
             'subject': 'Subject1',
             'type': 'type',
@@ -26,6 +37,7 @@ class DocumentTest:
         }))(DocumentTest, 'all needed attributes', False)
 
         make_test(lambda: DocController.create_document({
+            'user_id' : 1,
             'title': 'title',
             'subject': 'Subject1',
             'type': 'type',
@@ -34,6 +46,7 @@ class DocumentTest:
             DocumentTest, 'all needed attributes', False)
 
         make_test(lambda: DocController.create_document({
+            'user_id' : 1,
             'title': 'title',
             'subject': 'Subject2',
             'type': 'type',
@@ -43,6 +56,7 @@ class DocumentTest:
         }))(DocumentTest, 'all needed attributes', False)
 
         make_test(lambda: DocController.create_document({
+            'user_id' : 1,
             'title': 'another title',
             'subject': 'Subject3',
             'type': 'type',
