@@ -15,24 +15,38 @@ from controller.UserController import UserController
 from controller.DocController import DocController
 from util.upload import *
 from util.encryption import *
+from util.Exception import *
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
 
-def send_response(old_function):
+def send_response(old_function, authorization_function=None,
+                  authorization=None, resource_id=None):
     def new_function(*args, **kwargs):
         try:
-            return jsonify(old_function(*args, **kwargs))
+            if authorization_function:
+                authorization_function(authorization, resource_id)
+            response = old_function(*args, **kwargs)
+            if response is None:
+                return '',204
+            if isinstance(response, (dict,list)):
+                return jsonify(response)
+            return response
+
+        except LoginError:
+            return 'unauthorized', 401
+        except AuthError:
+            return 'access denied', 403
         except sqlalchemy.exc.IntegrityError:
             return 'integrity error', 422
         except sqlalchemy.orm.exc.NoResultFound:
             return 'no result found', 204
-        except (LoginError, jwt.exceptions.InvalidSignatureError):
+        except LoginError:
             return 'unauthorized', 401
-        except AuthError:
-            return 'access denied', 403
+        except (AuthError, jwt.exceptions.InvalidSignatureError):
+            return 'Authentification failed', 403
         except Exception as e:
             print(e)
             info_logger.error(e)
@@ -59,19 +73,34 @@ def index():
     </html>
     '''
 
+def is_connected(*args):
+    encoded_JWT = args[0]["Authentication"]
+    if jwt:
+        payload = jwt.decode(encoded_JWT,
+                            VarConfig.get()['password'],
+                            algorithms=['HS256'])
+        if payload:
+            return payload
+    raise LoginError
 
 @app.route('/addDocument', methods=['POST'])
 def create_document():
     def creation():
-        document = DocController.create_document(
-            {key: request.form.get(key) for key in request.form.keys()})
-
-        if request.files.get('link'):
-            filename = save_file(document["id"], request.files['link'])
-            if filename:
-                DocController.update_document(document["id"],
-                                              {"link": filename})
-        return document
+        payload = jwt.decode(request.form.get('Authentication'),
+                            VarConfig.get()['password'],
+                            algorithms=['HS256'])
+        if payload:
+            args = {key: request.form.get(key) for key in request.form.keys()}
+            args['user_id'] = payload['user_id']
+            document = DocController.create_document(args)
+            if request.files.get('link'):
+                filename = save_file(document["id"], request.files['link'])
+                if filename:
+                    DocController.update_document(document["id"],
+                                                  {"link": filename})
+            return document
+        else:
+            raise LoginError
 
     return send_response(creation)()
 
@@ -86,22 +115,43 @@ def create_guided_tour():
     return send_response(
         lambda: TourController.create_tour(name, description))()
 
+
 @app.route('/addUser', methods=['POST'])
 def create_user():
-    #TODO : Add some verifications
-    print('argument  ',{key: request.form.get(key) for key in request.form.keys()})
     return send_response(
-        lambda: UserController.create_user({key: request.form.get(key) for key in request.form.keys()}))()
+        lambda: UserController.create_user(
+            {key: request.form.get(key) for key in
+             request.form.keys()}))()
 
+@app.route('/addPrivilegedUser', methods=['POST'])
+def add_Privileged_User():
+    '''payload = jwt.decode(request.form.get('Authentication'),
+                        VarConfig.get()['password'],
+                        algorithms=['HS256'])
+    if payload:
+    '''
+    args = {key: request.form.get(key) for key in request.form.keys()}
+    #args['user_id'] = payload['user_id']
+    return send_response(
+        lambda: UserController.create_privileged_user(args))()
+    '''
+     else:
+        raise AuthError
+    '''
 @app.route('/login', methods=['POST'])
 def login():
+    print('login')
     return send_response(
-        lambda: UserController.login({key: request.form.get(key) for key in request.form.keys()}))()
+        lambda: UserController.login(
+            {key: request.form.get(key) for key in
+             request.form.keys()}))()
+
 
 @app.route('/getDocument/<int:doc_id>', methods=['GET', 'POST'])
 def get_document(doc_id):
     return send_response(
         lambda: DocController.get_document_by_id(doc_id))()
+
 
 @app.route('/getUser/<int:user_id>', methods=['GET', 'POST'])
 def get_user(user_id):
@@ -122,6 +172,21 @@ def get_documents():
             {key: request.args.get(key)
              for key in request.args.keys()}))()
 
+
+
+@app.route('/getDocuments_to_validate', methods=['GET', 'POST'])
+def get_documents_to_validate():
+    payload = jwt.decode(request.form.get('Authentication'),
+                        VarConfig.get()['password'],
+                        algorithms=['HS256'])
+    if payload:
+        args = {key: request.form.get(key) for key in request.form.keys()}
+        args['user_id'] = payload['user_id']
+        print(args)
+        return send_response(
+            lambda: DocController.get_documents_to_validate(args))()
+    else:
+        raise AuthError
 
 @app.route('/getGuidedTours', methods=['GET', 'POST'])
 def get_all_guided_tours():

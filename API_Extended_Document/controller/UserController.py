@@ -6,14 +6,12 @@ from time import time
 import jwt
 
 from util.Exception import LoginError
-from util.encryption import is_password_valid
+from util.encryption import *
 
 from controller.Controller import Controller
 import persistence_unit.PersistenceUnit as pUnit
 from entities.User import User
-
-
-
+from entities.Position import Position
 
 class UserController:
     """
@@ -28,39 +26,57 @@ class UserController:
     @staticmethod
     @pUnit.make_a_transaction
     def create_user(session, *args):
+        attributes = args[0]
         user = User()
-        user.update(args[0])
+        user.set_position(session.query(Position).filter(
+            Position.label == Position.getClearance(0)).one())
+        user.update(attributes)
+        session.add(user)
+        return user
+
+    @staticmethod
+    @pUnit.make_a_transaction
+    def create_privileged_user(session, *args):
+        attributes = args[0]
+        user = User()
+        user.set_position(session.query(Position).filter(
+            Position.label == attributes["role"]).one())
+        user.update(attributes)
         session.add(user)
         return user
 
     @staticmethod
     @pUnit.make_a_query
     def get_user_by_id(session, *args):
-        user_id = args[0]
+        attributes = args[0]
+        user_id = attributes
         return session.query(User).filter(
             User.id == user_id).one()
-
 
     @staticmethod
     @pUnit.make_a_transaction
     def login(session, *args):
         try:
-            username = args[0]['username']
-            password = args[0]['password']
+            attributes = args[0]
+            username = attributes['username']
+            password = attributes['password']
             user = session.query(User).filter(
                 User.username == username).one()
-            if is_password_valid(user.password,password):
+            if is_password_valid(user.password, password):
                 exp = time() + 24 * 3600
                 payload = {
-                    'id': user.id,
-                    'username': user.username,
-                    'exp': exp
+                    'user_id'  : user.id,
+                    'username' : user.username,
+                    'firstName': user.firstName,
+                    'lastName' : user.lastName,
+                    'email'    : user.email,
+                    'position' : str(user.position.serialize()),
+                    'exp'      : exp
                 }
                 return {
-                    "token": jwt.encode(payload, password, algorithm='HS256')
+                    "token": jwt.encode(payload, VarConfig.get()['password'], algorithm='HS256').decode('utf-8')
                 }
         except sqlalchemy.orm.exc.NoResultFound:
             pass
 
-            raise LoginError
-
+        raise LoginError

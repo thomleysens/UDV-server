@@ -24,6 +24,14 @@ class UserTest:
             'email': 'John_Doe@mail.com'
         }))(UserTest, 'Normal Creation case', False)
 
+        make_test(lambda: UserController.create_user({
+            'username': '   ',
+            'password': 'pwd',
+            'firstName': 'John',
+            'lastName': 'Doe',
+            'email': 'John_Doe@mail.com'
+        }))(UserTest, 'Empty username', True)
+
 
         make_test(lambda: UserController.create_user({
             'username': 'John_Doe1',
@@ -40,6 +48,24 @@ class UserTest:
             'firstName': 'John',
             'email': 'John_Doe@mail.com1'
         }))(UserTest, 'Missing Field', True)
+
+        make_test(lambda: UserController.create_user({
+            'username': 'John_Doe12',
+            'password': 'pwd',
+            'firstName': 'John',
+            'lastName':'Doe',
+            'email': 'John_Doe@mail.com12',
+            'fake:':'fake'
+        }))(UserTest, 'Add Erronate Ignored Field', False)
+
+        make_test(lambda: UserController.create_user({
+            'username': 'John_Doe123',
+            'password': 'pwd',
+            'firstName': 'John',
+            'lastName':'Doe',
+            'lastName':'Doe1',
+            'email': 'John_Doe@mail.com123',
+        }))(UserTest, 'Add Duplicate Param Takes the last one', False)
 
 
         make_test(lambda: UserController.create_user({
@@ -75,6 +101,8 @@ class UserTest:
             'email': 'John_Doe1234@mail.com'
         }))(UserTest, 'Other normal case with unordered fields', False)
 
+    @staticmethod
+    def login():
         make_test(lambda: UserController.login({
             'username': 'John_Doe',
             'password': 'pwd'
@@ -88,12 +116,12 @@ class UserTest:
         make_test(lambda: UserController.login({
             'username': 'John_Doe',
             'password': 'pwd1'
-        }))(UserTest, 'Login with wrong pwd', False)
+        }))(UserTest, 'Login with wrong pwd', True)
 
         make_test(lambda: UserController.login({
             'username': 'John_Doe',
             'password': ''
-        }))(UserTest, 'Login with empty pwd', False)
+        }))(UserTest, 'Login with empty pwd', True)
 
         make_test(lambda: UserController.login({
             'username': 'John_Doe'
@@ -103,6 +131,11 @@ class UserTest:
             'username': 'John_Doe1',
             'password': 'pwd'
         }))(UserTest, 'Login with wrong username', True)
+
+        make_test(lambda: UserController.login({
+            'username': 'Jane',
+            'password': 'pwd'
+        }))(UserTest, 'Login with inexisting username', True)
 
         make_test(lambda: UserController.login({
             'username': '',
@@ -116,9 +149,13 @@ class UserTest:
         make_test(lambda: UserController.login({
         }))(UserTest, 'Login with all missing fields', True)
 
+        make_test(lambda: UserController.login({
+        }))(UserTest, 'Login with all missing fields', True)
+
 if __name__ == '__main__':
     Controller.recreate_tables()
     UserTest.create_user()
+    UserTest.login()
     print('\n\n\033[04mSuccessTest\033[01m: ',
           UserTest.nb_tests_succeed, '/',
           UserTest.nb_tests, sep='')
