@@ -27,7 +27,8 @@ class UserController:
     @pUnit.make_a_transaction
     def create_user(session, *args):
         user = User()
-        user.set_position(session.query(Position).filter(Position.label == Position.getClearanceLevel(0)).one())
+        user.set_position(session.query(Position).filter(
+            Position.label == Position.getClearanceLevel(0)).one())
         user.update(args[0])
         session.add(user)
         return user
@@ -39,7 +40,6 @@ class UserController:
         return session.query(User).filter(
             User.id == user_id).one()
 
-
     @staticmethod
     @pUnit.make_a_transaction
     def login(session, *args):
@@ -48,7 +48,7 @@ class UserController:
             password = args[0]['password']
             user = session.query(User).filter(
                 User.username == username).one()
-            if is_password_valid(user.password,password):
+            if is_password_valid(user.password, password):
                 exp = time() + 24 * 3600
                 payload = {
                     'user_id'  : user.id,
@@ -59,10 +59,10 @@ class UserController:
                     'position' : str(user.position.serialize()),
                     'exp'      : exp
                 }
-                return { 
+                return {
                     "token": jwt.encode(payload, VarConfig.get()['password'], algorithm='HS256').decode('utf-8')
                 }
         except sqlalchemy.orm.exc.NoResultFound:
             pass
 
-            raise LoginError
+        raise LoginError

@@ -75,7 +75,7 @@ class User(Base):
     def is_valid_instances(self,objs):
         is_valid = True
         for obj in objs:
-            if(not(is_valid_instance(obj))): 
+            if(not(is_valid_instance(obj))):
                 is_valid = False
                 break
         return is_valid
