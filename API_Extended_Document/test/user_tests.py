@@ -116,12 +116,12 @@ class UserTest:
         make_test(lambda: UserController.login({
             'username': 'John_Doe',
             'password': 'pwd1'
-        }))(UserTest, 'Login with wrong pwd', False)
+        }))(UserTest, 'Login with wrong pwd', True)
 
         make_test(lambda: UserController.login({
             'username': 'John_Doe',
             'password': ''
-        }))(UserTest, 'Login with empty pwd', False)
+        }))(UserTest, 'Login with empty pwd', True)
 
         make_test(lambda: UserController.login({
             'username': 'John_Doe'

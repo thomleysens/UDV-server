@@ -1,6 +1,5 @@
 ExtractCityData/db_config.yml
 UDV_server.egg-info
-~/__pycache__/*
 API_Extended_Document/log/*
 API_Extended_Document/Dockerfile
 venv
