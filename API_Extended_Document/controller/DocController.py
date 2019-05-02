@@ -10,6 +10,7 @@ from util.db_config import *
 from entities.MetaData import MetaData
 from entities.ExtendedDocument import ExtendedDocument
 from entities.ToValidateDoc import ToValidateDoc
+from entities.ValidDoc import ValidDoc
 import persistence_unit.PersistenceUnit as pUnit
 
 
@@ -100,7 +101,7 @@ class DocController:
         query = session.query(ExtendedDocument).join(
             MetaData).filter_by(**attributes).filter(
             and_(*comparison_conditions)).filter(
-            or_(*keyword_conditions))
+            or_(*keyword_conditions)).join(ValidDoc)
 
         return query.all()
 

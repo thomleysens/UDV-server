@@ -1,12 +1,12 @@
-[ERROR] 2019-05-02 06:14:51,093 : (psycopg2.errors.NotNullViolation) null value in column "subject" violates not-null constraint
+[ERROR] 2019-05-02 06:39:26,316 : (psycopg2.errors.NotNullViolation) null value in column "subject" violates not-null constraint
 DETAIL:  Failing row contains (6, another title, null, null, null, null, null, null, null).
 
 [SQL: INSERT INTO metadata (id, title, subject, description, "refDate", "publicationDate", type, link, "originalName") VALUES (%(id)s, %(title)s, %(subject)s, %(description)s, %(refDate)s, %(publicationDate)s, %(type)s, %(link)s, %(originalName)s)]
 [parameters: {'id': 6, 'title': 'another title', 'subject': None, 'description': None, 'refDate': None, 'publicationDate': None, 'type': None, 'link': None, 'originalName': None}]
 (Background on this error at: http://sqlalche.me/e/gkpj)
-[ERROR] 2019-05-02 06:14:51,180 : No row was found for one()
-[ERROR] 2019-05-02 06:14:51,232 : No row was found for one()
-[ERROR] 2019-05-02 06:14:51,291 : No row was found for one()
-[ERROR] 2019-05-02 06:14:51,295 : [Errno 2] No such file or directory: 'upload/1.gif'
-[ERROR] 2019-05-02 06:14:51,299 : [Errno 2] No such file or directory: 'upload/1.gif'
-[ERROR] 2019-05-02 06:14:51,367 : No row was found for one()
+[ERROR] 2019-05-02 06:39:26,393 : No row was found for one()
+[ERROR] 2019-05-02 06:39:26,439 : No row was found for one()
+[ERROR] 2019-05-02 06:39:26,498 : No row was found for one()
+[ERROR] 2019-05-02 06:39:26,504 : [Errno 2] No such file or directory: 'upload/1.gif'
+[ERROR] 2019-05-02 06:39:26,508 : [Errno 2] No such file or directory: 'upload/1.gif'
+[ERROR] 2019-05-02 06:39:26,557 : No row was found for one()
