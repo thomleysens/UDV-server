@@ -26,17 +26,30 @@ class UserController:
     @staticmethod
     @pUnit.make_a_transaction
     def create_user(session, *args):
+        attributes = args[0]
         user = User()
         user.set_position(session.query(Position).filter(
-            Position.label == Position.getClearanceLevel(0)).one())
-        user.update(args[0])
+            Position.label == Position.getClearance(0)).one())
+        user.update(attributes)
+        session.add(user)
+        return user
+
+    @staticmethod
+    @pUnit.make_a_transaction
+    def create_privileged_user(session, *args):
+        attributes = args[0]
+        user = User()
+        user.set_position(session.query(Position).filter(
+            Position.label == attributes["role"]).one())
+        user.update(attributes)
         session.add(user)
         return user
 
     @staticmethod
     @pUnit.make_a_query
     def get_user_by_id(session, *args):
-        user_id = args[0]
+        attributes = args[0]
+        user_id = attributes
         return session.query(User).filter(
             User.id == user_id).one()
 
@@ -44,8 +57,9 @@ class UserController:
     @pUnit.make_a_transaction
     def login(session, *args):
         try:
-            username = args[0]['username']
-            password = args[0]['password']
+            attributes = args[0]
+            username = attributes['username']
+            password = attributes['password']
             user = session.query(User).filter(
                 User.username == username).one()
             if is_password_valid(user.password, password):

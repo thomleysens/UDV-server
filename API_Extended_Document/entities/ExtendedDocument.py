@@ -7,6 +7,7 @@ from sqlalchemy.orm import relationship
 from entities.MetaData import MetaData
 from entities.Visualisation import Visualisation
 from entities.ValidDoc import ValidDoc
+from entities.Position import Position
 from entities.ToValidateDoc import ToValidateDoc
 from util.db_config import Base
 from util.serialize import serialize
@@ -39,7 +40,7 @@ class ExtendedDocument(Base):
     def __init__(self, attributes):
         self.metaData = MetaData()
         self.visualization = Visualisation()
-        if (attributes["validation"]):
+        if (ExtendedDocument.isAllowed(attributes)):
             self.valid_doc = ValidDoc()
         else:
             self.to_validate_doc = ToValidateDoc()
@@ -60,16 +61,34 @@ class ExtendedDocument(Base):
             serialized_object[attr] = serialize(getattr(self, attr))
         return serialized_object
 
+    def update_initial(self, attributes):
+        self.metaData.update(attributes)
+        self.visualization.update(attributes)
+        for attKey, attVal in attributes.items():
+            if hasattr(self, attKey):
+                setattr(self, attKey, attVal)
+        if (ExtendedDocument.isAllowed(attributes)):
+            self.valid_doc.update(attributes)
+        else:
+            self.to_validate_doc.update(attributes)
+
+        return self
+
     def update(self, attributes):
         self.metaData.update(attributes)
         self.visualization.update(attributes)
         for attKey, attVal in attributes.items():
             if hasattr(self, attKey):
                 setattr(self, attKey, attVal)
-
-        if (attributes["validation"]):
-            self.valid_doc.update(attributes)
-        else:
-            self.to_validate_doc.update(attributes)
+            if self.valid_doc:
+                self.valid_doc.update(attributes)
+            if self.to_validate_doc:
+                self.to_validate_doc.update(attributes)
 
         return self
+
+    @staticmethod
+    def isAllowed(attributes):
+        role = attributes['position']
+        level = Position.getClearanceLevel(role)
+        return (level > Position.LEVEL_MIN)

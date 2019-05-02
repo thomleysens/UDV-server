@@ -118,19 +118,26 @@ def create_guided_tour():
 
 @app.route('/addUser', methods=['POST'])
 def create_user():
-<<<<<<< HEAD
-    #TODO : Add some verifications
-=======
-    # TODO : Add some verifications
-    print('argument  ',
-          {key: request.form.get(key) for key in request.form.keys()})
->>>>>>> 6438a0d7624017340429c61d83978dbd7535cea1
     return send_response(
         lambda: UserController.create_user(
             {key: request.form.get(key) for key in
              request.form.keys()}))()
 
-
+@app.route('/addPrivilegedUser', methods=['POST'])
+def add_Privileged_User():
+    '''payload = jwt.decode(request.form.get('Authentication'),
+                        VarConfig.get()['password'],
+                        algorithms=['HS256'])
+    if payload:
+    '''
+    args = {key: request.form.get(key) for key in request.form.keys()}
+    #args['user_id'] = payload['user_id']
+    return send_response(
+        lambda: UserController.create_privileged_user(args))()
+    '''
+     else:
+        raise AuthError
+    '''
 @app.route('/login', methods=['POST'])
 def login():
     print('login')
@@ -165,6 +172,21 @@ def get_documents():
             {key: request.args.get(key)
              for key in request.args.keys()}))()
 
+
+
+@app.route('/getDocuments_to_validate', methods=['GET', 'POST'])
+def get_documents_to_validate():
+    payload = jwt.decode(request.form.get('Authentication'),
+                        VarConfig.get()['password'],
+                        algorithms=['HS256'])
+    if payload:
+        args = {key: request.form.get(key) for key in request.form.keys()}
+        args['user_id'] = payload['user_id']
+        print(args)
+        return send_response(
+            lambda: DocController.get_documents_to_validate(args))()
+    else:
+        raise AuthError
 
 @app.route('/getGuidedTours', methods=['GET', 'POST'])
 def get_all_guided_tours():

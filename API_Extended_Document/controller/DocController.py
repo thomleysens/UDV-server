@@ -6,8 +6,10 @@ from sqlalchemy import or_, and_
 from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
 from util.log import *
 from util.upload import UPLOAD_FOLDER
+from util.Exception import *
 from util.db_config import *
 from entities.MetaData import MetaData
+from entities.User import User
 from entities.ExtendedDocument import ExtendedDocument
 from entities.ToValidateDoc import ToValidateDoc
 from entities.ValidDoc import ValidDoc
@@ -29,8 +31,10 @@ class DocController:
     @pUnit.make_a_transaction
     def create_document(session, *args):
         attributes = args[0]
+        user = session.query(User).filter(User.id == attributes['user_id']).one()
+        attributes['position'] = user.position.label
         document = ExtendedDocument(attributes)
-        document.update(attributes)
+        document.update_initial(attributes)
         session.add(document)
         return document
 
@@ -39,14 +43,19 @@ class DocController:
     def validate_document(session, *args):
         attributes = args[0]
         id = attributes["id"]
-        document = session.query(ExtendedDocument).filter(
-            ExtendedDocument.id == id).one()
-        to_validate = session.query(ToValidateDoc).filter(
-            ToValidateDoc.id_to_validate == id).one()
-        document.validate(attributes)
-        session.delete(to_validate)
-        session.add(document)
-        return document
+        user = session.query(User).filter(User.id == attributes['user_id']).one()
+        attributes['position'] = user.position.label
+        if(ExtendedDocument.isAllowed(attributes)):
+            document = session.query(ExtendedDocument).filter(
+                ExtendedDocument.id == id).one()
+            to_validate = session.query(ToValidateDoc).filter(
+                ToValidateDoc.id_to_validate == id).one()
+            document.validate(attributes)
+            session.delete(to_validate)
+            session.add(document)
+            return document
+        else:
+            raise AuthError
 
     @staticmethod
     @pUnit.make_a_query
@@ -111,31 +120,46 @@ class DocController:
         """
         This method si used to get documents to validate
         """
-
-        query = session.query(ExtendedDocument).join(
-            ToValidateDoc)
-
-        return query.all()
+        attributes = args[0]
+        user = session.query(User).filter(User.id == attributes['user_id']).one()
+        attributes['position'] = user.position.label
+        if(ExtendedDocument.isAllowed(attributes)):
+            query = session.query(ExtendedDocument).join(ToValidateDoc)
+            return query.all()
+        else:
+            raise AuthError
 
     @staticmethod
     @pUnit.make_a_transaction
     def update_document(session, *args):
         doc_id = args[0]
         attributes = args[1]
-
+        user = session.query(User).filter(User.id == attributes['user_id']).one()
+        attributes['position'] = user.position.label
         document = session.query(ExtendedDocument) \
             .filter(ExtendedDocument.id == doc_id).one()
-        document.update(attributes)
-        session.add(document)
-
-        return document
+        #To change not supposed to be done in Controller
+        if(ExtendedDocument.isAllowed(attributes)):
+            document.update(attributes)
+            session.add(document)
+            return document
+        else:
+            raise AuthError
 
     @staticmethod
     @pUnit.make_a_transaction
     def delete_documents(session, *args):
         an_id = args[0]
+        attributes = args[1]
+        user = session.query(User).filter(User.id == attributes['user_id']).one()
+        attributes['position'] = user.position.label
+
         a_doc = session.query(ExtendedDocument).filter(
             ExtendedDocument.id == an_id).one()
-        # we also remove the associated image located in 'UPLOAD_FOLDER' directory
-        os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
-        session.delete(a_doc)
+        #To change not supposed to be done in Controller
+        if(ExtendedDocument.isAllowed(attributes)):
+            # we also remove the associated image located in 'UPLOAD_FOLDER' directory
+            os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
+            session.delete(a_doc)
+        else:
+            raise AuthError

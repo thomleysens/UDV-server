@@ -15,6 +15,8 @@ class Position(Base):
 
     clearance = ["contributor","softModerator","moderator","admin"]
 
+    LEVEL_MIN = 1
+
     def __init__(self, label):
         self.label = label
 
@@ -25,11 +27,18 @@ class Position(Base):
         return self
 
     @staticmethod
-    def getClearanceLevel(level):
+    def getClearance(level):
         if(level == int(level) and 0 <= level < len(Position.clearance)):
             return Position.clearance[level]
         else:
             return Position.clearance[0]
+
+    @staticmethod
+    def getClearanceLevel(role):
+        if(role in Position.clearance):
+            return Position.clearance.index(role)
+        else:
+            return None
 
     @classmethod
     def get_attr(cls, attr_name):
