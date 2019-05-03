@@ -94,14 +94,12 @@ class DocumentTest:
         }))(DocumentTest, 'needed argument missing', True)
 
         print('\033[01m## validation ##\033[0m')
-        make_test(lambda: DocController.validate_document({
-            'id': 5,
-            'user_id' : 2
+        make_test(lambda: DocController.validate_document(3,{
+            'user_id': 2
         }))(DocumentTest, 'document validation', True)
 
-        make_test(lambda: DocController.validate_document({
-            'id': 5,
-            'user_id' : 3
+        make_test(lambda: DocController.validate_document(3,{
+            'user_id': 1
         }))(DocumentTest, 'document validation', False)
 
     @staticmethod
@@ -117,11 +115,11 @@ class DocumentTest:
         }))(DocumentTest, 'specific documents', False)
 
         make_test(lambda: DocController.get_documents_to_validate({
-            'user_id':2
-        }))(DocumentTest, 'to validate documents', True)
+            'user_id':3
+        }))(DocumentTest, 'to validate documents', False)
 
         make_test(lambda: DocController.get_documents_to_validate({
-            'user_id':3
+            'user_id':1
         }))(DocumentTest, 'to validate documents', False)
 
         make_test(lambda: DocController.get_document_by_id(1))(
@@ -170,7 +168,6 @@ if __name__ == '__main__':
     DocumentTest.read_documents()
     DocumentTest.update_documents()
     DocumentTest.delete_documents()
-
 
     print('\n\n\033[04mSuccess\033[01m: ',
           DocumentTest.nb_tests_succeed, '/',
