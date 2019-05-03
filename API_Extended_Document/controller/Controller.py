@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-import persistence_unit.PersistenceUnit as pUnit
 from util.db_config import *
-from entities.GuidedTour import GuidedTour
+import persistence_unit.PersistenceUnit as pUnit
+from controller.UserController import UserController
+from controller.PositionController import PositionController
+
+from entities.User import User
 from entities.Position import Position
+from entities.GuidedTour import GuidedTour
+from entities.ExtendedDocument import ExtendedDocument
 from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
 
 
@@ -19,16 +24,6 @@ class Controller:
     """
 
     @staticmethod
-    @pUnit.make_a_transaction
-    def create_position(session, label):
-        position_exist = session.query(Position).filter(
-            Position.label == label).scalar() is not None
-
-        if not position_exist:
-            position = Position(label)
-            session.add(position)
-
-    @staticmethod
     def recreate_tables():
         Base.metadata.drop_all(pUnit.engine)
         Controller.create_tables()
@@ -36,7 +31,5 @@ class Controller:
     @staticmethod
     def create_tables():
         Base.metadata.create_all(pUnit.engine)
-        Controller.create_position("admin")
-        Controller.create_position("moderator")
-        Controller.create_position("softModerator")
-        Controller.create_position("contributor")
+        PositionController.create_all_positions()
+        UserController.create_admin()

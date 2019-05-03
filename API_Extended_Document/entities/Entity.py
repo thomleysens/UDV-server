@@ -1,46 +1,15 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-from sqlalchemy import Column, Integer, String
-
-from util.db_config import Base
 from util.serialize import serialize
 
 
-class Position(Base):
-    __tablename__ = "position"
-
-    id = Column(Integer, primary_key=True)
-    label = Column(String)
-
-    clearance = ["contributor", "softModerator", "moderator", "admin"]
-
-    LEVEL_MIN = 1
-    LEVEL_MAX = 3
-
-    def __init__(self, label):
-        self.label = label
-
+class Entity:
     def update(self, new_values):
         for attKey, attVal in new_values.items():
             if hasattr(self, attKey):
                 setattr(self, attKey, attVal)
         return self
-
-    @staticmethod
-    def get_clearance(level):
-        if (level == int(level) and 0 <= level < len(
-                Position.clearance)):
-            return Position.clearance[level]
-        else:
-            return Position.clearance[0]
-
-    @staticmethod
-    def get_clearance_level(role):
-        if role in Position.clearance:
-            return Position.clearance.index(role)
-        else:
-            return None
 
     @classmethod
     def get_attr(cls, attr_name):

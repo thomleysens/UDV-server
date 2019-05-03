@@ -12,26 +12,27 @@ from entities.ToValidateDoc import ToValidateDoc
 from util.db_config import Base
 from util.serialize import serialize
 
+
 class ExtendedDocument(Base):
     __tablename__ = "extended_document"
 
     id = Column(Integer, primary_key=True)
 
     user_id = Column(Integer,
-                    ForeignKey("user.id"),
-                    nullable=False)
+                     ForeignKey("user.id"),
+                     nullable=False)
 
     metaData = relationship("MetaData",
                             uselist=False,
                             cascade="all, delete-orphan")
 
     valid_doc = relationship("ValidDoc",
-                            uselist=False,
-                            cascade="all, delete-orphan")
+                             uselist=False,
+                             cascade="all, delete-orphan")
 
     to_validate_doc = relationship("ToValidateDoc",
-                            uselist=False,
-                            cascade="all, delete-orphan")
+                                   uselist=False,
+                                   cascade="all, delete-orphan")
 
     visualization = relationship("Visualisation",
                                  uselist=False,
@@ -40,14 +41,14 @@ class ExtendedDocument(Base):
     def __init__(self, attributes):
         self.metaData = MetaData()
         self.visualization = Visualisation()
-        if (ExtendedDocument.isAllowed(attributes)):
+        if ExtendedDocument.is_allowed(attributes):
             self.valid_doc = ValidDoc()
         else:
             self.to_validate_doc = ToValidateDoc()
 
     def validate(self, attributes):
-            self.valid_doc = ValidDoc()
-            self.valid_doc.update(attributes)
+        self.valid_doc = ValidDoc()
+        self.valid_doc.update(attributes)
 
     def get_all_attr(self):
         return {i for i in dir(self)
@@ -67,7 +68,7 @@ class ExtendedDocument(Base):
         for attKey, attVal in attributes.items():
             if hasattr(self, attKey):
                 setattr(self, attKey, attVal)
-        if (ExtendedDocument.isAllowed(attributes)):
+        if ExtendedDocument.is_allowed(attributes):
             self.valid_doc.update(attributes)
         else:
             self.to_validate_doc.update(attributes)
@@ -88,7 +89,7 @@ class ExtendedDocument(Base):
         return self
 
     @staticmethod
-    def isAllowed(attributes):
+    def is_allowed(attributes):
         role = attributes['position']
-        level = Position.getClearanceLevel(role)
-        return (level > Position.LEVEL_MIN)
+        level = Position.get_clearance_level(role)
+        return level > Position.LEVEL_MIN

@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-import sqlalchemy.orm
 from time import time
-import jwt
 
 from util.Exception import LoginError
 from util.encryption import *
 
-from controller.Controller import Controller
-import persistence_unit.PersistenceUnit as pUnit
 from entities.User import User
 from entities.Position import Position
+import persistence_unit.PersistenceUnit as pUnit
+
 
 class UserController:
     """
@@ -29,7 +27,7 @@ class UserController:
         attributes = args[0]
         user = User()
         user.set_position(session.query(Position).filter(
-            Position.label == Position.getClearance(0)).one())
+            Position.label == Position.get_clearance(0)).one())
         user.update(attributes)
         session.add(user)
         return user
@@ -38,12 +36,18 @@ class UserController:
     @pUnit.make_a_transaction
     def create_privileged_user(session, *args):
         attributes = args[0]
-        user = User()
-        user.set_position(session.query(Position).filter(
-            Position.label == attributes["role"]).one())
-        user.update(attributes)
-        session.add(user)
-        return user
+        admin = session.query(User).filter(
+            User.id == attributes['user_id']).one()
+        position = admin.position.label
+        if User.is_admin(position):
+            user = User()
+            user.set_position(session.query(Position).filter(
+                Position.label == attributes["role"]).one())
+            user.update(attributes)
+            session.add(user)
+            return user
+        else:
+            raise AuthError
 
     @staticmethod
     @pUnit.make_a_query
@@ -65,18 +69,47 @@ class UserController:
             if is_password_valid(user.password, password):
                 exp = time() + 24 * 3600
                 payload = {
-                    'user_id'  : user.id,
-                    'username' : user.username,
+                    'user_id': user.id,
+                    'username': user.username,
                     'firstName': user.firstName,
-                    'lastName' : user.lastName,
-                    'email'    : user.email,
-                    'position' : str(user.position.serialize()),
-                    'exp'      : exp
+                    'lastName': user.lastName,
+                    'email': user.email,
+                    'position': str(user.position.serialize()),
+                    'exp': exp
                 }
                 return {
-                    "token": jwt.encode(payload, VarConfig.get()['password'], algorithm='HS256').decode('utf-8')
+                    "token": jwt.encode(
+                        payload, VarConfig.get()['password'],
+                        algorithm='HS256').decode('utf-8')
                 }
-        except sqlalchemy.orm.exc.NoResultFound:
-            pass
+            else:
+                raise LoginError
+        except Exception:
+            raise LoginError
 
-        raise LoginError
+    @staticmethod
+    @pUnit.make_a_transaction
+    def create_privileged_user(session, *args):
+        attributes = args[0]
+        user = User()
+        user.set_position(session.query(Position).filter(
+            Position.label == attributes["role"]).one())
+        user.update(attributes)
+        session.add(user)
+        return user
+
+    @staticmethod
+    @pUnit.make_a_transaction
+    def create_admin(session):
+        print('try to create admin')
+        user_exist = session.query(User).scalar() is not None
+        if not user_exist:
+            attributes = {
+                "email": "gilles.gesquiere@insa-lyon.fr",
+                "firstName": "Gilles",
+                "lastName": "Gesquière",
+                "password": "MEPP2019",
+                "role": "admin",
+                "username": "admin_gilles"
+            }
+            UserController.create_privileged_user(attributes)
