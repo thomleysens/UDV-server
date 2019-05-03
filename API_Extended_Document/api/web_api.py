@@ -150,7 +150,6 @@ def add_Privileged_User():
 
 @app.route('/login', methods=['POST'])
 def login():
-    print('login')
     return send_response(
         lambda: UserController.login(
             {key: request.form.get(key) for key in
@@ -192,7 +191,6 @@ def get_documents_to_validate():
     if payload:
         args = {key: request.form.get(key) for key in request.form.keys()}
         args['user_id'] = payload['user_id']
-        print(args)
         return send_response(
             lambda: DocController.get_documents_to_validate(args))()
     else:
@@ -210,19 +208,21 @@ def update_document(doc_id):
                         VarConfig.get()['password'],
                         algorithms=['HS256'])
     if payload:
+        args = {key: request.form.get(key) for key in request.form.keys()}
+        args['user_id'] = payload['user_id']
         return send_response(
-            lambda: DocController.update_document(doc_id, request.form))()
+            lambda: DocController.update_document(doc_id, args))()
     else:
         raise AuthError
 
-@app.route('/validateDocument/<int:doc_id>', methods=['POST'])
+@app.route('/validateDocument/<int:doc_id>', methods=['GET'])
 def validate_document(doc_id):
     payload = jwt.decode(request.headers.get('Authorization'),
                         VarConfig.get()['password'],
                         algorithms=['HS256'])
     if payload:
         return send_response(
-            lambda: DocController.validateDocument(doc_id, request.form))()
+            lambda: DocController.validate_document(doc_id, {'user_id' : int(payload['user_id']) }))()
     else:
         raise AuthError
 
@@ -265,7 +265,7 @@ def delete_document(doc_id):
                         algorithms=['HS256'])
     if payload:
         return send_response(
-            lambda: DocController.delete_documents(doc_id))()
+            lambda: DocController.delete_documents(doc_id, {'user_id' : int(payload['user_id']) } ))()
     else:
         raise AuthError
 
@@ -301,5 +301,5 @@ def get_uploaded_file(filename):
 
 
 if __name__ == '__main__':
-    Controller.create_tables()
+    Controller.recreate_tables()
     app.run(debug=True, host='0.0.0.0')

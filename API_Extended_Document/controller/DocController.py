@@ -41,8 +41,8 @@ class DocController:
     @staticmethod
     @pUnit.make_a_transaction
     def validate_document(session, *args):
-        attributes = args[0]
-        id = attributes["id"]
+        id = args[0]
+        attributes = args[1] 
         user = session.query(User).filter(User.id == attributes['user_id']).one()
         attributes['position'] = user.position.label
         if(ExtendedDocument.isAllowed(attributes)):
@@ -127,7 +127,7 @@ class DocController:
             query = session.query(ExtendedDocument).join(ToValidateDoc)
             return query.all()
         else:
-            query = session.query(ExtendedDocument).join(ToValidateDoc).join(session.query(User).filter(User.id == attributes['user_id']).one())
+            query = session.query(ExtendedDocument).join(ToValidateDoc).filter(ExtendedDocument.user_id == attributes['user_id'])
             return query.all()
 
     @staticmethod
@@ -162,7 +162,7 @@ class DocController:
             os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
             session.delete(a_doc)
         else:
-            a_doc = session.query(ExtendedDocument).filter(
-                ExtendedDocument.id == an_id).one().join(session.query(User).filter(User.id == attributes['user_id']).one())
+            a_doc = session.query(ExtendedDocument).filter(and_(
+                ExtendedDocument.id == an_id  , ExtendedDocument.user_id == attributes['user_id'])).one()
             os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
             session.delete(a_doc)

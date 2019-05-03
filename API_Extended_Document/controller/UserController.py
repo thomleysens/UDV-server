@@ -67,6 +67,7 @@ class UserController:
             password = attributes['password']
             user = session.query(User).filter(
                 User.username == username).one()
+            print(user.username) 
             if is_password_valid(user.password, password):
                 exp = time() + 24 * 3600
                 payload = {
