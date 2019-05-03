@@ -206,9 +206,25 @@ def get_all_guided_tours():
 
 @app.route('/editDocument/<int:doc_id>', methods=['POST'])
 def update_document(doc_id):
-    return send_response(
-        lambda: DocController.update_document(doc_id, request.form))()
+    payload = jwt.decode(request.headers.get('Authorization'),
+                        VarConfig.get()['password'],
+                        algorithms=['HS256'])
+    if payload:
+        return send_response(
+            lambda: DocController.update_document(doc_id, request.form))()
+    else:
+        raise AuthError
 
+@app.route('/validateDocument/<int:doc_id>', methods=['POST'])
+def validate_document(doc_id):
+    payload = jwt.decode(request.headers.get('Authorization'),
+                        VarConfig.get()['password'],
+                        algorithms=['HS256'])
+    if payload:
+        return send_response(
+            lambda: DocController.validateDocument(doc_id, request.form))()
+    else:
+        raise AuthError
 
 @app.route('/addDocumentToGuidedTour')
 def add_document_to_guided_tour():

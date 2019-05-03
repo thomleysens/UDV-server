@@ -127,7 +127,8 @@ class DocController:
             query = session.query(ExtendedDocument).join(ToValidateDoc)
             return query.all()
         else:
-            raise AuthError
+            query = session.query(ExtendedDocument).join(ToValidateDoc).join(session.query(User).filter(User.id == attributes['user_id']).one())
+            return query.all()
 
     @staticmethod
     @pUnit.make_a_transaction
@@ -153,13 +154,15 @@ class DocController:
         attributes = args[1]
         user = session.query(User).filter(User.id == attributes['user_id']).one()
         attributes['position'] = user.position.label
-
-        a_doc = session.query(ExtendedDocument).filter(
-            ExtendedDocument.id == an_id).one()
         #To change not supposed to be done in Controller
         if(ExtendedDocument.isAllowed(attributes)):
             # we also remove the associated image located in 'UPLOAD_FOLDER' directory
+            a_doc = session.query(ExtendedDocument).filter(
+                ExtendedDocument.id == an_id).one()
             os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
             session.delete(a_doc)
         else:
-            raise AuthError
+            a_doc = session.query(ExtendedDocument).filter(
+                ExtendedDocument.id == an_id).one().join(session.query(User).filter(User.id == attributes['user_id']).one())
+            os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
+            session.delete(a_doc)

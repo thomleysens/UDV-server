@@ -53,5 +53,5 @@ class Controller:
         Controller.create_position("softModerator")
         Controller.create_position("contributor")
         attributes = {"email": "gilles.gesquiere@insa-lyon.fr", "firstName": "Gilles", "lastName": "Gesquière",\
-        "password": "MEPP2019", "role": "admin", "username": " admin_gilles"}
+        "password": "MEPP2019", "role": "admin", "username": "admin_gilles"}
         Controller.create_privileged_user(attributes)
