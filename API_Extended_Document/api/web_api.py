@@ -74,7 +74,7 @@ def index():
     '''
 
 def is_connected(*args):
-    encoded_JWT = args[0]["Authentication"]
+    encoded_JWT = args[0]["Authorization"]
     if jwt:
         payload = jwt.decode(encoded_JWT,
                             VarConfig.get()['password'],
@@ -86,7 +86,7 @@ def is_connected(*args):
 @app.route('/addDocument', methods=['POST'])
 def create_document():
     def creation():
-        payload = jwt.decode(request.form.get('Authentication'),
+        payload = jwt.decode(request.headers.get('Authorization'),
                             VarConfig.get()['password'],
                             algorithms=['HS256'])
         if payload:
@@ -125,19 +125,19 @@ def create_user():
 
 @app.route('/addPrivilegedUser', methods=['POST'])
 def add_Privileged_User():
-    '''payload = jwt.decode(request.form.get('Authentication'),
-                        VarConfig.get()['password'],
-                        algorithms=['HS256'])
+    payload = jwt.decode(request.headers.get('Authorization'),
+                    VarConfig.get()['password'],
+                    algorithms=['HS256'])
     if payload:
-    '''
-    args = {key: request.form.get(key) for key in request.form.keys()}
-    #args['user_id'] = payload['user_id']
-    return send_response(
-        lambda: UserController.create_privileged_user(args))()
-    '''
-     else:
+
+        args = {key: request.form.get(key) for key in request.form.keys()}
+        args['user_id'] = payload['user_id']
+        return send_response(
+            lambda: UserController.create_privileged_user(args))()
+
+    else:
         raise AuthError
-    '''
+
 @app.route('/login', methods=['POST'])
 def login():
     print('login')
@@ -176,7 +176,7 @@ def get_documents():
 
 @app.route('/getDocuments_to_validate', methods=['GET', 'POST'])
 def get_documents_to_validate():
-    payload = jwt.decode(request.form.get('Authentication'),
+    payload = jwt.decode(request.headers.get('Authorization'),
                         VarConfig.get()['password'],
                         algorithms=['HS256'])
     if payload:
@@ -234,8 +234,15 @@ def delete_tour(doc_id):
 
 @app.route('/deleteDocument/<int:doc_id>')
 def delete_document(doc_id):
-    return send_response(
-        lambda: DocController.delete_documents(doc_id))()
+    payload = jwt.decode(request.headers.get('Authorization'),
+                        VarConfig.get()['password'],
+                        algorithms=['HS256'])
+    if payload:
+        return send_response(
+            lambda: DocController.delete_documents(doc_id))()
+    else:
+        raise AuthError
+
 
 
 @app.route('/uploadFile/<int:doc_id>', methods=['GET', 'POST'])

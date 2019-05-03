@@ -16,6 +16,7 @@ class Position(Base):
     clearance = ["contributor","softModerator","moderator","admin"]
 
     LEVEL_MIN = 1
+    LEVEL_MAX = 3
 
     def __init__(self, label):
         self.label = label

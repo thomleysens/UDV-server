@@ -38,12 +38,17 @@ class UserController:
     @pUnit.make_a_transaction
     def create_privileged_user(session, *args):
         attributes = args[0]
-        user = User()
-        user.set_position(session.query(Position).filter(
-            Position.label == attributes["role"]).one())
-        user.update(attributes)
-        session.add(user)
-        return user
+        admin = session.query(User).filter(User.id == attributes['user_id']).one()
+        position = admin.position.label
+        if(User.isAdmin(position)):
+            user = User()
+            user.set_position(session.query(Position).filter(
+                Position.label == attributes["role"]).one())
+            user.update(attributes)
+            session.add(user)
+            return user
+        else:
+            raise AuthError
 
     @staticmethod
     @pUnit.make_a_query

@@ -85,3 +85,8 @@ class User(Base):
         for attr in self.get_all_attr():
             serialized_object[attr] = serialize(getattr(self, attr))
         return serialized_object
+
+    @staticmethod
+    def isAdmin(position):
+        level = Position.getClearanceLevel(position)
+        return (level == Position.LEVEL_MAX)

@@ -92,3 +92,5 @@ class ExtendedDocument(Base):
         role = attributes['position']
         level = Position.getClearanceLevel(role)
         return (level > Position.LEVEL_MIN)
+
+    
