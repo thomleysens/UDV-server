@@ -19,3 +19,20 @@ class PositionController:
     @pUnit.make_a_query
     def get_positions(session):
         return session.query(Position).all()
+
+    @staticmethod
+    @pUnit.make_a_transaction
+    def create_position(session, label):
+        position_exist = session.query(Position).filter(
+            Position.label == label).scalar() is not None
+
+        if not position_exist:
+            position = Position(label)
+            session.add(position)
+
+    @staticmethod
+    def create_all_positions():
+        PositionController.create_position("admin")
+        PositionController.create_position("moderator")
+        PositionController.create_position("softModerator")
+        PositionController.create_position("contributor")

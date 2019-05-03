@@ -6,6 +6,7 @@ from controller.UserController import UserController
 
 from test.test_functions import *
 
+
 class UserTest:
     nb_tests = 0
     nb_tests_succeed = 0
@@ -32,7 +33,6 @@ class UserTest:
             'email': 'John_Doe@mail.com'
         }))(UserTest, 'Empty username', True)
 
-
         make_test(lambda: UserController.create_user({
             'username': 'John_Doe1',
             'password': 'pwd',
@@ -40,7 +40,6 @@ class UserTest:
             'lastName': '',
             'email': 'John_Doe@mail.com1'
         }))(UserTest, 'Empty field', True)
-
 
         make_test(lambda: UserController.create_user({
             'username': 'John_Doe1',
@@ -67,7 +66,6 @@ class UserTest:
             'email': 'John_Doe@mail.com123',
         }))(UserTest, 'Add Duplicate Param Takes the last one', False)
 
-
         make_test(lambda: UserController.create_user({
             'username': 'John_Doe',
             'password': 'pwd',
@@ -75,7 +73,6 @@ class UserTest:
             'lastName': 'Doe',
             'email': 'John_Doe@mail.com1'
         }))(UserTest, 'Duplicate username', True)
-
 
         make_test(lambda: UserController.create_user({
             'username': 'John_Doe123',
@@ -151,6 +148,7 @@ class UserTest:
 
         make_test(lambda: UserController.login({
         }))(UserTest, 'Login with all missing fields', True)
+
 
 if __name__ == '__main__':
     Controller.recreate_tables()

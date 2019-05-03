@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-from json import dumps
-
 from sqlalchemy import Column, Integer, ForeignKey, String
 from sqlalchemy.orm import relationship
 

@@ -11,7 +11,7 @@ class ToValidateDoc(Base):
     __tablename__ = "to_validate_doc"
 
     id_to_validate = Column(Integer, ForeignKey('extended_document.id'),
-                primary_key=True)
+                            primary_key=True)
 
     def update(self, new_values):
         for attKey, attVal in new_values.items():
