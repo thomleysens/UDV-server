@@ -139,12 +139,10 @@ def add_Privileged_User():
                     VarConfig.get()['password'],
                     algorithms=['HS256'])
     if payload:
-
         args = {key: request.form.get(key) for key in request.form.keys()}
         args['user_id'] = payload['user_id']
         return send_response(
             lambda: UserController.create_privileged_user(args))()
-
     else:
         raise AuthError
 
@@ -301,5 +299,5 @@ def get_uploaded_file(filename):
 
 
 if __name__ == '__main__':
-    Controller.recreate_tables()
+    Controller.create_tables()
     app.run(debug=True, host='0.0.0.0')
