@@ -67,7 +67,6 @@ class UserController:
             password = attributes['password']
             user = session.query(User).filter(
                 User.username == username).one()
-            print(user.username) 
             if is_password_valid(user.password, password):
                 exp = time() + 24 * 3600
                 payload = {
@@ -82,7 +81,7 @@ class UserController:
                 return {
                     "token": jwt.encode(payload, VarConfig.get()['password'], algorithm='HS256').decode('utf-8')
                 }
-        except sqlalchemy.orm.exc.NoResultFound:
-            pass
-
-        raise LoginError
+            else:
+                raise LoginError
+        except Exception:
+            raise LoginError
