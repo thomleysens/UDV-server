@@ -135,6 +135,7 @@ def add_privileged_user():
     if payload:
         args = {key: request.form.get(key) for key in
                 request.form.keys()}
+        args['user_position'] = payload['position']['label']
         args['user_id'] = payload['user_id']
         return send_response(
             lambda: UserController.create_privileged_user(args))()
@@ -151,6 +152,7 @@ def create_document():
         if payload:
             args = {key: request.form.get(key) for key in
                     request.form.keys()}
+            args['user_position'] = payload['position']['label']
             args['user_id'] = payload['user_id']
             document = DocController.create_document(args)
             if request.files.get('link'):
@@ -203,6 +205,7 @@ def delete_document(doc_id):
     if payload:
         return send_response(
             lambda: DocController.delete_documents(doc_id, {
+                'user_position': payload['position']['label'],
                 'user_id': int(payload['user_id'])}))()
     else:
         raise AuthError
@@ -217,6 +220,7 @@ def validate_document():
         return send_response(
             lambda:
             DocController.validate_document(request.form['id'], {
+                'user_position': payload['position']['label'],
                 'user_id': int(payload['user_id'])}))()
     else:
         raise AuthError
@@ -230,6 +234,7 @@ def get_documents_to_validate():
     if payload:
         args = {key: request.form.get(key) for key in
                 request.form.keys()}
+        args['user_position'] = payload['position']['label']
         args['user_id'] = payload['user_id']
         return send_response(
             lambda: DocController.get_documents_to_validate(args))()
