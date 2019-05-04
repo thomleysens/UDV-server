@@ -167,8 +167,12 @@ class DocController:
             # located in 'UPLOAD_FOLDER' directory
             a_doc = session.query(ExtendedDocument).filter(
                 ExtendedDocument.id == an_id).one()
-            os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
             session.delete(a_doc)
+            try:
+                os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
+            except Exception as e:
+                print(e)
+                info_logger.error(e)
         else:
             a_doc = session.query(ExtendedDocument).filter(and_(
                 ExtendedDocument.id == an_id,
