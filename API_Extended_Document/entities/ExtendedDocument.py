@@ -4,16 +4,17 @@
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
+from util.db_config import Base
+from entities.Entity import Entity
+
 from entities.MetaData import MetaData
 from entities.Visualisation import Visualisation
 from entities.ValidDoc import ValidDoc
 from entities.Position import Position
 from entities.ToValidateDoc import ToValidateDoc
-from util.db_config import Base
-from util.serialize import serialize
 
 
-class ExtendedDocument(Base):
+class ExtendedDocument(Entity, Base):
     __tablename__ = "extended_document"
 
     id = Column(Integer, primary_key=True)
@@ -50,18 +51,6 @@ class ExtendedDocument(Base):
         self.valid_doc = ValidDoc()
         self.valid_doc.update(attributes)
 
-    def get_all_attr(self):
-        return {i for i in dir(self)
-                if not (i.startswith('_')
-                        or callable(getattr(self, i))
-                        or i == "metadata")}
-
-    def serialize(self):
-        serialized_object = {}
-        for attr in self.get_all_attr():
-            serialized_object[attr] = serialize(getattr(self, attr))
-        return serialized_object
-
     def update_initial(self, attributes):
         self.metaData.update(attributes)
         self.visualization.update(attributes)
@@ -90,6 +79,6 @@ class ExtendedDocument(Base):
 
     @staticmethod
     def is_allowed(attributes):
-        role = attributes['position']
+        role = attributes['user_position']
         level = Position.get_clearance_level(role)
         return level > Position.LEVEL_MIN

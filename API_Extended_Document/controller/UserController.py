@@ -36,9 +36,7 @@ class UserController:
     @pUnit.make_a_transaction
     def create_privileged_user(session, *args):
         attributes = args[0]
-        admin = session.query(User).filter(
-            User.id == attributes['user_id']).one()
-        position = admin.position.label
+        position = attributes["user_position"]
         if User.is_admin(position):
             user = User()
             user.set_position(session.query(Position).filter(
@@ -74,7 +72,7 @@ class UserController:
                     'firstName': user.firstName,
                     'lastName': user.lastName,
                     'email': user.email,
-                    'position': str(user.position.serialize()),
+                    'position': user.position.serialize(),
                     'exp': exp
                 }
                 return {
@@ -84,19 +82,8 @@ class UserController:
                 }
             else:
                 raise LoginError
-        except Exception:
+        except Exception as e:
             raise LoginError
-
-    @staticmethod
-    @pUnit.make_a_transaction
-    def create_privileged_user(session, *args):
-        attributes = args[0]
-        user = User()
-        user.set_position(session.query(Position).filter(
-            Position.label == attributes["role"]).one())
-        user.update(attributes)
-        session.add(user)
-        return user
 
     @staticmethod
     @pUnit.make_a_transaction
@@ -110,6 +97,7 @@ class UserController:
                 "lastName": "Gesquière",
                 "password": "MEPP2019",
                 "role": "admin",
-                "username": "admin_gilles"
+                "username": "admin_gilles",
+                "user_position": "admin"
             }
             UserController.create_privileged_user(attributes)

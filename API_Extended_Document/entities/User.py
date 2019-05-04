@@ -3,15 +3,15 @@
 
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
+from util.encryption import encrypt
+
+from util.db_config import Base
+from entities.Entity import Entity
 
 from entities.Position import Position
 
-from util.db_config import Base
-from util.encryption import *
-from util.serialize import serialize
 
-
-class User(Base):
+class User(Entity, Base):
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True)
@@ -42,24 +42,6 @@ class User(Base):
     def set_position(self, position):
         self.position = position
         self.position_id = position.id
-
-    @classmethod
-    def get_attr(cls, attr_name):
-        if hasattr(cls, attr_name):
-            return getattr(cls, attr_name)
-        return None
-
-    def get_all_attr(self):
-        return {i for i in dir(self)
-                if not (i.startswith('_')
-                        or callable(getattr(self, i))
-                        or i == "metadata")}
-
-    def serialize(self):
-        serialized_object = {}
-        for attr in self.get_all_attr():
-            serialized_object[attr] = serialize(getattr(self, attr))
-        return serialized_object
 
     @staticmethod
     def is_admin(position):

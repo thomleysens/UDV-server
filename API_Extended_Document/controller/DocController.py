@@ -31,9 +31,6 @@ class DocController:
     @pUnit.make_a_transaction
     def create_document(session, *args):
         attributes = args[0]
-        user = session.query(User).filter(
-            User.id == attributes['user_id']).one()
-        attributes['position'] = user.position.label
         document = ExtendedDocument(attributes)
         document.update_initial(attributes)
         session.add(document)
@@ -44,9 +41,6 @@ class DocController:
     def validate_document(session, *args):
         id = args[0]
         attributes = args[1]
-        user = session.query(User).filter(
-            User.id == attributes['user_id']).one()
-        attributes['position'] = user.position.label
         if ExtendedDocument.is_allowed(attributes):
             document = session.query(ExtendedDocument).filter(
                 ExtendedDocument.id == id).one()
@@ -123,9 +117,6 @@ class DocController:
         This method si used to get documents to validate
         """
         attributes = args[0]
-        user = session.query(User).filter(
-            User.id == attributes['user_id']).one()
-        attributes['position'] = user.position.label
         if ExtendedDocument.is_allowed(attributes):
             query = session.query(ExtendedDocument).join(ToValidateDoc)
             return query.all()
@@ -140,9 +131,6 @@ class DocController:
     def update_document(session, *args):
         doc_id = args[0]
         attributes = args[1]
-        user = session.query(User).filter(
-            User.id == attributes['user_id']).one()
-        attributes['position'] = user.position.label
         document = session.query(ExtendedDocument) \
             .filter(ExtendedDocument.id == doc_id).one()
         # To change not supposed to be done in Controller
@@ -158,17 +146,18 @@ class DocController:
     def delete_documents(session, *args):
         an_id = args[0]
         attributes = args[1]
-        user = session.query(User).filter(
-            User.id == attributes['user_id']).one()
-        attributes['position'] = user.position.label
         # To change not supposed to be done in Controller
         if ExtendedDocument.is_allowed(attributes):
             # we also remove the associated image
             # located in 'UPLOAD_FOLDER' directory
             a_doc = session.query(ExtendedDocument).filter(
                 ExtendedDocument.id == an_id).one()
-            os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
             session.delete(a_doc)
+            try:
+                os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
+            except Exception as e:
+                print(e)
+                info_logger.error(e)
         else:
             a_doc = session.query(ExtendedDocument).filter(and_(
                 ExtendedDocument.id == an_id,
