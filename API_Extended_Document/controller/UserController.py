@@ -72,7 +72,7 @@ class UserController:
                     'firstName': user.firstName,
                     'lastName': user.lastName,
                     'email': user.email,
-                    'position': str(user.position.serialize()),
+                    'position': user.position.serialize(),
                     'exp': exp
                 }
                 return {
