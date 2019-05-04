@@ -79,6 +79,6 @@ class ExtendedDocument(Entity, Base):
 
     @staticmethod
     def is_allowed(attributes):
-        role = attributes['position']
+        role = attributes['user_position']
         level = Position.get_clearance_level(role)
         return level > Position.LEVEL_MIN
