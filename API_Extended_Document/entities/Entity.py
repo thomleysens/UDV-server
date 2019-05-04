@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # coding: utf8
 
+
 from util.serialize import serialize
 
 
-class Entity:
+class Entity():
+
     def update(self, new_values):
         for attKey, attVal in new_values.items():
             if hasattr(self, attKey):
@@ -28,3 +30,6 @@ class Entity:
         for attr in self.get_all_attr():
             serialized_object[attr] = serialize(getattr(self, attr))
         return serialized_object
+
+    def __str__(self):
+        return str(self.serialize())
