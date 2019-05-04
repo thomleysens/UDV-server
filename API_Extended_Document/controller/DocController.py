@@ -107,6 +107,7 @@ class DocController:
             MetaData).filter_by(**attributes).filter(
             and_(*comparison_conditions)).filter(
             or_(*keyword_conditions)).join(ValidDoc)
+        print(query)
 
         return query.all()
 

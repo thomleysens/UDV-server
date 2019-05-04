@@ -89,7 +89,7 @@ class UserController:
     @pUnit.make_a_transaction
     def create_admin(session):
         print('try to create admin')
-        user_exist = session.query(User).scalar() is not None
+        user_exist = session.query(User).all() is not None
         if not user_exist:
             attributes = {
                 "email": "gilles.gesquiere@insa-lyon.fr",

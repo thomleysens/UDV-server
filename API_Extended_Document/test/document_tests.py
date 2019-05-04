@@ -38,7 +38,6 @@ class DocumentTest:
           "username": "thor"
         }))(UserTest, 'Creation with rights case', False)
 
-
         make_test(lambda: DocController.create_document({
             'user_id' : 1,
             "user_position": "admin",
