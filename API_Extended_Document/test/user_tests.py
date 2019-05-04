@@ -12,7 +12,6 @@ class UserTest:
     nb_tests_succeed = 0
 
     # @TODO: create a method to check the success of uploading a file
-
     @staticmethod
     def create_user():
         print('\033[01m## Creation ##\033[0m')
@@ -148,7 +147,6 @@ class UserTest:
 
         make_test(lambda: UserController.login({
         }))(UserTest, 'Login with all missing fields', True)
-
 
 if __name__ == '__main__':
     Controller.recreate_tables()
