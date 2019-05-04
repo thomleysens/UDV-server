@@ -122,6 +122,56 @@ def create_document():
 
     return send_response(creation)()
 
+@app.route('/document/<int:doc_id>/comment', methods=['POST'])
+def create_comment(doc_id):
+    def creation():
+        payload = jwt.decode(request.headers.get('Authorization'),
+                             VarConfig.get()['password'],
+                             algorithms=['HS256'])
+        if payload:
+            args = {key: request.form.get(key) for key in
+                    request.form.keys()}
+            args['user_position'] = payload['position']['label']
+            args['user_id'] = payload['user_id']
+            args['doc_id'] = doc_id
+            comment = CommentController.create_comment(args)
+            return comment
+        else:
+            raise LoginError
+
+    return send_response(creation)()
+
+@app.route('/document/<int:doc_id>/comment', methods=['GET'])
+def get_comment(doc_id):
+    return send_response(
+        lambda: CommentController.get_comments(doc_id))()
+
+@app.route('/comment/<int:comment_id>', methods=['PUT'])
+def update_comment(comment_id):
+    payload = jwt.decode(request.headers.get('Authorization'),
+                         VarConfig.get()['password'],
+                         algorithms=['HS256'])
+    if payload:
+        args = {key: request.form.get(key) for key in
+                request.form.keys()}
+        args['user_position'] = payload['position']['label']
+        args['user_id'] = payload['user_id']
+        return send_response(
+            lambda: CommentController.update_comment(comment_id, args))()
+    else:
+        raise AuthError
+
+@app.route('/comment/<int:comment_id>', methods=['DELETE'])
+def delete_comment(comment_id):
+    payload = jwt.decode(request.headers.get('Authorization'),
+                         VarConfig.get()['password'],
+                         algorithms=['HS256'])
+    if payload:
+        return send_response(
+            lambda: CommentController.delete_comment(comment_id, {
+                'user_position': payload['position']['label'], 'user_id': int(payload['user_id'])}))()
+    else:
+        raise AuthError
 
 @app.route('/addGuidedTour')
 def create_guided_tour():

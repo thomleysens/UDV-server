@@ -111,9 +111,7 @@ class TestComment:
                 'user_id': 1
             }
         ]
-        assert expected_response == CommentController.get_comments({
-            'doc_id' : 1,
-        })
+        assert expected_response == CommentController.get_comments(1)
 
 if __name__ == "__main__":
     TestComment().test_create_document()

@@ -11,6 +11,7 @@ from entities.Position import Position
 from entities.GuidedTour import GuidedTour
 from entities.ExtendedDocument import ExtendedDocument
 from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
+from entities.Comment import Comment
 
 
 class Controller:

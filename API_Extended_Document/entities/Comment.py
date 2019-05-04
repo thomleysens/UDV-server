@@ -8,7 +8,7 @@ from util.db_config import Base
 from entities.Entity import Entity
 
 
-class MetaData(Entity, Base):
+class Comment(Entity, Base):
     __tablename__ = "comments"
 
     id = Column(Integer, primary_key=True)

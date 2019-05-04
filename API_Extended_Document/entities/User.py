@@ -28,6 +28,10 @@ class User(Entity, Base):
     extended_document = relationship('ExtendedDocument',
                                      cascade="all, delete-orphan")
 
+    comments = relationship("Comment",
+                            uselist=False,
+                            cascade="all, delete-orphan")
+
     def update(self, new_values):
         for attKey, attVal in new_values.items():
             if hasattr(self, attKey):

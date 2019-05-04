@@ -39,10 +39,10 @@ class CommentController:
         """
         This method si used to make a research the comments of a document
         """
-        attributes = args[0]
+        doc_id = args[0]
 
         query = session.query(Comment).filter(
-            and_(Comment.doc_id == attributes["doc_id"]))
+            and_(Comment.doc_id == doc_id))
 
         return query.all()
 
