@@ -62,14 +62,9 @@ class UserController:
             attributes = args[0]
             username = attributes['username']
             password = attributes['password']
-            print(username)
-            print(password)
             user = session.query(User).filter(
                 User.username == username).one()
-            print(user.username)
-            print(user.password)
             if is_password_valid(user.password, password):
-                print('valid')
                 exp = time() + 24 * 3600
                 payload = {
                     'user_id': user.id,
@@ -86,11 +81,8 @@ class UserController:
                         algorithm='HS256').decode('utf-8')
                 }
             else:
-                print('pas_valid')
                 raise LoginError
         except Exception as e:
-            print('Exception :')
-            print(e)
             raise LoginError
 
     @staticmethod
