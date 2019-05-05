@@ -36,8 +36,10 @@ class UserController:
     @pUnit.make_a_transaction
     def create_privileged_user(session, *args):
         attributes = args[0]
-        position = attributes["user_position"]
-        if User.is_admin(position):
+        payload = args[1]
+        attributes['user_position'] = payload['position']['label']
+        attributes['user_id'] = payload['user_id']
+        if User.is_admin(attributes['user_position']):
             user = User()
             user.set_position(session.query(Position).filter(
                 Position.label == attributes["role"]).one())
@@ -92,7 +94,7 @@ class UserController:
         print('try to create admin')
         admin_exist = False
         for user in session.query(User).all():
-            if(user.username == 'admin_gilles'):
+            if (user.username == 'admin_gilles'):
                 admin_exist = True
         if not admin_exist:
             attributes = {

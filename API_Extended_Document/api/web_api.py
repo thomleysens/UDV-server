@@ -72,6 +72,7 @@ def is_connected(*args):
             return payload
     raise LoginError
 
+
 def get_my_id(authorization):
     return is_connected(authorization)['user_id']
 
@@ -126,18 +127,9 @@ def get_user(user_id):
 
 @app.route('/user/grant', methods=['POST'])
 def add_privileged_user():
-    payload = jwt.decode(request.headers.get('Authorization'),
-                         VarConfig.get()['password'],
-                         algorithms=['HS256'])
-    if payload:
-        args = {key: request.form.get(key) for key in
-                request.form.keys()}
-        args['user_position'] = payload['position']['label']
-        args['user_id'] = payload['user_id']
-        return send_response(
-            lambda: UserController.create_privileged_user(args))()
-    else:
-        raise AuthError
+    return send_response(
+        lambda: UserController.create_privileged_user({key: request.form.get(key) for key in
+                                                       request.form.keys()}, is_connected(request.headers)))()
 
 
 @app.route('/document', methods=['POST'])
