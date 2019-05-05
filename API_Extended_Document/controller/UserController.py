@@ -5,7 +5,7 @@ from time import time
 
 from util.Exception import LoginError
 from util.encryption import *
-
+from util.log import info_logger
 from entities.User import User
 from entities.Position import Position
 import persistence_unit.PersistenceUnit as pUnit
@@ -83,14 +83,18 @@ class UserController:
             else:
                 raise LoginError
         except Exception as e:
+            info_logger.error(e)
             raise LoginError
 
     @staticmethod
     @pUnit.make_a_transaction
     def create_admin(session):
         print('try to create admin')
-        user_exist = session.query(User).all() is not None
-        if not user_exist:
+        admin_exist = False
+        for user in session.query(User).all():
+            if(user.username == 'admin_gilles'):
+                admin_exist = True
+        if not admin_exist:
             attributes = {
                 "email": "gilles.gesquiere@insa-lyon.fr",
                 "firstName": "Gilles",

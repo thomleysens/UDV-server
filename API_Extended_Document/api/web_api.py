@@ -3,7 +3,6 @@
 
 import sqlalchemy.exc
 import sqlalchemy.orm
-import jwt
 
 from flask import Flask, send_from_directory, request, safe_join
 from flask.json import jsonify
@@ -13,7 +12,6 @@ from controller.Controller import Controller
 from controller.TourController import TourController
 from controller.UserController import UserController
 from controller.DocController import DocController
-from util.log import info_logger
 from util.upload import *
 from util.encryption import *
 from util.Exception import *
