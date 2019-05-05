@@ -135,26 +135,20 @@ def add_privileged_user():
 @app.route('/document', methods=['POST'])
 def create_document():
     def creation():
-        payload = jwt.decode(request.headers.get('Authorization'),
-                             VarConfig.get()['password'],
-                             algorithms=['HS256'])
-        if payload:
-            args = {key: request.form.get(key) for key in
-                    request.form.keys()}
-            args['user_position'] = payload['position']['label']
-            args['user_id'] = payload['user_id']
-            document = DocController.create_document(args)
-            if request.files.get('link'):
-                filename = save_file(document["id"],
-                                     request.files['link'])
-                if filename:
-                    DocController.update_document(document["id"],
-                                                  {"link": filename})
-            return document
-        else:
-            raise LoginError
+        form = {key: request.form.get(key) for key in request.form.keys()}
+        document = DocController.create_document(form, is_connected(request.headers))
+        if request.files.get('link'):
+            filename = save_file(document['id'],
+                                 request.files['link'])
+        if filename:
+            document = DocController.update_document(document['id'],
+                                                     {'link': filename},
+                                                     {'user_position': is_connected(request.headers)['position'][
+                                                         'label']}
+                                                     )
+        return document
 
-    return send_response(creation)()
+    return send_response(lambda: creation())()
 
 
 @app.route('/document', methods=['GET'])

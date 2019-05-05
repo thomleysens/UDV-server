@@ -74,7 +74,6 @@ class ExtendedDocument(Entity, Base):
                 self.valid_doc.update(attributes)
             if self.to_validate_doc:
                 self.to_validate_doc.update(attributes)
-
         return self
 
     @staticmethod

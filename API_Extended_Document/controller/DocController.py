@@ -31,6 +31,9 @@ class DocController:
     @pUnit.make_a_transaction
     def create_document(session, *args):
         attributes = args[0]
+        payload = args[1]
+        attributes['user_position'] = payload['position']['label']
+        attributes['user_id'] = payload['user_id']
         document = ExtendedDocument(attributes)
         document.update_initial(attributes)
         session.add(document)
@@ -107,7 +110,6 @@ class DocController:
             MetaData).filter_by(**attributes).filter(
             and_(*comparison_conditions)).filter(
             or_(*keyword_conditions)).join(ValidDoc)
-        print(query)
 
         return query.all()
 
@@ -132,10 +134,12 @@ class DocController:
     def update_document(session, *args):
         doc_id = args[0]
         attributes = args[1]
+        user_position = args[2]
         document = session.query(ExtendedDocument) \
             .filter(ExtendedDocument.id == doc_id).one()
+
         # To change not supposed to be done in Controller
-        if ExtendedDocument.is_allowed(attributes):
+        if ExtendedDocument.is_allowed(user_position):
             document.update(attributes)
             session.add(document)
             return document
