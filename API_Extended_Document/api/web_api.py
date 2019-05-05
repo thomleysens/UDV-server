@@ -65,13 +65,12 @@ def get_file(member_id):
 
 def is_connected(*args):
     encoded_jwt = args[0]["Authorization"]
-    if jwt:
+    if encoded_jwt:
         payload = jwt.decode(encoded_jwt, VarConfig.get()['password'],
                              algorithms=['HS256'])
         if payload:
             return payload
     raise LoginError
-
 
 def get_my_id(authorization):
     return is_connected(authorization)['user_id']
