@@ -144,6 +144,7 @@ def create_document():
         if filename:
             payload = is_connected(request.headers)
             payload['link'] = filename
+            payload['initial_creation'] = True
             document = DocController.update_document(document['id'], payload)
         return document
 
@@ -167,54 +168,27 @@ def get_document(doc_id):
 @app.route('/document/<int:doc_id>', methods=['PUT'])
 def update_document(doc_id):
     args = {key: request.form.get(key) for key in request.form.keys()}
-    args.update(is_connected(request.headers))
+    payload = is_connected(request.headers)
+    args['initial_creation'] = False
+    args.update(payload)
     return send_response(
         lambda: DocController.update_document(doc_id, args))()
 
 
 @app.route('/document/<int:doc_id>', methods=['DELETE'])
 def delete_document(doc_id):
-    payload = jwt.decode(request.headers.get('Authorization'),
-                         VarConfig.get()['password'],
-                         algorithms=['HS256'])
-    if payload:
-        return send_response(
-            lambda: DocController.delete_documents(doc_id, {
-                'user_position': payload['position']['label'],
-                'user_id': int(payload['user_id'])}))()
-    else:
-        raise AuthError
+    return send_response(lambda: DocController.delete_documents(doc_id, is_connected(request.headers)))()
 
 
 @app.route('/document/validate', methods=['POST'])
 def validate_document():
-    payload = jwt.decode(request.headers.get('Authorization'),
-                         VarConfig.get()['password'],
-                         algorithms=['HS256'])
-    if payload:
-        return send_response(
-            lambda:
-            DocController.validate_document(request.form['id'], {
-                'user_position': payload['position']['label'],
-                'user_id': int(payload['user_id'])}))()
-    else:
-        raise AuthError
+    return send_response(lambda: DocController.validate_document(request.form['id'], is_connected(request.headers)))()
 
 
 @app.route('/document/in_validation', methods=['GET'])
 def get_documents_to_validate():
-    payload = jwt.decode(request.headers.get('Authorization'),
-                         VarConfig.get()['password'],
-                         algorithms=['HS256'])
-    if payload:
-        args = {key: request.form.get(key) for key in
-                request.form.keys()}
-        args['user_position'] = payload['position']['label']
-        args['user_id'] = payload['user_id']
-        return send_response(
-            lambda: DocController.get_documents_to_validate(args))()
-    else:
-        raise AuthError
+    return send_response(
+        lambda: DocController.get_documents_to_validate(is_connected(request.headers)))()
 
 
 @app.route('/document/<int:doc_id>/file', methods=['GET'])
