@@ -4,7 +4,7 @@
 import sqlalchemy.exc
 import sqlalchemy.orm
 
-from flask import Flask, send_from_directory, request, safe_join
+from flask import Flask, send_from_directory, request
 from flask.json import jsonify
 from flask_cors import CORS
 
@@ -135,17 +135,16 @@ def add_privileged_user():
 @app.route('/document', methods=['POST'])
 def create_document():
     def creation():
-        form = {key: request.form.get(key) for key in request.form.keys()}
-        document = DocController.create_document(form, is_connected(request.headers))
+        args = {key: request.form.get(key) for key in request.form.keys()}
+        args.update(is_connected(request.headers))
+        document = DocController.create_document(args)
         if request.files.get('link'):
             filename = save_file(document['id'],
                                  request.files['link'])
         if filename:
-            document = DocController.update_document(document['id'],
-                                                     {'link': filename},
-                                                     {'user_position': is_connected(request.headers)['position'][
-                                                         'label']}
-                                                     )
+            payload = is_connected(request.headers)
+            payload['link'] = filename
+            document = DocController.update_document(document['id'], payload)
         return document
 
     return send_response(lambda: creation())()
@@ -167,17 +166,10 @@ def get_document(doc_id):
 
 @app.route('/document/<int:doc_id>', methods=['PUT'])
 def update_document(doc_id):
-    payload = jwt.decode(request.headers.get('Authorization'),
-                         VarConfig.get()['password'],
-                         algorithms=['HS256'])
-    if payload:
-        args = {key: request.form.get(key) for key in
-                request.form.keys()}
-        args['user_id'] = payload['user_id']
-        return send_response(
-            lambda: DocController.update_document(doc_id, args))()
-    else:
-        raise AuthError
+    args = {key: request.form.get(key) for key in request.form.keys()}
+    args.update(is_connected(request.headers))
+    return send_response(
+        lambda: DocController.update_document(doc_id, args))()
 
 
 @app.route('/document/<int:doc_id>', methods=['DELETE'])
