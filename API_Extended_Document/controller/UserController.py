@@ -50,6 +50,17 @@ class UserController:
             raise AuthError
 
     @staticmethod
+    @pUnit.make_a_transaction
+    def create_admin_user(session, *args):
+        attributes = args[0]
+        user = User()
+        user.set_position(session.query(Position).filter(
+            Position.label == attributes["role"]).one())
+        user.update(attributes)
+        session.add(user)
+        return user
+
+    @staticmethod
     @pUnit.make_a_query
     def get_user_by_id(session, *args):
         attributes = args[0]
@@ -106,4 +117,4 @@ class UserController:
                 "username": "admin_gilles",
                 "user_position": "admin"
             }
-            UserController.create_privileged_user(attributes)
+            UserController.create_admin_user(attributes)

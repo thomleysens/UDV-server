@@ -146,11 +146,7 @@ class DocController:
     def delete_documents(session, *args):
         an_id = args[0]
         attributes = args[1]
-        my_owning = session.query(ExtendedDocument).filter(and_(
-            ExtendedDocument.id == an_id,
-            ExtendedDocument.user_id == attributes[
-                'user_id'])).one() is not None
-        if ExtendedDocument.is_allowed(attributes) or my_owning:
+        if ExtendedDocument.is_allowed(attributes):
             # we also remove the associated image
             # located in 'UPLOAD_FOLDER' directory
             a_doc = session.query(ExtendedDocument).filter(
