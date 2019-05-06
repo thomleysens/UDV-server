@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship
 from util.encryption import encrypt
 
 from util.db_config import Base
+from util.serialize import serialize
 from entities.Entity import Entity
 
 from entities.Position import Position
@@ -47,3 +48,10 @@ class User(Entity, Base):
     def is_admin(position):
         level = Position.get_clearance_level(position)
         return level == Position.LEVEL_MAX
+
+    def serialize(self):
+        serialized_object = {}
+        for attr in self.get_all_attr():
+            if attr != 'password':
+                serialized_object[attr] = serialize(getattr(self, attr))
+        return serialized_object
