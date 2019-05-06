@@ -12,6 +12,7 @@ from entities.GuidedTour import GuidedTour
 from entities.ExtendedDocument import ExtendedDocument
 from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
 from entities.Comment import Comment
+from entities.VersionDoc import VersionDoc
 
 
 class Controller:

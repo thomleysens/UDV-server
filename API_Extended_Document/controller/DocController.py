@@ -12,6 +12,7 @@ from entities.MetaData import MetaData
 from entities.ExtendedDocument import ExtendedDocument
 from entities.ToValidateDoc import ToValidateDoc
 from entities.ValidDoc import ValidDoc
+from controller.ArchiveController import ArchiveController
 
 import persistence_unit.PersistenceUnit as pUnit
 
@@ -133,6 +134,7 @@ class DocController:
         attributes = args[1]
         document = session.query(ExtendedDocument) \
             .filter(ExtendedDocument.id == doc_id).one()
+        ArchiveController.create_archive(document.serialize())
         # To change not supposed to be done in Controller
         if ExtendedDocument.is_allowed(attributes):
             document.update(attributes)
@@ -152,6 +154,8 @@ class DocController:
             # located in 'UPLOAD_FOLDER' directory
             a_doc = session.query(ExtendedDocument).filter(
                 ExtendedDocument.id == an_id).one()
+            if (a_doc):
+                ArchiveController.create_archive(a_doc.serialize())
             session.delete(a_doc)
             try:
                 os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
@@ -163,5 +167,11 @@ class DocController:
                 ExtendedDocument.id == an_id,
                 ExtendedDocument.user_id == attributes[
                     'user_id'])).one()
-            os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
+            if (a_doc):
+                ArchiveController.create_archive(a_doc.serialize())
             session.delete(a_doc)
+            try:
+                os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
+            except Exception as e:
+                print(e)
+                info_logger.error(e)
