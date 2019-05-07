@@ -1,15 +1,10 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-from sqlalchemy import or_, and_, desc
+from sqlalchemy import desc
 
 from util.log import *
-from util.upload import UPLOAD_FOLDER
-from util.Exception import *
-
-from entities.ExtendedDocument import ExtendedDocument
 from entities.VersionDoc import VersionDoc
-
 import persistence_unit.PersistenceUnit as pUnit
 
 
@@ -35,14 +30,14 @@ class ArchiveController:
         last = None
         try:
             last = session.query(VersionDoc).filter(
-                VersionDoc.doc_id == attributes['doc_id']).order_by(desc(VersionDoc.version)).first()
+                VersionDoc.doc_id == attributes['doc_id']).order_by(
+                desc(VersionDoc.version)).first()
         except Exception as e:
             print(e)
             info_logger.error(e)
-        if (last):
+        if last:
             attributes['version'] = last.serialize()['version'] + 1
-        else :
-            print('no')
+        else:
             attributes['version'] = 1
         archive = VersionDoc()
         archive.update(attributes)
@@ -57,6 +52,7 @@ class ArchiveController:
         """
         doc_id = args[0]
         query = session.query(VersionDoc).filter(
-            VersionDoc.doc_id == doc_id).order_by(desc(VersionDoc.version))
+            VersionDoc.doc_id == doc_id).order_by(
+            desc(VersionDoc.version))
 
         return query.all()
