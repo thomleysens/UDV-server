@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 # coding: utf8
-import pytest
-import sqlalchemy.orm
 
 from controller.Controller import Controller
 from controller.DocController import DocController
@@ -9,7 +7,6 @@ from controller.CommentController import CommentController
 
 
 class TestComment:
-
     def test_create_document(self):
         Controller.recreate_tables()
         print("Create a valid document")
@@ -46,9 +43,9 @@ class TestComment:
             'type': 'type',
             'description': 'a description',
             'link': '1.gif',
-            'user_id' : 1,
+            'user_id': 1,
             "position": {
-                'label' : 'admin'
+                'label': 'admin'
             }
         })
 
@@ -61,9 +58,9 @@ class TestComment:
             'description': 'ok'
         }
         assert expected_response == CommentController.create_comment({
-            'doc_id' : 1,
-            'user_id' : 1,
-            'description' : 'ok'
+            'doc_id': 1,
+            'user_id': 1,
+            'description': 'ok'
         })
 
     def test_create_comment_2(self):
@@ -75,9 +72,9 @@ class TestComment:
             'description': 'ok_2'
         }
         assert expected_response == CommentController.create_comment({
-            'doc_id' : 1,
-            'user_id' : 1,
-            'description' : 'ok_2'
+            'doc_id': 1,
+            'user_id': 1,
+            'description': 'ok_2'
         })
 
     def test_update_comment(self):
@@ -88,24 +85,26 @@ class TestComment:
             'description': 'ok_1',
             'id': 1
         }
-        assert expected_response == CommentController.update_comment(1, {
-            'id' : 1,
-            'user_id' : 1,
-            "position": {
-                'label' : 'admin'
-            },
-            'description' : 'ok_1'
-        })
+        assert expected_response == \
+            CommentController.update_comment(1, {
+               'id': 1,
+               'user_id': 1,
+               "position": {
+                   'label': 'admin'
+               },
+               'description': 'ok_1'
+            })
 
     def test_delete_comment(self):
         print("delete a comment")
         expected_response = None
-        assert expected_response == CommentController.delete_comment(2, {
-            'user_id' : 1,
-            "position": {
-                'label' : 'admin'
-            }
-        })
+        assert expected_response == \
+            CommentController.delete_comment(2, {
+               'user_id': 1,
+               "position": {
+                   'label': 'admin'
+               }
+            })
 
     def test_get_comments(self):
         print("get comments")
@@ -118,6 +117,7 @@ class TestComment:
             }
         ]
         assert expected_response == CommentController.get_comments(1)
+
 
 if __name__ == "__main__":
     TestComment().test_create_document()

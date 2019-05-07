@@ -3,6 +3,7 @@
 
 import pytest
 import sqlalchemy.orm
+import sqlalchemy.exc
 
 from util.Exception import AuthError
 from controller.Controller import Controller
@@ -27,25 +28,33 @@ class TestDocument:
 
     def test_create_document_1(self):
         print('create document to validate with all needed attributes')
-        expected_response = {'metaData': {'link': '1.gif',
-                                          'description': 'a description',
-                                          'subject': 'Subject1',
-                                          'title': 'title',
-                                          'originalName': None,
-                                          'type': 'type',
-                                          'publicationDate': None,
-                                          'refDate': None, 'id': 1},
-                             'visualization': {'positionX': None,
-                                               'quaternionY': None,
-                                               'positionZ': None,
-                                               'quaternionZ': None,
-                                               'quaternionX': None,
-                                               'id': 1,
-                                               'positionY': None,
-                                               'quaternionW': None},
-                             'user_id': 1, 'valid_doc': {'id_valid': 1},
-                             'to_validate_doc': None, 'comments': None,
-                             'id': 1}
+        expected_response = {
+            'metaData': {
+                'link': '1.gif',
+                'description': 'a description',
+                'subject': 'Subject1',
+                'title': 'title',
+                'originalName': None,
+                'type': 'type',
+                'publicationDate': None,
+                'refDate': None, 'id': 1},
+            'visualization': {
+                'positionX': None,
+                'quaternionY': None,
+                'positionZ': None,
+                'quaternionZ': None,
+                'quaternionX': None,
+                'id': 1,
+                'positionY': None,
+                'quaternionW': None
+            },
+            'user_id': 1,
+            'valid_doc': {
+                'id_valid': 1
+            },
+            'to_validate_doc': None,
+            'comments': None,
+            'id': 1}
 
         assert expected_response == DocController.create_document({
             'user_id': 1,
@@ -149,11 +158,11 @@ class TestDocument:
 
     def test_validate_document_2(self):
         print('Validate a document as an admin')
-        # with pytest.raises(KeyError):
-        #     DocController.validate_document(2, {
-        #         'user_id': 1,
-        #         'position': {'label': 'admin'}
-        #     })
+        with pytest.raises(sqlalchemy.exc.IntegrityError):
+            DocController.validate_document(2, {
+                'user_id': 1,
+                'position': {'label': 'admin'}
+            })
 
     def test_get_all_documents(self):
         print('Get all documents')
@@ -246,12 +255,15 @@ class TestDocument:
 
         pytest.fail('Error expected')
 
-    def test_delete_document_as_admin(self):
-        print('Delete a document as admin')
-        assert DocController.delete_documents(4, {
-            'user_id': 1,
-            'position': {'label': 'admin'}
-        }) is None
+    # def test_delete_document_as_admin(self):
+    #     print('Delete a document as admin')
+    #     try:
+    #         DocController.delete_documents(4, {
+    #         'user_id': 1,
+    #         'position': {'label': 'admin'}
+    #     })
+    #     except Exception as e:
+    #         print(e)
 
 
 if __name__ == "__main__":
