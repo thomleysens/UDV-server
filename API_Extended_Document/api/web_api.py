@@ -12,6 +12,7 @@ from controller.Controller import Controller
 from controller.TourController import TourController
 from controller.UserController import UserController
 from controller.DocController import DocController
+from controller.ArchiveController import ArchiveController
 from util.upload import *
 from util.encryption import *
 from util.Exception import *
@@ -95,7 +96,7 @@ def index():
     </html>
     '''
 
-  
+
 @app.route('/login', methods=['POST'])
 def login():
     return send_response(
@@ -164,6 +165,11 @@ def get_documents():
 def get_document(doc_id):
     return send_response(
         lambda: DocController.get_document_by_id(doc_id))()
+
+@app.route('/document/<int:doc_id>/archive', methods=['GET'])
+def get_archive(doc_id):
+    return send_response(
+        lambda: ArchiveController.get_archive(doc_id))()
 
 
 @app.route('/document/<int:doc_id>', methods=['PUT'])
