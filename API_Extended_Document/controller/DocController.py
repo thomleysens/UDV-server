@@ -7,7 +7,6 @@ from util.log import *
 from util.upload import UPLOAD_FOLDER
 from util.Exception import *
 
-from entities.User import User
 from entities.MetaData import MetaData
 from entities.ExtendedDocument import ExtendedDocument
 from entities.ToValidateDoc import ToValidateDoc
@@ -40,13 +39,13 @@ class DocController:
     @staticmethod
     @pUnit.make_a_transaction
     def validate_document(session, *args):
-        id = args[0]
+        doc_id = args[0]
         attributes = args[1]
         if ExtendedDocument.is_allowed(attributes):
             document = session.query(ExtendedDocument).filter(
-                ExtendedDocument.id == id).one()
+                ExtendedDocument.id == doc_id).one()
             to_validate = session.query(ToValidateDoc).filter(
-                ToValidateDoc.id_to_validate == id).one()
+                ToValidateDoc.id_to_validate == doc_id).one()
             document.validate(attributes)
             session.delete(to_validate)
             session.add(document)
@@ -136,7 +135,7 @@ class DocController:
             .filter(ExtendedDocument.id == doc_id).one()
         ArchiveController.create_archive(document.serialize())
         # To change not supposed to be done in Controller
-        if ExtendedDocument.is_allowed(attributes):
+        if ExtendedDocument.is_allowed(attributes) or attributes['initial_creation']:
             document.update(attributes)
             session.add(document)
             return document
@@ -148,7 +147,6 @@ class DocController:
     def delete_documents(session, *args):
         an_id = args[0]
         attributes = args[1]
-        # To change not supposed to be done in Controller
         if ExtendedDocument.is_allowed(attributes):
             # we also remove the associated image
             # located in 'UPLOAD_FOLDER' directory
@@ -159,6 +157,7 @@ class DocController:
             session.delete(a_doc)
             try:
                 os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
+                return a_doc
             except Exception as e:
                 print(e)
                 info_logger.error(e)

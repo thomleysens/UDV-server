@@ -78,11 +78,10 @@ class ExtendedDocument(Entity, Base):
                 self.valid_doc.update(attributes)
             if self.to_validate_doc:
                 self.to_validate_doc.update(attributes)
-
         return self
 
     @staticmethod
     def is_allowed(attributes):
-        role = attributes['user_position']
+        role = attributes['position']['label']
         level = Position.get_clearance_level(role)
         return level > Position.LEVEL_MIN
