@@ -38,7 +38,10 @@ In order to relate (link) those two parts, the MetaData and the Visualisation cl
 
 On top of ExtendedDocument, AED implements the notion of **GuidedTour**. Because the relationship between **ExtendedDocument** and **GuidedTour** is a Many to Many type, AED defines the **ExtendeDocGuideTour** class. **ExtendeDocGuideTour** can link a document to a GuidedTour. Note that an ExtendedDocument can be associated several times to the same guided tour. Since a Guided Tour has a beginning and an end, the notion or order is thus important, and we hence have the attribute **doc_position**, that defines the order of each document in the guided tour.
 
+there is also a class named **Comment** related with **ExtendedDocument** and **User** that will contain all the comments
 
+in order to save the differents versions of a document, AED uses a class named **VersionDoc** related with **ExtendedDocument** and **User**
+ 
 ### Controller
 The controller is used to interact with the entities. It can realize all the CRUD (Create, Read, Update, Delete) operations.
 
