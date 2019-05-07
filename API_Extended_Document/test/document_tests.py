@@ -66,8 +66,7 @@ class DocumentTest:
             'refDate': '2019-02-05',
             'position': {'label': 'admin'}
         }))(DocumentTest, 'all needed attributes to validate', False)
-        
-        
+
         make_test(lambda: DocController.create_document({
             'user_id': 2,
             'title': 'another title',
@@ -130,7 +129,6 @@ class DocumentTest:
             'user_id': 1,
             'position': {'label': 'contributor'}
         }))(DocumentTest, 'to validate documents non admin', False)
-
 
         make_test(lambda: DocController.get_document_by_id(1))(
             DocumentTest, 'document with existing id', False)

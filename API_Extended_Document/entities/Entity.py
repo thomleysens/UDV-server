@@ -5,7 +5,7 @@
 from util.serialize import serialize
 
 
-class Entity():
+class Entity:
 
     def update(self, new_values):
         for attKey, attVal in new_values.items():
