@@ -245,37 +245,41 @@ class TestDocument:
 
     def test_delete_document_as_contributor(self):
         print('Delete a document as contributor')
-        try:
+        with pytest.raises(AuthError):
             DocController.delete_documents(4, {
                 'user_id': 2,
                 'position': {'label': 'contributor'}
             })
-        except (AuthError, sqlalchemy.orm.exc.NoResultFound):
-            return
 
-        pytest.fail('Error expected')
-
-    # def test_delete_document_as_admin(self):
-    #     print('Delete a document as admin')
-    #     try:
-    #         DocController.delete_documents(4, {
-    #         'user_id': 1,
-    #         'position': {'label': 'admin'}
-    #     })
-    #     except Exception as e:
-    #         print(e)
+    def test_delete_document_as_admin(self):
+        print('Delete a document as admin')
+        try:
+            DocController.delete_documents(4, {
+                'user_id': 1,
+                'position': {'label': 'admin'}
+            })
+        except Exception as e:
+            print(e)
 
 
 if __name__ == "__main__":
-    Controller.recreate_tables()
+    TestDocument().test_document_init()
     TestDocument().test_create_regular_user()
-    a = DocController.create_document({
-        'user_id': 1,
-        'title': 'title',
-        'subject': 'Subject1',
-        'type': 'type',
-        'description': 'a description',
-        'link': '1.gif',
-        'position': {'label': 'admin'}
-    })
-    print(a)
+    TestDocument().test_create_document_1()
+    TestDocument().test_create_document_2()
+    TestDocument().test_create_document_3()
+    TestDocument().test_create_document_4()
+    TestDocument().test_create_document_5()
+    TestDocument().test_validate_document_1()
+    TestDocument().test_validate_document_2()
+    TestDocument().test_get_all_documents()
+    TestDocument().test_get_specific_documents()
+    TestDocument().test_get_documents_to_validate_admin()
+    TestDocument().test_get_documents_to_validate_contributor()
+    TestDocument().test_get_document_by_id()
+    TestDocument().test_get_non_existing_document()
+    TestDocument().test_update_document_as_contributor()
+    TestDocument().test_update_document_as_admin()
+    TestDocument().test_update_non_existing_document()
+    TestDocument().test_delete_document_as_contributor()
+    TestDocument().test_delete_document_as_admin()

@@ -57,8 +57,7 @@ class TestComment:
             'user_id': 1,
             'description': 'ok'
         }
-        assert expected_response == CommentController.create_comment({
-            'doc_id': 1,
+        assert expected_response == CommentController.create_comment(1, {
             'user_id': 1,
             'description': 'ok'
         })
@@ -66,13 +65,12 @@ class TestComment:
     def test_create_comment_2(self):
         print("Create a comment")
         expected_response = {
-            'doc_id': 1,
             'id': 2,
             'user_id': 1,
+            'doc_id': 1,
             'description': 'ok_2'
         }
-        assert expected_response == CommentController.create_comment({
-            'doc_id': 1,
+        assert expected_response == CommentController.create_comment(1, {
             'user_id': 1,
             'description': 'ok_2'
         })
@@ -85,26 +83,24 @@ class TestComment:
             'description': 'ok_1',
             'id': 1
         }
-        assert expected_response == \
-            CommentController.update_comment(1, {
-               'id': 1,
-               'user_id': 1,
-               "position": {
-                   'label': 'admin'
-               },
-               'description': 'ok_1'
-            })
+        assert expected_response == CommentController.update_comment(1, {
+            'id': 1,
+            'user_id': 1,
+            "position": {
+                'label': 'admin'
+            },
+            'description': 'ok_1'
+        })
 
     def test_delete_comment(self):
         print("delete a comment")
         expected_response = None
-        assert expected_response == \
-            CommentController.delete_comment(2, {
-               'user_id': 1,
-               "position": {
-                   'label': 'admin'
-               }
-            })
+        assert expected_response == CommentController.delete_comment(2, {
+            'user_id': 1,
+            "position": {
+                'label': 'admin'
+            }
+        })
 
     def test_get_comments(self):
         print("get comments")

@@ -211,8 +211,8 @@ class TestArchive:
         assert expected_response == ArchiveController.get_archive(1)
 
 if __name__ == "__main__":
-    Archivetest().test_create_document()
-    Archivetest().test_update_document_1()
-    Archivetest().test_update_document_2()
-    Archivetest().test_delete_document()
-    Archivetest().test_get_archive()
+    TestArchive().test_create_document()
+    TestArchive().test_update_document_1()
+    TestArchive().test_update_document_2()
+    TestArchive().test_delete_document()
+    TestArchive().test_get_archive()

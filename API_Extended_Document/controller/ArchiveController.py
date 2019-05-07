@@ -17,16 +17,11 @@ class ArchiveController:
     the decorators '~persistence_unit.PersistenceUnit.make_a_query'
     and make_a_transaction
     """
-    keyword_attr = ["title", "description"]
 
     @staticmethod
     @pUnit.make_a_transaction
     def create_archive(session, *args):
-        attributes = args[0]['metaData']
-        attributes.update(args[0]['visualization'])
-        attributes['user_id'] = args[0]['user_id']
-        attributes['doc_id'] = args[0]['id']
-        del attributes['id']
+        attributes = ArchiveController.remake_attribute(args[0])
         last = None
         try:
             last = session.query(VersionDoc).filter(
@@ -48,7 +43,7 @@ class ArchiveController:
     @pUnit.make_a_query
     def get_archive(session, *args):
         """
-        This method si used get all the archives of a document
+        This method is used get all the archives of a document
         """
         doc_id = args[0]
         query = session.query(VersionDoc).filter(
@@ -56,3 +51,14 @@ class ArchiveController:
             desc(VersionDoc.version))
 
         return query.all()
+
+    #@TODO refactor versionDoc in order to take 2 attributes metadata & visualisation instead of attribute in one table
+    @staticmethod
+    def remake_attribute(attributes):
+        new_attributes = attributes['metaData']
+        new_attributes.update(attributes['visualization'])
+        new_attributes['user_id'] = attributes['user_id']
+        new_attributes['doc_id'] = attributes['id']
+        del new_attributes['id']
+        return new_attributes
+
