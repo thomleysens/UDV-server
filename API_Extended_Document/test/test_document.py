@@ -17,66 +17,35 @@ class TestDocument:
 
     def test_create_regular_user(self):
         print("Create a regular user")
-        expected_response = {
-            'position_id': 4,
-            'username': 'John_Doe',
-            'position': {
-                'clearance': [
-                    'contributor',
-                    'softModerator',
-                    'moderator',
-                    'admin'
-                ],
-                'label': 'contributor',
-                'LEVEL_MAX': 3,
-                'LEVEL_MIN': 1,
-                'id': 4
-            },
-            'extended_document': [],
-            'lastName': 'Doe',
-            'email': 'John_Doe@mail.com',
-            'firstName': 'John',
-            'id': 2
-        }
-
-        assert expected_response == UserController.create_user({
+        assert UserController.create_user({
             'username': 'John_Doe',
             'password': 'pwd',
             'firstName': 'John',
             'lastName': 'Doe',
             'email': 'John_Doe@mail.com'
-        })
+        }) is not None
 
     def test_create_document_1(self):
         print('create document to validate with all needed attributes')
-        expected_response = {
-            'visualization': {
-                'quaternionZ': None,
-                'positionY': None,
-                'positionX': None,
-                'quaternionW': None,
-                'positionZ': None,
-                'quaternionY': None,
-                'id': 1,
-                'quaternionX': None
-            },
-            'user_id': 1,
-            'metaData': {
-                'description': 'a description',
-                'link': '1.gif',
-                'type': 'type',
-                'title': 'title',
-                'refDate': None,
-                'publicationDate': None,
-                'subject': 'Subject1',
-                'id': 1,
-                'originalName': None},
-            'to_validate_doc': None,
-            'id': 1,
-            'valid_doc': {
-                'id_valid': 1
-            }
-        }
+        expected_response = {'metaData': {'link': '1.gif',
+                                          'description': 'a description',
+                                          'subject': 'Subject1',
+                                          'title': 'title',
+                                          'originalName': None,
+                                          'type': 'type',
+                                          'publicationDate': None,
+                                          'refDate': None, 'id': 1},
+                             'visualization': {'positionX': None,
+                                               'quaternionY': None,
+                                               'positionZ': None,
+                                               'quaternionZ': None,
+                                               'quaternionX': None,
+                                               'id': 1,
+                                               'positionY': None,
+                                               'quaternionW': None},
+                             'user_id': 1, 'valid_doc': {'id_valid': 1},
+                             'to_validate_doc': None, 'comments': None,
+                             'id': 1}
 
         assert expected_response == DocController.create_document({
             'user_id': 1,
@@ -108,6 +77,7 @@ class TestDocument:
                 'id_valid': 2
             },
             'user_id': 2,
+            'comments': None,
             'to_validate_doc': None,
             'visualization': {
                 'id': 2,
@@ -257,23 +227,27 @@ class TestDocument:
         print('Update a non existing document')
         with pytest.raises(sqlalchemy.orm.exc.NoResultFound):
             DocController.update_document(-1, {
-                'user_id': 2,
                 'user_position': 'admin',
                 'positionX': 12,
                 'description': 'another description',
+                'user_id': 2,
                 'position': {'label': 'admin'}
             })
 
     def test_delete_document_as_contributor(self):
         print('Delete a document as contributor')
-        with pytest.raises(AuthError):
+        try:
             DocController.delete_documents(4, {
                 'user_id': 2,
                 'position': {'label': 'contributor'}
             })
+        except (AuthError, sqlalchemy.orm.exc.NoResultFound):
+            return
+
+        pytest.fail('Error expected')
 
     def test_delete_document_as_admin(self):
-        print('Delete a document as contributor')
+        print('Delete a document as admin')
         assert DocController.delete_documents(4, {
             'user_id': 1,
             'position': {'label': 'admin'}
@@ -281,7 +255,15 @@ class TestDocument:
 
 
 if __name__ == "__main__":
-    a = DocController.delete_documents(4, {
+    Controller.recreate_tables()
+    TestDocument().test_create_regular_user()
+    a = DocController.create_document({
         'user_id': 1,
+        'title': 'title',
+        'subject': 'Subject1',
+        'type': 'type',
+        'description': 'a description',
+        'link': '1.gif',
         'position': {'label': 'admin'}
     })
+    print(a)

@@ -95,7 +95,7 @@ def index():
     </html>
     '''
 
-
+  
 @app.route('/login', methods=['POST'])
 def login():
     return send_response(
@@ -138,6 +138,7 @@ def create_document():
         args = {key: request.form.get(key) for key in request.form.keys()}
         args.update(is_connected(request.headers))
         document = DocController.create_document(args)
+        filename = ''
         if request.files.get('link'):
             filename = save_file(document['id'],
                                  request.files['link'])

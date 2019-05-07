@@ -27,6 +27,10 @@ class ExtendedDocument(Entity, Base):
                             uselist=False,
                             cascade="all, delete-orphan")
 
+    comments = relationship("Comment",
+                            uselist=False,
+                            cascade="all, delete-orphan")
+
     valid_doc = relationship("ValidDoc",
                              uselist=False,
                              cascade="all, delete-orphan")
