@@ -8,10 +8,12 @@ from flask import Flask, send_from_directory, request
 from flask.json import jsonify
 from flask_cors import CORS
 
+from controller.CommentController import CommentController
 from controller.Controller import Controller
 from controller.TourController import TourController
 from controller.UserController import UserController
 from controller.DocController import DocController
+from controller.ArchiveController import ArchiveController
 from util.upload import *
 from util.encryption import *
 from util.Exception import *
@@ -95,7 +97,7 @@ def index():
     </html>
     '''
 
-  
+
 @app.route('/login', methods=['POST'])
 def login():
     return send_response(
@@ -128,14 +130,16 @@ def get_user(user_id):
 @app.route('/user/grant', methods=['POST'])
 def add_privileged_user():
     return send_response(
-        lambda: UserController.create_privileged_user({key: request.form.get(key) for key in
-                                                       request.form.keys()}, is_connected(request.headers)))()
+        lambda: UserController.create_privileged_user({
+            key: request.form.get(key) for key in
+            request.form.keys()}, is_connected(request.headers)))()
 
 
 @app.route('/document', methods=['POST'])
 def create_document():
     def creation():
-        args = {key: request.form.get(key) for key in request.form.keys()}
+        args = {key: request.form.get(key) for key in
+                request.form.keys()}
         args.update(is_connected(request.headers))
         document = DocController.create_document(args)
         filename = ''
@@ -146,7 +150,8 @@ def create_document():
             payload = is_connected(request.headers)
             payload['link'] = filename
             payload['initial_creation'] = True
-            document = DocController.update_document(document['id'], payload)
+            document = DocController.update_document(document['id'],
+                                                     payload)
         return document
 
     return send_response(lambda: creation())()
@@ -178,18 +183,87 @@ def update_document(doc_id):
 
 @app.route('/document/<int:doc_id>', methods=['DELETE'])
 def delete_document(doc_id):
-    return send_response(lambda: DocController.delete_documents(doc_id, is_connected(request.headers)))()
+    return send_response(lambda: DocController.delete_documents(
+        doc_id, is_connected(request.headers)))()
+
+
+@app.route('/document/<int:doc_id>/comment', methods=['POST'])
+def create_comment(doc_id):
+    def creation():
+        payload = jwt.decode(request.headers.get('Authorization'),
+                             VarConfig.get()['password'],
+                             algorithms=['HS256'])
+        if payload:
+            args = {key: request.form.get(key) for key in
+                    request.form.keys()}
+            args['user_position'] = payload['position']['label']
+            args['user_id'] = payload['user_id']
+            args['doc_id'] = doc_id
+            comment = CommentController.create_comment(args)
+            return comment
+        else:
+            raise LoginError
+
+    return send_response(creation)()
+
+
+@app.route('/document/<int:doc_id>/comment', methods=['GET'])
+def get_comment(doc_id):
+    return send_response(
+        lambda: CommentController.get_comments(doc_id))()
+
+
+@app.route('/comment/<int:comment_id>', methods=['PUT'])
+def update_comment(comment_id):
+    # @TODO Refactor this as a unique function called by 'send_response'
+    payload = jwt.decode(request.headers.get('Authorization'),
+                         VarConfig.get()['password'],
+                         algorithms=['HS256'])
+    if payload:
+        args = {key: request.form.get(key) for key in
+                request.form.keys()}
+        args['user_position'] = payload['position']['label']
+        args['user_id'] = payload['user_id']
+        return send_response(
+            lambda: CommentController.update_comment(comment_id,
+                                                     args))()
+    else:
+        raise AuthError
+
+
+@app.route('/comment/<int:comment_id>', methods=['DELETE'])
+def delete_comment(comment_id):
+    # @TODO Refactor this as a unique function called by 'send_response'
+    payload = jwt.decode(request.headers.get('Authorization'),
+                         VarConfig.get()['password'],
+                         algorithms=['HS256'])
+    if payload:
+        return send_response(
+            lambda: CommentController.delete_comment(comment_id, {
+                'user_position': payload['position']['label'],
+                'user_id': int(payload['user_id'])}))()
+    else:
+        raise AuthError
+
+
+@app.route('/document/<int:doc_id>/archive', methods=['GET'])
+def get_archive(doc_id):
+    return send_response(
+        lambda: ArchiveController.get_archive(doc_id))()
 
 
 @app.route('/document/validate', methods=['POST'])
 def validate_document():
-    return send_response(lambda: DocController.validate_document(request.form['id'], is_connected(request.headers)))()
+    return send_response(
+        lambda: DocController.validate_document(
+            request.form['id'], is_connected(request.headers)))()
 
 
 @app.route('/document/in_validation', methods=['GET'])
 def get_documents_to_validate():
     return send_response(
-        lambda: DocController.get_documents_to_validate(is_connected(request.headers)))()
+        lambda: DocController.get_documents_to_validate(
+            is_connected(request.headers)))()
 
 
 @app.route('/document/<int:doc_id>/file', methods=['GET'])
