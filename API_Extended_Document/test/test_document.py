@@ -158,7 +158,7 @@ class TestDocument:
 
     def test_validate_document_2(self):
         print('Validate a document as an admin')
-        with pytest.raises(sqlalchemy.exc.IntegrityError):
+        with pytest.raises(sqlalchemy.orm.exc.NoResultFound):
             DocController.validate_document(2, {
                 'user_id': 1,
                 'position': {'label': 'admin'}
