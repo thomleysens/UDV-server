@@ -9,7 +9,7 @@ from controller.CommentController import CommentController
 from controller.ArchiveController import ArchiveController
 
 
-class Archivetest:
+class TestArchive:
 
     def test_create_document(self):
         Controller.recreate_tables()
@@ -48,7 +48,9 @@ class Archivetest:
             'description': 'a description',
             'link': '1.gif',
             'user_id' : 1,
-            "user_position": "admin"
+            "position": {
+                'label' : 'admin'
+            }
         })
 
     def test_update_document_1(self):
@@ -83,7 +85,9 @@ class Archivetest:
         }
         assert expected_response == DocController.update_document(1, {
             'user_id' : 1,
-            "user_position": "admin",
+            "position": {
+                'label' : 'admin'
+            },
             'positionX': 12,
             'description': 'description of a document'
         })
@@ -120,7 +124,9 @@ class Archivetest:
         }
         assert expected_response == DocController.update_document(1, {
             'user_id' : 1,
-            "user_position": "admin",
+            "position": {
+                'label' : 'admin'
+            },
             'positionY': 15,
             'description': 'a new description'
         })
@@ -130,7 +136,9 @@ class Archivetest:
         expected_response = None
         assert expected_response == DocController.delete_documents(1, {
                 'user_id' : 1,
-                "user_position": "admin"
+                "position": {
+                    'label' : 'admin'
+                }
             })
 
     def test_get_archive(self):

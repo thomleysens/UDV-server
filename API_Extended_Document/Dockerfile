@@ -9,4 +9,4 @@ RUN pip install -r ./requirements.txt
 COPY . ./
 ENV PYTHONPATH /api
 
-CMD python test/archive_test.py
+CMD pytest -s

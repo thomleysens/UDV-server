@@ -47,7 +47,9 @@ class TestComment:
             'description': 'a description',
             'link': '1.gif',
             'user_id' : 1,
-            "user_position": "admin"
+            "position": {
+                'label' : 'admin'
+            }
         })
 
     def test_create_comment_1(self):
@@ -89,7 +91,9 @@ class TestComment:
         assert expected_response == CommentController.update_comment(1, {
             'id' : 1,
             'user_id' : 1,
-            "user_position": "admin",
+            "position": {
+                'label' : 'admin'
+            },
             'description' : 'ok_1'
         })
 
@@ -98,7 +102,9 @@ class TestComment:
         expected_response = None
         assert expected_response == CommentController.delete_comment(2, {
             'user_id' : 1,
-            "user_position": "admin"
+            "position": {
+                'label' : 'admin'
+            }
         })
 
     def test_get_comments(self):

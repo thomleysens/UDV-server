@@ -7,7 +7,7 @@ from controller.UserController import UserController
 from test.test_functions import *
 
 
-class UserTest:
+class TestUser:
     nb_tests = 0
     nb_tests_succeed = 0
 
