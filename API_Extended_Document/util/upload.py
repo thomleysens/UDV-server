@@ -51,7 +51,7 @@ def delete_image(member_id):
 
 
 def find_image(member_id):
-    pattern = f'^{member_id}\.[a-z]+$'
+    pattern = fr'^{member_id}\.[a-z]+$'
     rex = re.compile(pattern)
     files = os.listdir(
         safe_join(os.getcwd(), UPLOAD_FOLDER))
