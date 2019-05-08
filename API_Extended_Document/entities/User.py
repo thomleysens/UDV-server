@@ -32,7 +32,6 @@ class User(Entity, Base):
     version = relationship('VersionDoc')
 
     comments = relationship("Comment",
-                            uselist=False,
                             cascade="all, delete-orphan")
 
     def update(self, new_values):

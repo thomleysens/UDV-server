@@ -53,7 +53,7 @@ class TestDocument:
                 'id_valid': 1
             },
             'to_validate_doc': None,
-            'comments': None,
+            'comments': [],
             'id': 1}
 
         assert expected_response == DocController.create_document({
@@ -86,7 +86,7 @@ class TestDocument:
                 'id_valid': 2
             },
             'user_id': 2,
-            'comments': None,
+            'comments': [],
             'to_validate_doc': None,
             'visualization': {
                 'id': 2,

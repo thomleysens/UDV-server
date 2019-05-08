@@ -12,7 +12,7 @@ class TestComment:
         print("Create a valid document")
         expected_response = {
             'id': 1,
-            'comments': None,
+            'comments': [],
             'user_id': 1,
             'metaData': {
                 'publicationDate': None,
@@ -106,13 +106,14 @@ class TestComment:
         print("get comments")
         expected_response = [
             {
-                'id': 1,
                 'description': 'ok_1',
-                'doc_id': 1,
-                'user_id': 1
+                'id': 1,
+                'user_id': 1,
+                'doc_id': 1
             }
         ]
         assert expected_response == CommentController.get_comments(1)
+
 
 
 if __name__ == "__main__":
