@@ -50,8 +50,8 @@ class User(Entity, Base):
         self.position_id = position.id
 
     @staticmethod
-    def is_admin(position):
-        level = Position.get_clearance_level(position)
+    def is_admin(attributes):
+        level = Position.get_clearance_level(attributes['position']['label'])
         return level == Position.LEVEL_MAX
 
     def serialize(self):
