@@ -16,7 +16,7 @@ class TestArchive:
         print("Create a document")
         expected_response = {
             'id': 1,
-            'comments': None,
+            'comments': [],
             'user_id': 1,
             'metaData': {
                 'publicationDate': None,
@@ -80,7 +80,7 @@ class TestArchive:
                 'positionZ': None
             },
             'valid_doc': {'id_valid': 1},
-            'comments': None,
+            'comments': [],
             'to_validate_doc': None
         }
         assert expected_response == DocController.update_document(1, {
@@ -120,7 +120,7 @@ class TestArchive:
             },
             'id': 1,
             'valid_doc': {'id_valid': 1},
-            'comments': None
+            'comments': []
         }
         assert expected_response == DocController.update_document(1, {
             'user_id' : 1,
@@ -211,8 +211,8 @@ class TestArchive:
         assert expected_response == ArchiveController.get_archive(1)
 
 if __name__ == "__main__":
-    Archivetest().test_create_document()
-    Archivetest().test_update_document_1()
-    Archivetest().test_update_document_2()
-    Archivetest().test_delete_document()
-    Archivetest().test_get_archive()
+    TestArchive().test_create_document()
+    TestArchive().test_update_document_1()
+    TestArchive().test_update_document_2()
+    TestArchive().test_delete_document()
+    TestArchive().test_get_archive()

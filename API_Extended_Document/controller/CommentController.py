@@ -27,7 +27,9 @@ class CommentController:
     @staticmethod
     @pUnit.make_a_transaction
     def create_comment(session, *args):
-        attributes = args[0]
+        doc_id = args[0]
+        attributes = args[1]
+        attributes['doc_id'] = doc_id
         comment = Comment()
         comment.update(attributes)
         session.add(comment)
@@ -37,7 +39,7 @@ class CommentController:
     @pUnit.make_a_query
     def get_comments(session, *args):
         """
-        This method si used to make a research the comments of a document
+        This method is used to make a research the comments of a document
         """
         doc_id = args[0]
 
@@ -51,12 +53,9 @@ class CommentController:
     def update_comment(session, *args):
         comment_id = args[0]
         attributes = args[1]
-        params = {'description' : attributes['description']}
-        comment = session.query(Comment) \
-            .filter(Comment.id == comment_id).one()
-        # To change not supposed to be done in Controller
-        if (ExtendedDocument.is_allowed(attributes) or comment.user_id == attributes['user_id']):
-            comment.update(params)
+        comment = session.query(Comment).filter(Comment.id == comment_id).one()
+        if ExtendedDocument.is_allowed(attributes) or comment.user_id == attributes['user_id']:
+            comment.update(attributes)
             session.add(comment)
             return comment
         else:
@@ -67,16 +66,9 @@ class CommentController:
     def delete_comment(session, *args):
         an_id = args[0]
         attributes = args[1]
-        # To change not supposed to be done in Controller
-        if ExtendedDocument.is_allowed(attributes):
-            # we also remove the associated image
-            # located in 'UPLOAD_FOLDER' directory
-            comment = session.query(Comment).filter(
-                Comment.id == an_id).one()
+        if ExtendedDocument.is_allowed(attributes) or Comment.user_id == attributes['user_id']:
+            comment = session.query(Comment).filter(Comment.id == an_id).one()
             session.delete(comment)
         else:
-            comment = session.query(Comment).filter(and_(
-                Comment.id == an_id,
-                Comment.user_id == attributes[
-                    'user_id'])).one()
-            session.delete(comment)
+            raise  AuthError
+

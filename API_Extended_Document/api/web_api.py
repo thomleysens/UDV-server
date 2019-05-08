@@ -190,19 +190,13 @@ def delete_document(doc_id):
 @app.route('/document/<int:doc_id>/comment', methods=['POST'])
 def create_comment(doc_id):
     def creation():
-        payload = jwt.decode(request.headers.get('Authorization'),
-                             VarConfig.get()['password'],
-                             algorithms=['HS256'])
-        if payload:
-            args = {key: request.form.get(key) for key in
-                    request.form.keys()}
-            args['user_position'] = payload['position']['label']
-            args['user_id'] = payload['user_id']
-            args['doc_id'] = doc_id
-            comment = CommentController.create_comment(args)
-            return comment
-        else:
-            raise LoginError
+        payload = is_connected(request.headers)
+        form = {key: request.form.get(key) for key in request.form.keys()}
+        args = {}
+        args.update(payload)
+        args.update(form)
+        comment = CommentController.create_comment(doc_id, args)
+        return comment
 
     return send_response(creation)()
 
@@ -215,35 +209,21 @@ def get_comment(doc_id):
 
 @app.route('/comment/<int:comment_id>', methods=['PUT'])
 def update_comment(comment_id):
-    # @TODO Refactor this as a unique function called by 'send_response'
-    payload = jwt.decode(request.headers.get('Authorization'),
-                         VarConfig.get()['password'],
-                         algorithms=['HS256'])
-    if payload:
-        args = {key: request.form.get(key) for key in
-                request.form.keys()}
-        args['user_position'] = payload['position']['label']
-        args['user_id'] = payload['user_id']
-        return send_response(
-            lambda: CommentController.update_comment(comment_id,
-                                                     args))()
-    else:
-        raise AuthError
+    def creation():
+        payload = is_connected(request.headers)
+        form = {key: request.form.get(key) for key in request.form.keys()}
+        args = {}
+        args.update(payload)
+        args.update(form)
+        comment = CommentController.update_comment(comment_id, args)
+        return comment
+
+    return send_response(creation)()
 
 
 @app.route('/comment/<int:comment_id>', methods=['DELETE'])
 def delete_comment(comment_id):
-    # @TODO Refactor this as a unique function called by 'send_response'
-    payload = jwt.decode(request.headers.get('Authorization'),
-                         VarConfig.get()['password'],
-                         algorithms=['HS256'])
-    if payload:
-        return send_response(
-            lambda: CommentController.delete_comment(comment_id, {
-                'user_position': payload['position']['label'],
-                'user_id': int(payload['user_id'])}))()
-    else:
-        raise AuthError
+    return send_response(lambda: CommentController.delete_comment(comment_id, is_connected(request.headers)))()
 
 
 @app.route('/document/<int:doc_id>/archive', methods=['GET'])
@@ -335,8 +315,7 @@ def add_document_to_guided_tour(tour_id):
         lambda: TourController.add_document(tour_id, doc_id))()
 
 
-@app.route('/guidedTour/<int:tour_id>/document/<int:doc_position>',
-           methods=['POST'])
+@app.route('/guidedTour/<int:tour_id>/document/<int:doc_position>', methods=['POST'])
 def update_guided_tour_document(tour_id, doc_position):
     return send_response(
         lambda: TourController.update_document(

@@ -133,9 +133,12 @@ class DocController:
         attributes = args[1]
         document = session.query(ExtendedDocument) \
             .filter(ExtendedDocument.id == doc_id).one()
-        ArchiveController.create_archive(document.serialize())
         # To change not supposed to be done in Controller
-        if ExtendedDocument.is_allowed(attributes) or attributes['initial_creation']:
+        doc_count = session.query(ExtendedDocument).filter(
+            and_(ExtendedDocument.id == doc_id, ExtendedDocument.user_id == attributes['user_id'])).join(
+            ToValidateDoc).count()
+        if ExtendedDocument.is_allowed(attributes) or attributes['initial_creation'] or doc_count > 0:
+            ArchiveController.create_archive(document.serialize())
             document.update(attributes)
             session.add(document)
             return document
@@ -147,14 +150,16 @@ class DocController:
     def delete_documents(session, *args):
         an_id = args[0]
         attributes = args[1]
-        if ExtendedDocument.is_allowed(attributes):
+        doc_count = session.query(ExtendedDocument).filter(
+            and_(ExtendedDocument.id == an_id, ExtendedDocument.user_id == attributes['user_id'])).count()
+        if ExtendedDocument.is_allowed(attributes) or doc_count > 0:
             # we also remove the associated image
             # located in 'UPLOAD_FOLDER' directory
             a_doc = session.query(ExtendedDocument).filter(
                 ExtendedDocument.id == an_id).one()
-            if (a_doc):
+            if a_doc:
                 ArchiveController.create_archive(a_doc.serialize())
-            session.delete(a_doc)
+                session.delete(a_doc)
             try:
                 os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
                 return a_doc
@@ -162,15 +167,4 @@ class DocController:
                 print(e)
                 info_logger.error(e)
         else:
-            a_doc = session.query(ExtendedDocument).filter(and_(
-                ExtendedDocument.id == an_id,
-                ExtendedDocument.user_id == attributes[
-                    'user_id'])).one()
-            if (a_doc):
-                ArchiveController.create_archive(a_doc.serialize())
-            session.delete(a_doc)
-            try:
-                os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
-            except Exception as e:
-                print(e)
-                info_logger.error(e)
+            raise AuthError

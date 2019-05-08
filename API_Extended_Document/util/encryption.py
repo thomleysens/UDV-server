@@ -21,7 +21,7 @@ def create_password():
 
 
 def encrypt(password):
-    return pbkdf2_sha256.encrypt(password)
+    return pbkdf2_sha256.hash(password)
 
 
 def is_password_valid(hash_password, password):

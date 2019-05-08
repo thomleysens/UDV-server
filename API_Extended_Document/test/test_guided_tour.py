@@ -104,7 +104,7 @@ class TestGuidedTour:
                         'id_valid': 1
                     },
                     'user_id': 1,
-                    'comments': None,
+                    'comments': [],
                     'to_validate_doc': None,
                     'metaData': {
                         'id': 1,
@@ -144,7 +144,7 @@ class TestGuidedTour:
                 'doc_id': 1,
                 'document': {
                     'id': 1,
-                    'comments': None,
+                    'comments': [],
                     'valid_doc': {
                         'id_valid': 1
                     },
@@ -181,7 +181,7 @@ class TestGuidedTour:
                     'doc_id': 1,
                     'document': {
                         'id': 1,
-                        'comments': None,
+                        'comments': [],
                         'valid_doc': {
                             'id_valid': 1
                         },
