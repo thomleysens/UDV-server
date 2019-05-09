@@ -100,16 +100,16 @@ class UserController:
         print('try to create admin')
         admin_exist = False
         for user in session.query(User).all():
-            if user.username == 'admin_gilles':
+            if user.username == 'admin':
                 admin_exist = True
         if not admin_exist:
             attributes = {
-                "email": "gilles.gesquiere@insa-lyon.fr",
-                "firstName": "Gilles",
-                "lastName": "Gesquière",
-                "password": "MEPP2019",
+                "email": "admin@udv.fr",
+                "firstName": "Admin",
+                "lastName": "UDV",
+                "password": "password",
                 "role": "admin",
-                "username": "admin_gilles",
+                "username": "admin",
                 "user_position": "admin"
             }
             UserController.create_admin_user(attributes)
