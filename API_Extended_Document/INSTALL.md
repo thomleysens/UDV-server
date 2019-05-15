@@ -1,8 +1,29 @@
 # Install using docker
+````
+sudo apt-get install docker
+sudo apt-get install docker-compose
+sudo systemctl start docker.service
+sudo docker-compose build
+sudo docker-compose up
+````
 
-`sudo apt-get install docker`
-`sudo apt-get install docker-compose`
-`docker-compose build`
+If you get the following error when running `sudo docker-compose up` :
+
+````
+Creating extended_doc_db ...
+Creating extended_doc_db ... errorERROR: for extended_doc_db  
+Cannot start service postgres: driver failed programming external connectivity on endpoint extended_doc_db 
+(b3e0b552dd60e5f8dbb91d4a8d40234c7de8e9f2a621a05490896dfd0fc01411): Error starting userland proxy: 
+listen tcp 0.0.0.0:5432: bind: address already in useERROR: for postgres  Cannot start service postgres: 
+driver failed programming external connectivity on endpoint extended_doc_db 
+(b3e0b552dd60e5f8dbb91d4a8d40234c7de8e9f2a621a05490896dfd0fc01411): 
+Error starting userland proxy: listen tcp 0.0.0.0:5432: bind: address already in use
+ERROR: Encountered errors while bringing up the project.
+````
+
+You need to stop your local postgresql with the command `sudo service postgresql stop`.
+
+You can also tell postgres to not start when booting with the command `sudo update-rc.d postgresql disable`
 
 # Manual install  
 
