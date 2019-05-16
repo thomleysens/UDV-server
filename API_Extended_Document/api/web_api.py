@@ -201,7 +201,7 @@ def create_comment(doc_id):
     return send_response(creation)()
 
 
-@app.route('/document/<int:doc_id>/comment', methods=['GET'])
+@app.route('/document/<int:doc_id>/comment', methods=['GET']) 
 def get_comment(doc_id):
     return send_response(
         lambda: CommentController.get_comments(doc_id))()
