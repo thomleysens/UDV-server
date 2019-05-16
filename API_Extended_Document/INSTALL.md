@@ -1,4 +1,20 @@
 # Install using docker
+Modify the .env file to match this configuration:
+
+````
+# database configuration
+ordbms=postgresql
+user=postgres
+password=password
+host=postgres
+port=5432
+dbname=extendedDoc
+````
+
+*Note: the .env that is commited should not be modified because it is used by travis for CI.*  
+
+Then run the following commands:
+
 ````
 sudo apt-get install docker
 sudo apt-get install docker-compose
