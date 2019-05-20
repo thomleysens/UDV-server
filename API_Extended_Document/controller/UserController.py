@@ -61,7 +61,8 @@ class UserController:
     def get_user_by_id(session, *args):
         attributes = args[0]
         user_id = attributes
-        return session.query(User).filter(User.id == user_id).one()
+        user = session.query(User).filter(User.id == user_id).one()
+        return user
 
     @staticmethod
     @pUnit.make_a_transaction
