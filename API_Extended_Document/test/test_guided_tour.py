@@ -76,7 +76,7 @@ class TestGuidedTour:
             "subject": "Subject1",
             "type": "type",
             "description": "a description",
-            "link": "1.gif",
+            "file": "1.gif",
             'user_id': 1,
             'position': {'label': 'admin'}
         })
@@ -85,7 +85,7 @@ class TestGuidedTour:
             "subject": "Subject2",
             "type": "type",
             "description": "a description",
-            "link": "1.gif",
+            "file": "1.gif",
             'user_id': 1,
             'position': {'label': 'admin'}
         })
@@ -111,7 +111,7 @@ class TestGuidedTour:
                         'title': 'title',
                         'type': 'type',
                         'publicationDate': None,
-                        'link': '1.gif',
+                        'file': '1.gif',
                         'description': 'a description',
                         'subject': 'Subject1',
                         'originalName': None,
@@ -155,7 +155,7 @@ class TestGuidedTour:
                          'title': 'title',
                          'type': 'type',
                          'publicationDate': None,
-                         'link': '1.gif',
+                         'file': '1.gif',
                          'description': 'a description',
                          'subject': 'Subject1',
                          'originalName': None,
@@ -192,7 +192,7 @@ class TestGuidedTour:
                             'title': 'title',
                             'type': 'type',
                             'publicationDate': None,
-                            'link': '1.gif',
+                            'file': '1.gif',
                             'description': 'a description',
                             'subject': 'Subject1',
                             'originalName': None,

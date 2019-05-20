@@ -20,7 +20,7 @@ class TestComment:
                 'id': 1,
                 'title': 'title',
                 'refDate': None,
-                'link': '1.gif',
+                'file': '1.gif',
                 'originalName': None,
                 'description': 'a description',
                 'type': 'type'
@@ -42,7 +42,7 @@ class TestComment:
             'subject': 'Subject1',
             'type': 'type',
             'description': 'a description',
-            'link': '1.gif',
+            'file': '1.gif',
             'user_id': 1,
             "position": {
                 'label': 'admin'
