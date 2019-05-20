@@ -4,6 +4,22 @@
 from controller.Controller import Controller
 from controller.DocController import DocController
 from controller.CommentController import CommentController
+import datetime
+import pytest
+
+
+FAKE_TIME = datetime.datetime(2020, 12, 25, 17, 5, 55)
+
+
+@pytest.fixture
+def patch_datetime_now(monkeypatch):
+
+    class MyDateTime:
+        @classmethod
+        def now(cls):
+            return FAKE_TIME
+
+    monkeypatch.setattr(datetime, 'datetime', MyDateTime)
 
 
 class TestComment:
@@ -49,26 +65,28 @@ class TestComment:
             }
         })
 
-    def test_create_comment_1(self):
+    def test_create_comment_1(self, patch_datetime_now):
         print("Create a comment")
         expected_response = {
             'doc_id': 1,
             'id': 1,
             'user_id': 1,
-            'description': 'ok'
+            'description': 'ok',
+            'date': FAKE_TIME
         }
         assert expected_response == CommentController.create_comment(1, {
             'user_id': 1,
             'description': 'ok'
         })
 
-    def test_create_comment_2(self):
+    def test_create_comment_2(self, patch_datetime_now):
         print("Create a comment")
         expected_response = {
             'id': 2,
             'user_id': 1,
             'doc_id': 1,
-            'description': 'ok_2'
+            'description': 'ok_2',
+            'date': FAKE_TIME
         }
         assert expected_response == CommentController.create_comment(1, {
             'user_id': 1,
@@ -81,7 +99,8 @@ class TestComment:
             'doc_id': 1,
             'user_id': 1,
             'description': 'ok_1',
-            'id': 1
+            'id': 1,
+            'date': FAKE_TIME
         }
         assert expected_response == CommentController.update_comment(1, {
             'id': 1,
@@ -109,7 +128,8 @@ class TestComment:
                 'description': 'ok_1',
                 'id': 1,
                 'user_id': 1,
-                'doc_id': 1
+                'doc_id': 1,
+                'date': FAKE_TIME
             }
         ]
         assert expected_response == CommentController.get_comments(1)
