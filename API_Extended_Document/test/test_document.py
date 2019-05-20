@@ -30,7 +30,7 @@ class TestDocument:
         print('create document to validate with all needed attributes')
         expected_response = {
             'metaData': {
-                'link': '1.gif',
+                'file': '1.gif',
                 'description': 'a description',
                 'subject': 'Subject1',
                 'title': 'title',
@@ -62,7 +62,7 @@ class TestDocument:
             'subject': 'Subject1',
             'type': 'type',
             'description': 'a description',
-            'link': '1.gif',
+            'file': '1.gif',
             'position': {'label': 'admin'}
         })
 
@@ -76,7 +76,7 @@ class TestDocument:
                 'publicationDate': None,
                 'refDate': '2019-02-05',
                 'subject': 'Subject2',
-                'link': '2.gif',
+                'file': '2.gif',
                 'description': 'a description',
                 'type': 'type',
                 'originalName': None,
@@ -105,7 +105,7 @@ class TestDocument:
             'subject': 'Subject2',
             'type': 'type',
             'description': 'a description',
-            'link': '2.gif',
+            'file': '2.gif',
             'refDate': '2019-02-05',
             'position': {'label': 'admin'}
         })
@@ -121,7 +121,7 @@ class TestDocument:
             'non_attr': 'non_value',
             'refDate': '2018-12-02',
             'description': 'an other description',
-            'link': '3.png',
+            'file': '3.png',
             'position': {'label': 'contributor'}
         }) is not None
 
@@ -136,7 +136,7 @@ class TestDocument:
             'non_attr': 'non_value',
             'refDate': '2018-12-03',
             'description': 'details',
-            'link': '3.png',
+            'file': '3.png',
             'position': {'label': 'admin'}
         }) is not None
 
