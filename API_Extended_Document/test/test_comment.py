@@ -6,18 +6,24 @@ from controller.DocController import DocController
 from controller.CommentController import CommentController
 import datetime
 import pytest
+import psycopg2
 
 
-FAKE_TIME = datetime.datetime(2020, 12, 25, 17, 5, 55)
+FAKE_TIME = datetime.datetime(2020, 12, 25, 17, 5, 55, tzinfo=psycopg2.tz.FixedOffsetTimezone(offset=0, name=None))
 
 
 @pytest.fixture
 def patch_datetime_now(monkeypatch):
+    
+    class MyUTCNow:
+        @classmethod
+        def astimezone(cls):
+            return FAKE_TIME
 
     class MyDateTime:
         @classmethod
-        def now(cls):
-            return FAKE_TIME
+        def utcnow(cls):
+            return MyUTCNow
 
     monkeypatch.setattr(datetime, 'datetime', MyDateTime)
 

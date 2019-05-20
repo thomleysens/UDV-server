@@ -32,7 +32,7 @@ class CommentController:
         doc_id = args[0]
         attributes = args[1]
         attributes['doc_id'] = doc_id
-        attributes['date'] = datetime.datetime.now()
+        attributes['date'] = datetime.datetime.utcnow().astimezone()
         comment = Comment()
         comment.update(attributes)
         session.add(comment)

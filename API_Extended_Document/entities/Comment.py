@@ -15,4 +15,4 @@ class Comment(Entity, Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     doc_id = Column(Integer, ForeignKey('extended_document.id'))
     description = Column(String, nullable=False)
-    date = Column(DateTime, nullable=False)
+    date = Column(DateTime(timezone=True), nullable=False)
