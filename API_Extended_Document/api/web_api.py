@@ -269,10 +269,10 @@ def delete_member_image(doc_id):
     )()
 
 
-@app.route('/guidedTour')
+@app.route('/guidedTour', methods=['POST'])
 def create_guided_tour():
-    name = request.args.get('name')
-    description = request.args.get('description')
+    name = request.form.get('name')
+    description = request.form.get('description')
     if name is None or description is None:
         return 'parameter is missing', 400
 
