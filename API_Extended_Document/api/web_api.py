@@ -17,8 +17,10 @@ from controller.ArchiveController import ArchiveController
 from util.upload import *
 from util.encryption import *
 from util.Exception import *
+from util.JsonIsoEncoder import JsonIsoEncoder
 
 app = Flask(__name__)
+app.json_encoder = JsonIsoEncoder
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
