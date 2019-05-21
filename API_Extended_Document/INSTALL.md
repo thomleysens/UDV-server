@@ -1,9 +1,54 @@
-# Install Python and PostgreSQL
+# Install using docker
+Modify the .env file to match this configuration:
 
-[Python 3.6](https://www.python.org/downloads/) or newer is recommended and PostgreSQL can be install following 
+````
+# database configuration
+ordbms=postgresql
+user=postgres
+password=password
+host=postgres
+port=5432
+dbname=extendedDoc
+````
+
+*Note: the .env that is commited should not be modified because it is used by travis for CI.*  
+
+Then run the following commands:
+
+````
+sudo apt-get install docker
+sudo apt-get install docker-compose
+sudo systemctl start docker.service
+sudo docker-compose build
+sudo docker-compose up
+````
+
+If you get the following error when running `sudo docker-compose up` :
+
+````
+Creating extended_doc_db ...
+Creating extended_doc_db ... errorERROR: for extended_doc_db  
+Cannot start service postgres: driver failed programming external connectivity on endpoint extended_doc_db 
+(b3e0b552dd60e5f8dbb91d4a8d40234c7de8e9f2a621a05490896dfd0fc01411): Error starting userland proxy: 
+listen tcp 0.0.0.0:5432: bind: address already in useERROR: for postgres  Cannot start service postgres: 
+driver failed programming external connectivity on endpoint extended_doc_db 
+(b3e0b552dd60e5f8dbb91d4a8d40234c7de8e9f2a621a05490896dfd0fc01411): 
+Error starting userland proxy: listen tcp 0.0.0.0:5432: bind: address already in use
+ERROR: Encountered errors while bringing up the project.
+````
+
+You need to stop your local postgresql with the command `sudo service postgresql stop`.
+
+You can also tell postgres to not start when booting with the command `sudo update-rc.d postgresql disable`
+
+# Manual install  
+
+## Install Python and PostgreSQL
+
+[Python 3.6](https://www.python.org/downloads/) or newer is recommended and PostgreSQL can be install following
 [this](https://www.postgresql.org/docs/9.3/static/tutorial-install.html).
 
-# Clone this repository
+## Clone this repository
 
 You need to clone this repository by typing, if you have an ssh key: `git clone git@github.com:MEPP-team/UDV-server.git`
 
@@ -13,7 +58,7 @@ Then you need to go to the directory **API_Extended_Document**: `cd UDV-server/A
 
 *Note: In windows `/` is replaced by `\`*
 
-# Create a virtual environment
+## Create a virtual environment
 
 Then, create a virtual env in which we put the python intereter and our dependencies (only on Python3.6 or newer):
 ```
@@ -22,15 +67,15 @@ python3 -m venv venv
 
 On **linux**, if it fails try to run the command below first: `sudo apt-get install python3-venv`
 
-Enter in the virtual environment, 
+Enter in the virtual environment,
 - On **Unix**: `source venv/bin/activate`
 - on **Windows**: `venv\Scripts\activate.bat`
-  
+
 To quit the virtual environment, just type:   `deactivate`
 
 ***Warning**: Unless explicitly, in the following you need to be in the **virtual environment**.*
 
-# Install packages
+## Install packages
 
 Required packages for the application:
 - [**psycopg2**](http://initd.org/psycopg/)
@@ -39,19 +84,10 @@ Required packages for the application:
 - [**PyYAML**](https://pyyaml.org/wiki/PyYAMLDocumentation)
 - [**Colorama**](https://pypi.org/project/colorama/)
 
-```
-pip3 install psycopg2
-pip3 install sqlalchemy
-pip3 install Flask
-pip3 install flask_cors
-pip3 install colorama
-pip3 install PyYAML
-```
+Install them usin: `pip3 install -r requirements.txt` where
+`requirements.txt` contains the preceding packages.
 
-Alternatively you can use: `pip3 install -r Deployment/requirements.txt` where `requirements.txt` contains the preceding packages.
-
-
-# Create a postgres DataBase
+## Create a postgres DataBase
 You need to create a postgres database for instance on linux with
 ```
 (root)$ sudo su postgres
@@ -60,12 +96,11 @@ You need to create a postgres database for instance on linux with
 (postgres)$ exit
 ```
 
-*Note: You can also use [pgAdmin](https://www.pgadmin.org), especially on Windows. 
+*Note: You can also use [pgAdmin](https://www.pgadmin.org), especially on Windows.
 It is a software like [PhpMyAdmin](https://www.phpmyadmin.net/) but for PostgreSQL database.
 By default, it is installed with PostgreSQL: `Program Files (x86)\PostgreSQL\X.X\pgAdminX\bin\pgAdminX.exe`*
 
-Then modify the [**config.yml**](util/config.yml) 
-file located in the [`util/`](util) sub-directory to reflect your onfiguration. 
+Then modify the [**.env**](.env) to reflect your onfiguration.
 If you have created a new database as below, no change is needed but verify anyway everything are correct
 
 ```
@@ -85,25 +120,28 @@ and in `Program Files (x86)\PostgreSQL\X.X\data\postgresql.conf` on Windows
 
 ## Tests
 
-To verify everything works find, you can execute the tests files, located in the folder 
+To verify everything works find, you can execute the tests files, located in the folder
 [**test**](test)
 
-By default, python will not find the local packages (such as **test** or **api**), 
+By default, python will not find the local packages (such as **test** or **api**),
 you need to add the location of **API_Extended_Document** to the environment variable **PYTHONPATH** .
 - On **Linux**: `export PYTHONPATH="."`
 - On **Windows**: `set PYTHONPATH=.`
 
-`.` corresponds to the location of **API_Extended_Document** and can be replaced 
+`.` corresponds to the location of **API_Extended_Document** and can be replaced
 by any path to this directory.
 
-Then you can run any test file located in the **test** directory, for instance: 
+Then you can run any test file located in the **test** directory, for instance:
 ```
 python3 test/document_tests.py
 python3 test/guided_tour_tests.py
 ```
 
-*Note: It is a good practice to launch the tests before running the server, because it ensures everything works find and 
-is a way to have some data in the database and facilitate the tests with the front.*
+*Note: if the tests don't run, verify that you have at least Python 3.6"
+
+*Note: It is a good practice to launch the tests before running the server,
+because it ensures everything works fine and is a way to have some data in the
+database and facilitate the tests with the front-end.*
 
 ## Localhost execution
 
@@ -113,16 +151,16 @@ If you want the server to run you can then type: `python3 api/web_api.py`
 
 ### Context
 
-According to the [flask documentation](http://flask.pocoo.org/docs/1.0/tutorial/deploy/) 
+According to the [flask documentation](http://flask.pocoo.org/docs/1.0/tutorial/deploy/)
 it is a good practice to use a [production WSGI server](https://www.fullstackpython.com/wsgi-servers.html)
 
 ### Configure and run uWSGI
 
-Note that this part is only valid on the server `rict.lirirs.cnrs`, because of its environment. 
+Note that this part is only valid on the server `rict.lirirs.cnrs`, because of its environment.
 A more detailed set up can be find on its server and its documentation.
 
  * Edit and adpat `Deployment/conf/API_Extended_Document.uwsgi.yml` to obtain something similar to
- 
+
    ```
    uwsgi:
      virtualenv: /home/citydb_user/Demos/DocumentDemo/venv          <--- Adapt this

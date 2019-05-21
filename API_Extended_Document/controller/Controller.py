@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-import persistence_unit.PersistenceUnit as pUnit
 from util.db_config import *
+import persistence_unit.PersistenceUnit as pUnit
+from controller.UserController import UserController
+from controller.PositionController import PositionController
 
+from entities.User import User
+from entities.Position import Position
 from entities.GuidedTour import GuidedTour
 from entities.ExtendedDocument import ExtendedDocument
 from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
+from entities.Comment import Comment
+from entities.VersionDoc import VersionDoc
 
 
 class Controller:
@@ -22,8 +28,10 @@ class Controller:
     @staticmethod
     def recreate_tables():
         Base.metadata.drop_all(pUnit.engine)
-        Base.metadata.create_all(pUnit.engine)
+        Controller.create_tables()
 
     @staticmethod
     def create_tables():
         Base.metadata.create_all(pUnit.engine)
+        PositionController.create_all_positions()
+        UserController.create_admin()

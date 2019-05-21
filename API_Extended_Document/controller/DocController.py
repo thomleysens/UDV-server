@@ -3,12 +3,16 @@
 
 from sqlalchemy import or_, and_
 
-from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
 from util.log import *
 from util.upload import UPLOAD_FOLDER
-from util.db_config import *
+from util.Exception import *
+
 from entities.MetaData import MetaData
 from entities.ExtendedDocument import ExtendedDocument
+from entities.ToValidateDoc import ToValidateDoc
+from entities.ValidDoc import ValidDoc
+from controller.ArchiveController import ArchiveController
+
 import persistence_unit.PersistenceUnit as pUnit
 
 
@@ -27,10 +31,27 @@ class DocController:
     @pUnit.make_a_transaction
     def create_document(session, *args):
         attributes = args[0]
-        document = ExtendedDocument()
-        document.update(attributes)
+        document = ExtendedDocument(attributes)
+        document.update_initial(attributes)
         session.add(document)
         return document
+
+    @staticmethod
+    @pUnit.make_a_transaction
+    def validate_document(session, *args):
+        doc_id = args[0]
+        attributes = args[1]
+        if ExtendedDocument.is_allowed(attributes):
+            document = session.query(ExtendedDocument).filter(
+                ExtendedDocument.id == doc_id).one()
+            to_validate = session.query(ToValidateDoc).filter(
+                ToValidateDoc.id_to_validate == doc_id).one()
+            document.validate(attributes)
+            session.delete(to_validate)
+            session.add(document)
+            return document
+        else:
+            raise AuthError
 
     @staticmethod
     @pUnit.make_a_query
@@ -85,29 +106,65 @@ class DocController:
         query = session.query(ExtendedDocument).join(
             MetaData).filter_by(**attributes).filter(
             and_(*comparison_conditions)).filter(
-            or_(*keyword_conditions))
+            or_(*keyword_conditions)).join(ValidDoc)
 
         return query.all()
+
+    @staticmethod
+    @pUnit.make_a_query
+    def get_documents_to_validate(session, *args):
+        """
+        This method si used to get documents to validate
+        """
+        attributes = args[0]
+        if ExtendedDocument.is_allowed(attributes):
+            query = session.query(ExtendedDocument).join(ToValidateDoc)
+            return query.all()
+        else:
+            query = session.query(ExtendedDocument) \
+                .join(ToValidateDoc).filter(
+                ExtendedDocument.user_id == attributes['user_id'])
+            return query.all()
 
     @staticmethod
     @pUnit.make_a_transaction
     def update_document(session, *args):
         doc_id = args[0]
         attributes = args[1]
-
         document = session.query(ExtendedDocument) \
             .filter(ExtendedDocument.id == doc_id).one()
-        document.update(attributes)
-        session.add(document)
-
-        return document
+        # To change not supposed to be done in Controller
+        doc_count = session.query(ExtendedDocument).filter(
+            and_(ExtendedDocument.id == doc_id, ExtendedDocument.user_id == attributes['user_id'])).join(
+            ToValidateDoc).count()
+        if ExtendedDocument.is_allowed(attributes) or attributes['initial_creation'] or doc_count > 0:
+            ArchiveController.create_archive(document.serialize())
+            document.update(attributes)
+            session.add(document)
+            return document
+        else:
+            raise AuthError
 
     @staticmethod
     @pUnit.make_a_transaction
     def delete_documents(session, *args):
         an_id = args[0]
-        a_doc = session.query(ExtendedDocument).filter(
-            ExtendedDocument.id == an_id).one()
-        # we also remove the associated image located in 'UPLOAD_FOLDER' directory
-        os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
-        session.delete(a_doc)
+        attributes = args[1]
+        doc_count = session.query(ExtendedDocument).filter(
+            and_(ExtendedDocument.id == an_id, ExtendedDocument.user_id == attributes['user_id'])).count()
+        if ExtendedDocument.is_allowed(attributes) or doc_count > 0:
+            # we also remove the associated image
+            # located in 'UPLOAD_FOLDER' directory
+            a_doc = session.query(ExtendedDocument).filter(
+                ExtendedDocument.id == an_id).one()
+            if a_doc:
+                ArchiveController.create_archive(a_doc.serialize())
+                session.delete(a_doc)
+            try:
+                os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
+                return a_doc
+            except Exception as e:
+                print(e)
+                info_logger.error(e)
+        else:
+            raise AuthError

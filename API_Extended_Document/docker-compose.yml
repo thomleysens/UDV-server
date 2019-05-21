@@ -1,0 +1,23 @@
+version: '3.0'
+services:
+  postgres:
+    restart: always
+    image: postgres:10
+    container_name: extended_doc_db
+    environment:
+      - POSTGRES_USER=${user}
+      - POSTGRES_PASSWORD=${password}
+      - POSTGRES_DB=${dbname}
+    volumes:
+      - ./postgres-data/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  app:
+    container_name: extended_doc_api
+    build: .
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/api
+    depends_on:
+      - postgres
