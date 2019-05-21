@@ -6,7 +6,7 @@ CityGML resulting file.
 ```bash
 $ virtualenv -p /usr/bin/python3 venv
 $ . venv/bin/activate
-(venv)$ pip install -e .
+(venv)$ pip install -r requirements.txt
 ```
 
 ## Usage
