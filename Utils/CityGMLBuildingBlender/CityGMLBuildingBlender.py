@@ -40,5 +40,5 @@ if __name__ == '__main__':
     for city_object_member in inputs[1].findall(".//cityObjectMember",
                                                 namespaces=name_space):
         output.getroot().append(city_object_member)
-    output.write(cli_args.output)
+    output.write(cli_args.output[0])
 
