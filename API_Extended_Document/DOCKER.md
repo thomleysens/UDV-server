@@ -63,11 +63,11 @@ You can now test the connection. Fill in the database password (which is normall
 
 You can now view the content of each table by double-clicking on them. If that's the first time you run the database, every table should be empty, but they will be filled with data when we'll run the server.
 
-### Running the server inside a Docker from PyCharm
+## Running the server inside a Docker from PyCharm
 
 Now that the database is correctly launched inside the 'postgres' container, we should be able to run a docker container with the server inside to debug it. PyCharm can do that by changing the Python interpreter, and specifying that we want to run the server inside a Docker. But before that, we need to create the corresponding Docker image.
 
-#### Creating the server docker image
+### Creating the server docker image
 
 Whereas we could fetch the database image from internet, the server image is a custom image that we made, so we have to build it before running the container. The Dockerfile provided in the API_Extended_Document folder setups the correct environment, however it launches the server at the end (with the line `CMD python api/web_api.py`). That's not what we whant because PyCharm will try to launch the application itself, and it will somehow result in a conflict. So, we just need to comment the line :
 
@@ -83,13 +83,13 @@ $ docker build -t {image-name} .
 
 > {image-name} can be whatever name you want, but we recommend not to name it `extended_document_api` because this name is the one used by docker compose. If you want to run the server with the docker-compose method after following this tutorial, it will be easier if the names don't conflict.
 
-#### Creating the PyCharm Python Interpreter
+### Creating the PyCharm Python Interpreter
 
 Now we need to create a PyCharm interpreter using that image. Type `Ctrl-Alt-S` to open the settings, and go to "Project: [...] > Project Interpreter". Click on the cog icon in the right of the window and select "Add". It will open a configuration window to setup our new interpreter. Select the "Docker" option and fill the fields. The server should be automatically detected, otherwise it could be that you do not have the rights as a user to access the Docker daemon (see the "User permission" section of this file). Select your docker image that you juste created, and leave the last field as is.
 
 ![Server Interpreter Configuration](doc/img/pycharm-docker/server_int_cfg.png)
 
-#### Run/Debug configuration
+### Run/Debug configuration
 
 The last step is to configure a main file to run on the server. To do that, we need to go in the `api/web_api.py` file and go to the bottom. Left to the main section of the code, PyCharm displays a green triangle to run the code from here. If you click on it, it will create a run configuration that we can see in the upper left section of the window.
 
@@ -107,6 +107,25 @@ You can now click on the created configuration and select "Edit Configuration". 
 
 > In this example, my {network-name} is "my-net".
 
-#### Testing the run/debug
+### Running the server
 
 Now you should be able ton run the `web_api`. You can click on the green arrow right to the run configuration, or hit `Maj-F10`. The server should be running and exposing the port 5000.
+
+## Launching PyTest inside a Docker from PyCharm
+
+PyCharm provides built-in support for all sorts of testing frameworks in Python. As the project already uses Pytest, which is a really simple and convenient framework, it would be useful to launch them from PyCharm.
+
+### Creating a Test configuration
+
+We must create a test configuration, like we made a run/debug configuration for the `web_api.py` file. To do that, we can go into the "Edit Configuration" window and click on the "+" icon. Select the "Python Tests > pytest" option and we can start configuring the settings.
+
+1. The target will be a custom target. In order to have all informations about the test results, we specify the '-vv' additional argument.
+2. The python interpreter is the same as before.
+3. The working directory should still be `API_Extended_Document`
+4. The container settings should be the same as in the previous section.
+
+The configuration window should look like this :
+
+![Test Configuration](doc/img/pycharm-docker/server_tests.png)
+
+And that's done ! You should be able to run PyTest without problems now. Just hit the green arrow and the tests will run properly.
