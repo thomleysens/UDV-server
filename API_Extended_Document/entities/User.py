@@ -57,6 +57,6 @@ class User(Entity, Base):
     def serialize(self):
         serialized_object = {}
         for attr in self.get_all_attr():
-            if attr != 'password':
+            if attr != 'password' and attr != 'comments' and attr != 'version' and attr != 'extended_document':
                 serialized_object[attr] = serialize(getattr(self, attr))
         return serialized_object

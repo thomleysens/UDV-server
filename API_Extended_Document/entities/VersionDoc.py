@@ -22,7 +22,7 @@ class VersionDoc(Entity, Base):
     refDate = Column(String)
     publicationDate = Column(String)
     type = Column(String)
-    link = Column(String)
+    file = Column(String)
     originalName = Column(String)
     quaternionX = Column(Float)
     quaternionY = Column(Float)

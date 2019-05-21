@@ -19,5 +19,5 @@ class MetaData(Entity, Base):
     refDate = Column(String)
     publicationDate = Column(String)
     type = Column(String)
-    link = Column(String)
+    file = Column(String)
     originalName = Column(String)

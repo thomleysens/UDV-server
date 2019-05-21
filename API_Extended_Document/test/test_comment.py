@@ -4,6 +4,28 @@
 from controller.Controller import Controller
 from controller.DocController import DocController
 from controller.CommentController import CommentController
+import datetime
+import pytest
+import psycopg2
+
+
+FAKE_TIME = datetime.datetime(2020, 12, 25, 17, 5, 55, tzinfo=psycopg2.tz.FixedOffsetTimezone(offset=0, name=None))
+
+
+@pytest.fixture
+def patch_datetime_now(monkeypatch):
+    
+    class MyUTCNow:
+        @classmethod
+        def astimezone(cls):
+            return FAKE_TIME
+
+    class MyDateTime:
+        @classmethod
+        def utcnow(cls):
+            return MyUTCNow
+
+    monkeypatch.setattr(datetime, 'datetime', MyDateTime)
 
 
 class TestComment:
@@ -20,7 +42,7 @@ class TestComment:
                 'id': 1,
                 'title': 'title',
                 'refDate': None,
-                'link': '1.gif',
+                'file': '1.gif',
                 'originalName': None,
                 'description': 'a description',
                 'type': 'type'
@@ -42,33 +64,35 @@ class TestComment:
             'subject': 'Subject1',
             'type': 'type',
             'description': 'a description',
-            'link': '1.gif',
+            'file': '1.gif',
             'user_id': 1,
             "position": {
                 'label': 'admin'
             }
         })
 
-    def test_create_comment_1(self):
+    def test_create_comment_1(self, patch_datetime_now):
         print("Create a comment")
         expected_response = {
             'doc_id': 1,
             'id': 1,
             'user_id': 1,
-            'description': 'ok'
+            'description': 'ok',
+            'date': FAKE_TIME
         }
         assert expected_response == CommentController.create_comment(1, {
             'user_id': 1,
             'description': 'ok'
         })
 
-    def test_create_comment_2(self):
+    def test_create_comment_2(self, patch_datetime_now):
         print("Create a comment")
         expected_response = {
             'id': 2,
             'user_id': 1,
             'doc_id': 1,
-            'description': 'ok_2'
+            'description': 'ok_2',
+            'date': FAKE_TIME
         }
         assert expected_response == CommentController.create_comment(1, {
             'user_id': 1,
@@ -81,7 +105,8 @@ class TestComment:
             'doc_id': 1,
             'user_id': 1,
             'description': 'ok_1',
-            'id': 1
+            'id': 1,
+            'date': FAKE_TIME
         }
         assert expected_response == CommentController.update_comment(1, {
             'id': 1,
@@ -109,7 +134,8 @@ class TestComment:
                 'description': 'ok_1',
                 'id': 1,
                 'user_id': 1,
-                'doc_id': 1
+                'doc_id': 1,
+                'date': FAKE_TIME
             }
         ]
         assert expected_response == CommentController.get_comments(1)

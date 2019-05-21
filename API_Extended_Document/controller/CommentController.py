@@ -13,6 +13,8 @@ from entities.ExtendedDocument import ExtendedDocument
 
 import persistence_unit.PersistenceUnit as pUnit
 
+import datetime
+
 
 class CommentController:
     """
@@ -30,6 +32,7 @@ class CommentController:
         doc_id = args[0]
         attributes = args[1]
         attributes['doc_id'] = doc_id
+        attributes['date'] = datetime.datetime.utcnow().astimezone()
         comment = Comment()
         comment.update(attributes)
         session.add(comment)
@@ -44,7 +47,7 @@ class CommentController:
         doc_id = args[0]
 
         query = session.query(Comment).filter(
-            and_(Comment.doc_id == doc_id))
+            and_(Comment.doc_id == doc_id)).order_by(Comment.date.desc())
 
         return query.all()
 

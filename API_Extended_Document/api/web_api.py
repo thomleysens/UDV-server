@@ -17,8 +17,10 @@ from controller.ArchiveController import ArchiveController
 from util.upload import *
 from util.encryption import *
 from util.Exception import *
+from util.JsonIsoEncoder import JsonIsoEncoder
 
 app = Flask(__name__)
+app.json_encoder = JsonIsoEncoder
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
@@ -48,6 +50,8 @@ def send_response(old_function, authorization_function=None,
             return 'Authentication failed', 403
         except NotFound:
             return 'no result found', 404
+        except FormatError:
+            return 'Unsupported File Format', 415
         except Exception as e:
             print(e)
             info_logger.error(e)
@@ -143,15 +147,17 @@ def create_document():
         args.update(is_connected(request.headers))
         document = DocController.create_document(args)
         filename = ''
-        if request.files.get('link'):
+        if request.files.get('file'):
             filename = save_file(document['id'],
-                                 request.files['link'])
-        if filename:
+                                 request.files['file'])
+        if filename is not None:
             payload = is_connected(request.headers)
-            payload['link'] = filename
+            payload['file'] = filename
             payload['initial_creation'] = True
             document = DocController.update_document(document['id'],
                                                      payload)
+        else:
+            raise FormatError
         return document
 
     return send_response(lambda: creation())()
@@ -201,7 +207,7 @@ def create_comment(doc_id):
     return send_response(creation)()
 
 
-@app.route('/document/<int:doc_id>/comment', methods=['GET'])
+@app.route('/document/<int:doc_id>/comment', methods=['GET']) 
 def get_comment(doc_id):
     return send_response(
         lambda: CommentController.get_comments(doc_id))()
@@ -258,7 +264,7 @@ def upload_file(doc_id):
     if request.files.get('file'):
         file = request.files['file']
         return send_response(
-            lambda: save(file, doc_id)
+            lambda: save_file(doc_id, file)
         )()
 
 
@@ -269,10 +275,10 @@ def delete_member_image(doc_id):
     )()
 
 
-@app.route('/guidedTour')
+@app.route('/guidedTour', methods=['POST'])
 def create_guided_tour():
-    name = request.args.get('name')
-    description = request.args.get('description')
+    name = request.form.get('name')
+    description = request.form.get('description')
     if name is None or description is None:
         return 'parameter is missing', 400
 
