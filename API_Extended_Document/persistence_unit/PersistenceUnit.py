@@ -18,13 +18,15 @@ def try_to_connect():
     while remaining_tries:
         try:
             print('Trying to connect to Database...')
+            print('Config : ', get_db_info())
             created_engine = create_engine(get_db_info())
             created_engine.connect()
             print('Connection succeed!')
             return created_engine
-        except OperationalError:
+        except OperationalError as e:
             remaining_tries -= 1
             print('Connection failed', end=' ')
+            print(e)
             if remaining_tries == 0:
                 sys.exit()
             print('- new try')
