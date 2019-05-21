@@ -11,5 +11,5 @@ $ . venv/bin/activate
 
 ## Usage
 ```bash
-(venv)$ python CityGMLBuildingBlender.py filename_1.gml filename_2.gml <...filename_n.gml...> --output output.gml
+(venv)$ python CityGMLBuildingBlender.py --input filename_1.gml filename_2.gml <...filename_n.gml...> --output output.gml
 ```
