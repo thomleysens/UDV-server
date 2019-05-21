@@ -19,6 +19,8 @@ from util.encryption import *
 from util.Exception import *
 from util.JsonIsoEncoder import JsonIsoEncoder
 
+from functools import wraps
+
 app = Flask(__name__)
 app.json_encoder = JsonIsoEncoder
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -69,18 +71,32 @@ def get_file(member_id):
     raise NotFound
 
 
-def is_connected(*args):
-    encoded_jwt = args[0]["Authorization"]
-    if encoded_jwt:
-        payload = jwt.decode(encoded_jwt, VarConfig.get()['password'],
-                             algorithms=['HS256'])
-        if payload:
-            return payload
-    raise LoginError
+def need_authentication(old_function):
+    """
+    Decorator used to specify that a route needs authentication. To put after
+    the `app.route` decorator from Flask. Will search in the request headers
+    for an 'Authorization' field and decode it as JWT. If the field cannot be
+    found, or the timeout is expired, or the field is not a valid JWT, returns
+    a LoginError.
+    :param old_function: The old function
+    :return: Either the old function, or a function that raises a LoginError
+    """
+    @wraps(old_function)
+    def new_function(*args, **kwargs):
+        encoded_jwt = request.headers["Authorization"]
+        try:
+            decoded_jwt = jwt.decode(encoded_jwt, VarConfig.get()['password'],
+                                 algorithms=['HS256'])
+        except Exception:
+            return send_response(lambda: throw(LoginError))()
 
+        if decoded_jwt is None:
+            return send_response(lambda: throw(LoginError))()
 
-def get_my_id(authorization):
-    return is_connected(authorization)['user_id']
+        kwargs['user'] = decoded_jwt
+        return old_function(*args, **kwargs)
+
+    return new_function
 
 
 @app.route('/')
@@ -119,10 +135,10 @@ def create_user():
 
 
 @app.route('/user/me', methods=['GET'])
-def get_connected_user():
+@need_authentication
+def get_connected_user(user):
     return send_response(
-        lambda: UserController.get_user_by_id(
-            is_connected(request.headers)['user_id']))()
+        lambda: UserController.get_user_by_id(user['user_id']))()
 
 
 @app.route('/user/<int:user_id>', methods=['GET'])
@@ -132,26 +148,28 @@ def get_user(user_id):
 
 
 @app.route('/user/grant', methods=['POST'])
-def add_privileged_user():
+@need_authentication
+def add_privileged_user(user):
     return send_response(
         lambda: UserController.create_privileged_user({
             key: request.form.get(key) for key in
-            request.form.keys()}, is_connected(request.headers)))()
+            request.form.keys()}, user))()
 
 
 @app.route('/document', methods=['POST'])
-def create_document():
+@need_authentication
+def create_document(user):
     def creation():
         args = {key: request.form.get(key) for key in
                 request.form.keys()}
-        args.update(is_connected(request.headers))
+        args.update(user)
         document = DocController.create_document(args)
         filename = ''
         if request.files.get('file'):
             filename = save_file(document['id'],
                                  request.files['file'])
         if filename is not None:
-            payload = is_connected(request.headers)
+            payload = user
             payload['file'] = filename
             payload['initial_creation'] = True
             document = DocController.update_document(document['id'],
@@ -178,9 +196,10 @@ def get_document(doc_id):
 
 
 @app.route('/document/<int:doc_id>', methods=['PUT'])
-def update_document(doc_id):
+@need_authentication
+def update_document(doc_id, user):
     args = {key: request.form.get(key) for key in request.form.keys()}
-    payload = is_connected(request.headers)
+    payload = user
     args['initial_creation'] = False
     args.update(payload)
     return send_response(
@@ -188,15 +207,17 @@ def update_document(doc_id):
 
 
 @app.route('/document/<int:doc_id>', methods=['DELETE'])
-def delete_document(doc_id):
+@need_authentication
+def delete_document(doc_id, user):
     return send_response(lambda: DocController.delete_documents(
-        doc_id, is_connected(request.headers)))()
+        doc_id, user))()
 
 
 @app.route('/document/<int:doc_id>/comment', methods=['POST'])
-def create_comment(doc_id):
+@need_authentication
+def create_comment(doc_id, user):
     def creation():
-        payload = is_connected(request.headers)
+        payload = user
         form = {key: request.form.get(key) for key in request.form.keys()}
         args = {}
         args.update(payload)
@@ -214,9 +235,10 @@ def get_comment(doc_id):
 
 
 @app.route('/comment/<int:comment_id>', methods=['PUT'])
-def update_comment(comment_id):
+@need_authentication
+def update_comment(comment_id, user):
     def creation():
-        payload = is_connected(request.headers)
+        payload = user
         form = {key: request.form.get(key) for key in request.form.keys()}
         args = {}
         args.update(payload)
@@ -228,8 +250,9 @@ def update_comment(comment_id):
 
 
 @app.route('/comment/<int:comment_id>', methods=['DELETE'])
-def delete_comment(comment_id):
-    return send_response(lambda: CommentController.delete_comment(comment_id, is_connected(request.headers)))()
+@need_authentication
+def delete_comment(comment_id, user):
+    return send_response(lambda: CommentController.delete_comment(comment_id, user))()
 
 
 @app.route('/document/<int:doc_id>/archive', methods=['GET'])
@@ -239,17 +262,19 @@ def get_archive(doc_id):
 
 
 @app.route('/document/validate', methods=['POST'])
-def validate_document():
+@need_authentication
+def validate_document(user):
     return send_response(
         lambda: DocController.validate_document(
-            request.form['id'], is_connected(request.headers)))()
+            request.form['id'], user))()
 
 
 @app.route('/document/in_validation', methods=['GET'])
-def get_documents_to_validate():
+@need_authentication
+def get_documents_to_validate(user):
     return send_response(
         lambda: DocController.get_documents_to_validate(
-            is_connected(request.headers)))()
+            user))()
 
 
 @app.route('/document/<int:doc_id>/file', methods=['GET'])
@@ -321,7 +346,8 @@ def add_document_to_guided_tour(tour_id):
         lambda: TourController.add_document(tour_id, doc_id))()
 
 
-@app.route('/guidedTour/<int:tour_id>/document/<int:doc_position>', methods=['POST'])
+@app.route('/guidedTour/<int:tour_id>/document/<int:doc_position>',
+           methods=['POST'])
 def update_guided_tour_document(tour_id, doc_position):
     return send_response(
         lambda: TourController.update_document(
