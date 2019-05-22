@@ -27,8 +27,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
 
-def send_response(old_function, authorization_function=None,
-                  authorization=None, resource_id=None):
+def format_response(old_function, authorization_function=None,
+                    authorization=None, resource_id=None):
     @wraps(old_function)
     def new_function(*args, **kwargs):
         try:
@@ -88,16 +88,16 @@ def need_authentication(old_function):
             decoded_jwt = jwt.decode(encoded_jwt, VarConfig.get()['password'],
                                      algorithms=['HS256'])
             if decoded_jwt is None:
-                return send_response(lambda: throw(LoginError))()
+                raise LoginError
 
             kwargs['auth_info'] = decoded_jwt
             return old_function(*args, **kwargs)
         except jwt.PyJWTError as e:
-            return send_response(lambda: throw(LoginError(e)))()
+            raise LoginError(e)
         except KeyError:
-            return send_response(lambda: throw(LoginError("Missing 'Authorization' header")))()
+            raise LoginError("Missing 'Authorization' header")
         except Exception as e:
-            return send_response(lambda: throw(e))()
+            raise e
 
     return new_function
 
@@ -122,7 +122,7 @@ def index():
 
 
 @app.route('/login', methods=['POST'])
-@send_response
+@format_response
 def login():
     return UserController.login(
             {key: request.form.get(key) for key in
@@ -130,7 +130,7 @@ def login():
 
 
 @app.route('/user', methods=['POST'])
-@send_response
+@format_response
 def create_user():
     return UserController.create_user(
             {key: request.form.get(key) for key in
@@ -138,21 +138,21 @@ def create_user():
 
 
 @app.route('/user/me', methods=['GET'])
+@format_response
 @need_authentication
-@send_response
 def get_connected_user(auth_info):
     return UserController.get_user_by_id(auth_info['user_id'])
 
 
 @app.route('/user/<int:user_id>', methods=['GET'])
-@send_response
+@format_response
 def get_user(user_id):
     return UserController.get_user_by_id(user_id)
 
 
 @app.route('/user/grant', methods=['POST'])
+@format_response
 @need_authentication
-@send_response
 def add_privileged_user(auth_info):
     return UserController.create_privileged_user({
             key: request.form.get(key) for key in
@@ -160,8 +160,8 @@ def add_privileged_user(auth_info):
 
 
 @app.route('/document', methods=['POST'])
+@format_response
 @need_authentication
-@send_response
 def create_document(auth_info):
     args = {key: request.form.get(key) for key in
             request.form.keys()}
@@ -183,7 +183,7 @@ def create_document(auth_info):
 
 
 @app.route('/document', methods=['GET'])
-@send_response
+@format_response
 def get_documents():
     return DocController.get_documents(
             {key: request.args.get(key)
@@ -191,14 +191,14 @@ def get_documents():
 
 
 @app.route('/document/<int:doc_id>', methods=['GET'])
-@send_response
+@format_response
 def get_document(doc_id):
     return DocController.get_document_by_id(doc_id)
 
 
 @app.route('/document/<int:doc_id>', methods=['PUT'])
+@format_response
 @need_authentication
-@send_response
 def update_document(doc_id, auth_info):
     args = {key: request.form.get(key) for key in request.form.keys()}
     args['initial_creation'] = False
@@ -207,15 +207,15 @@ def update_document(doc_id, auth_info):
 
 
 @app.route('/document/<int:doc_id>', methods=['DELETE'])
+@format_response
 @need_authentication
-@send_response
 def delete_document(doc_id, auth_info):
     return DocController.delete_documents(doc_id, auth_info)
 
 
 @app.route('/document/<int:doc_id>/comment', methods=['POST'])
+@format_response
 @need_authentication
-@send_response
 def create_comment(doc_id, auth_info):
     form = {key: request.form.get(key) for key in request.form.keys()}
     args = {}
@@ -226,14 +226,14 @@ def create_comment(doc_id, auth_info):
 
 
 @app.route('/document/<int:doc_id>/comment', methods=['GET'])
-@send_response
+@format_response
 def get_comment(doc_id):
     return CommentController.get_comments(doc_id)
 
 
 @app.route('/comment/<int:comment_id>', methods=['PUT'])
+@format_response
 @need_authentication
-@send_response
 def update_comment(comment_id, auth_info):
     form = {key: request.form.get(key) for key in request.form.keys()}
     args = {}
@@ -244,41 +244,41 @@ def update_comment(comment_id, auth_info):
 
 
 @app.route('/comment/<int:comment_id>', methods=['DELETE'])
+@format_response
 @need_authentication
-@send_response
 def delete_comment(comment_id, auth_info):
     return CommentController.delete_comment(comment_id, auth_info)
 
 
 @app.route('/document/<int:doc_id>/archive', methods=['GET'])
-@send_response
+@format_response
 def get_archive(doc_id):
     return ArchiveController.get_archive(doc_id)
 
 
 @app.route('/document/validate', methods=['POST'])
+@format_response
 @need_authentication
-@send_response
 def validate_document(auth_info):
     return DocController.validate_document(
             request.form['id'], auth_info)
 
 
 @app.route('/document/in_validation', methods=['GET'])
+@format_response
 @need_authentication
-@send_response
 def get_documents_to_validate(auth_info):
     return DocController.get_documents_to_validate(auth_info)
 
 
 @app.route('/document/<int:doc_id>/file', methods=['GET'])
-@send_response
+@format_response
 def get_document_file(doc_id):
     return get_file(doc_id)
 
 
 @app.route('/document/<int:doc_id>/file', methods=['POST'])
-@send_response
+@format_response
 def upload_file(doc_id):
     if request.files.get('file'):
         file = request.files['file']
@@ -288,13 +288,13 @@ def upload_file(doc_id):
 
 
 @app.route('/document/<doc_id>/file', methods=['DELETE'])
-@send_response
+@format_response
 def delete_member_image(doc_id):
     return delete_image(doc_id)
 
 
 @app.route('/guidedTour', methods=['POST'])
-@send_response
+@format_response
 def create_guided_tour():
     name = request.form.get('name')
     description = request.form.get('description')
@@ -305,31 +305,31 @@ def create_guided_tour():
 
 
 @app.route('/guidedTour', methods=['GET'])
-@send_response
+@format_response
 def get_all_guided_tours():
     return TourController.get_tours()
 
 
 @app.route('/guidedTour/<int:tour_id>', methods=['GET'])
-@send_response
+@format_response
 def get_guided_tour(tour_id):
     return TourController.get_tour_by_id(tour_id)
 
 
 @app.route('/guidedTour/<int:tour_id>', methods=['PUT'])
-@send_response
+@format_response
 def update_guided_tour(tour_id):
     return TourController.update(tour_id, request.form)
 
 
 @app.route('/guidedTour/<int:doc_id>', methods=['DELETE'])
-@send_response
+@format_response
 def delete_tour(doc_id):
     return TourController.delete_tour(doc_id)
 
 
 @app.route('/guidedTour/<int:tour_id>/document', methods=['POST'])
-@send_response
+@format_response
 def add_document_to_guided_tour(tour_id):
     doc_id = request.form.get('doc_id')
     if doc_id is None or tour_id is None:
@@ -340,7 +340,7 @@ def add_document_to_guided_tour(tour_id):
 
 @app.route('/guidedTour/<int:tour_id>/document/<int:doc_position>',
            methods=['POST'])
-@send_response
+@format_response
 def update_guided_tour_document(tour_id, doc_position):
     return TourController.update_document(tour_id, doc_position, request.form)
 
