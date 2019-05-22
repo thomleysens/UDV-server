@@ -11,7 +11,6 @@ default_db_info = ('postgresql://''postgres:password'
 
 def get_db_info():
     config = VarConfig.get()
-
     return f'{config["ordbms"]}://{config["user"]}:' \
            f'{config["password"]}@{config["host"]}:' \
            f'{config["port"]}/{config["dbname"]}'

@@ -40,24 +40,21 @@ def send_response(old_function, authorization_function=None,
                 return jsonify(response)
             return response
 
-        except LoginError:
-            return 'unauthorized', 401
-        except AuthError:
-            return 'access denied', 403
-        except sqlalchemy.exc.IntegrityError:
-            return 'integrity error', 422
-        except sqlalchemy.orm.exc.NoResultFound:
-            return 'no result found', 204
-        except (AuthError, jwt.exceptions.InvalidSignatureError):
-            return 'Authentication failed', 403
-        except NotFound:
-            return 'no result found', 404
-        except FormatError:
-            return 'Unsupported File Format', 415
+        except LoginError as e:
+            return f'Unauthorized\n{e}', 401
+        except AuthError as e:
+            return f'Forbidden\n{e}', 403
+        except sqlalchemy.exc.IntegrityError as e:
+            return f'Integrity error\n{e}', 422
+        except sqlalchemy.orm.exc.NoResultFound as e:
+            return f'No result found\n{e}', 404
+        except NotFound as e:
+            return f'Not found\n{e}', 404
+        except FormatError as e:
+            return f'Unsupported file format\n{e}', 415
         except Exception as e:
-            print(e)
             info_logger.error(e)
-            return "unexpected error", 500
+            return f"Unexpected error\n{e}", 500
 
     return new_function
 
@@ -83,18 +80,22 @@ def need_authentication(old_function):
     """
     @wraps(old_function)
     def new_function(*args, **kwargs):
-        encoded_jwt = request.headers["Authorization"]
         try:
+            # Can raise a KeyError if header is not found
+            encoded_jwt = request.headers["Authorization"]
             decoded_jwt = jwt.decode(encoded_jwt, VarConfig.get()['password'],
-                                 algorithms=['HS256'])
-        except Exception:
-            return send_response(lambda: throw(LoginError))()
+                                     algorithms=['HS256'])
+            if decoded_jwt is None:
+                return send_response(lambda: throw(LoginError))()
 
-        if decoded_jwt is None:
-            return send_response(lambda: throw(LoginError))()
-
-        kwargs['user'] = decoded_jwt
-        return old_function(*args, **kwargs)
+            kwargs['user'] = decoded_jwt
+            return old_function(*args, **kwargs)
+        except jwt.PyJWTError as e:
+            return send_response(lambda: throw(LoginError(e)))()
+        except KeyError:
+            return send_response(lambda: throw(LoginError("Missing 'Authorization' header")))()
+        except Exception as e:
+            return send_response(lambda: throw(e))()
 
     return new_function
 
@@ -199,9 +200,8 @@ def get_document(doc_id):
 @need_authentication
 def update_document(doc_id, user):
     args = {key: request.form.get(key) for key in request.form.keys()}
-    payload = user
     args['initial_creation'] = False
-    args.update(payload)
+    args.update(user)
     return send_response(
         lambda: DocController.update_document(doc_id, args))()
 

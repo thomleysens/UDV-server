@@ -161,7 +161,7 @@ class DocController:
                 ArchiveController.create_archive(a_doc.serialize())
                 session.delete(a_doc)
             try:
-                os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
+                os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.file)
                 return a_doc
             except Exception as e:
                 print(e)
