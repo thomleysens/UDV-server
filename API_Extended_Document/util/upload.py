@@ -5,6 +5,8 @@ import os
 import re
 from flask import safe_join
 
+import uuid
+
 from util.log import info_logger
 from util.Exception import FormatError
 
@@ -21,14 +23,14 @@ def allowed_file(extension):
     return extension in ALLOWED_EXTENSIONS
 
 
-def save_file(document_id, file):
+def save_file(file):
     if not os.path.isdir(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
     extension = get_extension(file.filename)
     if extension in ALLOWED_EXTENSIONS:
-        location = str(document_id) + '.' + extension
-        file.save(os.path.join(UPLOAD_FOLDER, location))
-        return location
+        filename = f'{str(uuid.uuid4())}.{extension}'
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        return filename
     else:
         return None
 

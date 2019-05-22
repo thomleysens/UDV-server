@@ -61,15 +61,6 @@ def format_response(old_function, authorization_function=None,
     return new_function
 
 
-def get_file(member_id):
-    image_location = find_image(member_id)
-    if image_location:
-        return send_from_directory(
-            safe_join(os.getcwd(), app.config['UPLOAD_FOLDER']),
-            image_location)
-    raise NotFound
-
-
 def need_authentication(old_function):
     """
     Decorator used to specify that a route needs authentication. To put after
@@ -166,20 +157,16 @@ def create_document(auth_info):
     args = {key: request.form.get(key) for key in
             request.form.keys()}
     args.update(auth_info)
-    document = DocController.create_document(args)
-    filename = ''
     if request.files.get('file'):
-        filename = save_file(document['id'],
-                             request.files['file'])
-    if filename is not None:
-        payload = auth_info
-        payload['file'] = filename
-        payload['initial_creation'] = True
-        document = DocController.update_document(document['id'],
-                                                 payload)
+        filename = save_file(request.files['file'])
+        if filename is not None:
+            args['file'] = filename
+            document = DocController.create_document(args)
+            return document
+        else:
+            raise FormatError("Invalid file format")
     else:
-        raise FormatError
-    return document
+        raise BadRequest("Missing 'file' parameter")
 
 
 @app.route('/document', methods=['GET'])
@@ -274,7 +261,8 @@ def get_documents_to_validate(auth_info):
 @app.route('/document/<int:doc_id>/file', methods=['GET'])
 @format_response
 def get_document_file(doc_id):
-    return get_file(doc_id)
+    location = DocController.get_document_file_location(doc_id)
+    return send_from_directory(os.getcwd(), location)
 
 
 @app.route('/document/<int:doc_id>/file', methods=['POST'])

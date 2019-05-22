@@ -62,6 +62,17 @@ class DocController:
 
     @staticmethod
     @pUnit.make_a_query
+    def get_document_file_location(session, doc_id):
+        document = session.query(ExtendedDocument).filter(
+            ExtendedDocument.id == doc_id).one()
+        filename = document.metaData.file
+        location = os.path.join(UPLOAD_FOLDER, filename)
+        if os.path.exists(location):
+            return location
+        raise NotFound("File doest not exist")
+
+    @staticmethod
+    @pUnit.make_a_query
     def get_documents(session, *args):
         """
         This method si used to make a research using three criteria :
