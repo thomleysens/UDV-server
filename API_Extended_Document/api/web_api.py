@@ -88,7 +88,7 @@ def need_authentication(old_function):
             if decoded_jwt is None:
                 return send_response(lambda: throw(LoginError))()
 
-            kwargs['user'] = decoded_jwt
+            kwargs['auth_info'] = decoded_jwt
             return old_function(*args, **kwargs)
         except jwt.PyJWTError as e:
             return send_response(lambda: throw(LoginError(e)))()
@@ -137,9 +137,9 @@ def create_user():
 
 @app.route('/user/me', methods=['GET'])
 @need_authentication
-def get_connected_user(user):
+def get_connected_user(auth_info):
     return send_response(
-        lambda: UserController.get_user_by_id(user['user_id']))()
+        lambda: UserController.get_user_by_id(auth_info['user_id']))()
 
 
 @app.route('/user/<int:user_id>', methods=['GET'])
@@ -150,27 +150,27 @@ def get_user(user_id):
 
 @app.route('/user/grant', methods=['POST'])
 @need_authentication
-def add_privileged_user(user):
+def add_privileged_user(auth_info):
     return send_response(
         lambda: UserController.create_privileged_user({
             key: request.form.get(key) for key in
-            request.form.keys()}, user))()
+            request.form.keys()}, auth_info))()
 
 
 @app.route('/document', methods=['POST'])
 @need_authentication
-def create_document(user):
+def create_document(auth_info):
     def creation():
         args = {key: request.form.get(key) for key in
                 request.form.keys()}
-        args.update(user)
+        args.update(auth_info)
         document = DocController.create_document(args)
         filename = ''
         if request.files.get('file'):
             filename = save_file(document['id'],
                                  request.files['file'])
         if filename is not None:
-            payload = user
+            payload = auth_info
             payload['file'] = filename
             payload['initial_creation'] = True
             document = DocController.update_document(document['id'],
@@ -198,26 +198,26 @@ def get_document(doc_id):
 
 @app.route('/document/<int:doc_id>', methods=['PUT'])
 @need_authentication
-def update_document(doc_id, user):
+def update_document(doc_id, auth_info):
     args = {key: request.form.get(key) for key in request.form.keys()}
     args['initial_creation'] = False
-    args.update(user)
+    args.update(auth_info)
     return send_response(
         lambda: DocController.update_document(doc_id, args))()
 
 
 @app.route('/document/<int:doc_id>', methods=['DELETE'])
 @need_authentication
-def delete_document(doc_id, user):
+def delete_document(doc_id, auth_info):
     return send_response(lambda: DocController.delete_documents(
-        doc_id, user))()
+        doc_id, auth_info))()
 
 
 @app.route('/document/<int:doc_id>/comment', methods=['POST'])
 @need_authentication
-def create_comment(doc_id, user):
+def create_comment(doc_id, auth_info):
     def creation():
-        payload = user
+        payload = auth_info
         form = {key: request.form.get(key) for key in request.form.keys()}
         args = {}
         args.update(payload)
@@ -236,9 +236,9 @@ def get_comment(doc_id):
 
 @app.route('/comment/<int:comment_id>', methods=['PUT'])
 @need_authentication
-def update_comment(comment_id, user):
+def update_comment(comment_id, auth_info):
     def creation():
-        payload = user
+        payload = auth_info
         form = {key: request.form.get(key) for key in request.form.keys()}
         args = {}
         args.update(payload)
@@ -251,8 +251,8 @@ def update_comment(comment_id, user):
 
 @app.route('/comment/<int:comment_id>', methods=['DELETE'])
 @need_authentication
-def delete_comment(comment_id, user):
-    return send_response(lambda: CommentController.delete_comment(comment_id, user))()
+def delete_comment(comment_id, auth_info):
+    return send_response(lambda: CommentController.delete_comment(comment_id, auth_info))()
 
 
 @app.route('/document/<int:doc_id>/archive', methods=['GET'])
@@ -263,18 +263,18 @@ def get_archive(doc_id):
 
 @app.route('/document/validate', methods=['POST'])
 @need_authentication
-def validate_document(user):
+def validate_document(auth_info):
     return send_response(
         lambda: DocController.validate_document(
-            request.form['id'], user))()
+            request.form['id'], auth_info))()
 
 
 @app.route('/document/in_validation', methods=['GET'])
 @need_authentication
-def get_documents_to_validate(user):
+def get_documents_to_validate(auth_info):
     return send_response(
         lambda: DocController.get_documents_to_validate(
-            user))()
+            auth_info))()
 
 
 @app.route('/document/<int:doc_id>/file', methods=['GET'])
