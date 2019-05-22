@@ -93,7 +93,7 @@ class UserController:
                 raise LoginError
         except Exception as e:
             info_logger.error(e)
-            raise LoginError
+            raise LoginError('Wrong credentials')
 
     @staticmethod
     @pUnit.make_a_transaction

@@ -22,6 +22,10 @@ class NotFound(Exception):
     pass
 
 
+class BadRequest(Exception):
+    pass
+
+
 def throw(ex):
     """
     Transforms a raise statement into an expression. Used in lambda functions
