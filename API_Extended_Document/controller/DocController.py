@@ -139,16 +139,14 @@ class DocController:
 
     @staticmethod
     @pUnit.make_a_transaction
-    def update_document(session, *args):
-        doc_id = args[0]
-        attributes = args[1]
+    def update_document(session, auth_info, doc_id, attributes):
         document = session.query(ExtendedDocument) \
             .filter(ExtendedDocument.id == doc_id).one()
         # To change not supposed to be done in Controller
         doc_count = session.query(ExtendedDocument).filter(
-            and_(ExtendedDocument.id == doc_id, ExtendedDocument.user_id == attributes['user_id'])).join(
+            and_(ExtendedDocument.id == doc_id, ExtendedDocument.user_id == auth_info['user_id'])).join(
             ToValidateDoc).count()
-        if ExtendedDocument.is_allowed(attributes) or attributes['initial_creation'] or doc_count > 0:
+        if ExtendedDocument.is_allowed(auth_info) or doc_count > 0:
             ArchiveController.create_archive(document.serialize())
             document.update(attributes)
             session.add(document)

@@ -187,10 +187,8 @@ def get_document(doc_id):
 @format_response
 @need_authentication
 def update_document(doc_id, auth_info):
-    args = {key: request.form.get(key) for key in request.form.keys()}
-    args['initial_creation'] = False
-    args.update(auth_info)
-    return DocController.update_document(doc_id, args)
+    attributes = {key: request.form.get(key) for key in request.form.keys()}
+    return DocController.update_document(auth_info, doc_id, attributes)
 
 
 @app.route('/document/<int:doc_id>', methods=['DELETE'])
