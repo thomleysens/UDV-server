@@ -210,37 +210,39 @@ class TestDocument:
 
     def test_update_document_as_contributor(self):
         print('Update a document as contributor')
-        with pytest.raises(KeyError):
-            DocController.update_document(1, {
+        with pytest.raises(AuthError):
+            DocController.update_document({
                 'user_id': 2,
                 'user_position': 'contributor',
-                'positionX': 12,
-                'description': 'description of a document',
                 'position': {'label': 'contributor'}
+            }, 1, {
+                'positionX': 12,
+                'description': 'description of a document'
             })
 
     def test_update_document_as_admin(self):
         print('Update a document as admin')
-        response = DocController.update_document(1, {
+        response = DocController.update_document({
             'user_id': 2,
             'user_position': 'admin',
-            'positionX': 12,
-            'description': 'another description',
             'position': {'label': 'admin'}
+        }, 1, {
+            'positionX': 12,
+            'description': 'another description'
         })
         assert response['visualization']['positionX'] == 12
-        assert response['metaData']['description'] == \
-               'another description'
+        assert response['metaData']['description'] == 'another description'
 
     def test_update_non_existing_document(self):
         print('Update a non existing document')
         with pytest.raises(sqlalchemy.orm.exc.NoResultFound):
-            DocController.update_document(-1, {
+            DocController.update_document({
                 'user_position': 'admin',
-                'positionX': 12,
-                'description': 'another description',
                 'user_id': 2,
                 'position': {'label': 'admin'}
+            }, -1, {
+                'positionX': 12,
+                'description': 'another description'
             })
 
     def test_delete_document_as_contributor(self):

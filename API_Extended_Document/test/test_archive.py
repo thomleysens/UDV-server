@@ -83,14 +83,14 @@ class TestArchive:
             'comments': [],
             'to_validate_doc': None
         }
-        assert expected_response == DocController.update_document(1, {
-            'user_id' : 1,
+        assert expected_response == DocController.update_document({
+            'user_id': 1,
             "position": {
-                'label' : 'admin'
-            },
-            'positionX': 12,
-            'description': 'description of a document'
-        })
+                'label': 'admin'
+            }},
+            1,
+            {'positionX': 12,
+             'description': 'description of a document'})
 
     def test_update_document_2(self):
         print("update a document")
@@ -122,11 +122,12 @@ class TestArchive:
             'valid_doc': {'id_valid': 1},
             'comments': []
         }
-        assert expected_response == DocController.update_document(1, {
-            'user_id' : 1,
-            "position": {
-                'label' : 'admin'
-            },
+        assert expected_response == DocController.update_document({
+            'user_id': 1,
+            'position': {
+                'label': 'admin'
+            }
+        }, 1, {
             'positionY': 15,
             'description': 'a new description'
         })
@@ -209,6 +210,7 @@ class TestArchive:
             }
         ]
         assert expected_response == ArchiveController.get_archive(1)
+
 
 if __name__ == "__main__":
     TestArchive().test_create_document()
