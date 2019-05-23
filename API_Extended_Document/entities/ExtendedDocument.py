@@ -84,3 +84,6 @@ class ExtendedDocument(Entity, Base):
         role = auth_info['position']['label']
         level = Position.get_clearance_level(role)
         return level > Position.LEVEL_MIN
+
+    def is_owner(self, auth_info):
+        return auth_info['user_id'] == self.user_id

@@ -7,9 +7,6 @@ from flask import safe_join
 
 import uuid
 
-from util.log import info_logger
-from util.Exception import FormatError
-
 UPLOAD_FOLDER = 'upload'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
@@ -35,10 +32,8 @@ def save_file(file):
         return None
 
 
-def delete_image(member_id):
-    image = find_image(member_id)
-    if image:
-        os.remove(os.path.join(UPLOAD_FOLDER, image))
+def delete_file(filename):
+    os.remove(os.path.join(filename))
 
 
 def find_image(member_id):
