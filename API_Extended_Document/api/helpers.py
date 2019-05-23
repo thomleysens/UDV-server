@@ -97,7 +97,7 @@ def format_response(old_function, authorization_function=None,
             return f'Unauthorized\n{e}', 401
         except AuthError as e:
             return f'Forbidden\n{e}', 403
-        except sqlalchemy.exc.IntegrityError as e:
+        except (sqlalchemy.exc.IntegrityError, sqlalchemy.exc.DataError) as e:
             return f'Integrity error\n{e}', 422
         except sqlalchemy.orm.exc.NoResultFound as e:
             return f'No result found\n{e}', 404

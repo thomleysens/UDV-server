@@ -10,6 +10,12 @@ from controller.Controller import Controller
 from controller.DocController import DocController
 from controller.UserController import UserController
 
+import datetime
+import psycopg2
+
+FAKE_REF_DATE = datetime.datetime(2020, 12, 25, 17, 5, 55, tzinfo=psycopg2.tz.FixedOffsetTimezone(offset=0, name=None))
+FAKE_PUB_DATA = datetime.datetime(1654, 10, 3, 0, 0, 0, tzinfo=psycopg2.tz.FixedOffsetTimezone(offset=0, name=None))
+
 
 class TestDocument:
     def test_document_init(self):
@@ -74,7 +80,7 @@ class TestDocument:
             'metaData': {
                 'id': 2,
                 'publicationDate': None,
-                'refDate': '2019-02-05',
+                'refDate': FAKE_REF_DATE,
                 'subject': 'Subject2',
                 'file': '2.gif',
                 'description': 'a description',
@@ -106,7 +112,7 @@ class TestDocument:
             'type': 'type',
             'description': 'a description',
             'file': '2.gif',
-            'refDate': '2019-02-05',
+            'refDate': FAKE_REF_DATE,
             'position': {'label': 'admin'}
         })
 
@@ -119,7 +125,7 @@ class TestDocument:
             'subject': 'Subject3',
             'type': 'type',
             'non_attr': 'non_value',
-            'refDate': '2018-12-02',
+            'refDate': FAKE_REF_DATE,
             'description': 'an other description',
             'file': '3.png',
             'position': {'label': 'contributor'}
@@ -134,7 +140,7 @@ class TestDocument:
             'subject': 'Subject3',
             'type': 'type',
             'non_attr': 'non_value',
-            'refDate': '2018-12-03',
+            'refDate': FAKE_REF_DATE,
             'description': 'details',
             'file': '3.png',
             'position': {'label': 'admin'}

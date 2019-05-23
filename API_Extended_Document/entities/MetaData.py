@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy import ForeignKey
 
 from util.db_config import Base
@@ -16,8 +16,8 @@ class MetaData(Entity, Base):
     title = Column(String, nullable=False)
     subject = Column(String, nullable=False)
     description = Column(String, nullable=False)
-    refDate = Column(String)
-    publicationDate = Column(String)
+    refDate = Column(DateTime(timezone=True))
+    publicationDate = Column(DateTime(timezone=True))
     type = Column(String)
     file = Column(String)
     originalName = Column(String)
