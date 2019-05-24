@@ -301,6 +301,14 @@ def update_guided_tour_document(tour_id, doc_position):
     return ResponseOK(updated_tour)
 
 
+@app.route('/guidedTour/<int:tour_id>/document/<int:doc_position>',
+           methods=['DELETE'])
+@format_response
+def delete_guided_tour_document(tour_id, doc_position):
+    updated_tour = TourController.remove_document(tour_id, doc_position)
+    return ResponseOK(updated_tour)
+
+
 if __name__ == '__main__':
     Controller.create_tables()
     app.run(debug=True, host='0.0.0.0')
