@@ -115,8 +115,9 @@ def get_documents():
 
 @app.route('/document/<int:doc_id>', methods=['GET'])
 @format_response
-def get_document(doc_id):
-    document = DocController.get_document_by_id(doc_id)
+@need_authentication
+def get_document(doc_id, auth_info):
+    document = DocController.get_document_by_id(doc_id, auth_info)
     return ResponseOK(document)
 
 
