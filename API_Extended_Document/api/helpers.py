@@ -9,6 +9,7 @@ from flask import jsonify, request
 import sqlalchemy.exc
 import sqlalchemy.orm
 import jwt
+import re
 
 from functools import wraps
 
@@ -124,7 +125,8 @@ def need_authentication(old_function):
     def new_function(*args, **kwargs):
         try:
             # Can raise a KeyError if header is not found
-            encoded_jwt = request.headers["Authorization"]
+            bearer = request.headers["Authorization"]
+            encoded_jwt = re.search('Bearer (.*)', bearer).group(1)
             decoded_jwt = jwt.decode(encoded_jwt, VarConfig.get()['password'],
                                      algorithms=['HS256'])
             if decoded_jwt is None:
@@ -134,7 +136,7 @@ def need_authentication(old_function):
             return old_function(*args, **kwargs)
         except jwt.PyJWTError as e:
             raise LoginError(e)
-        except KeyError:
+        except (KeyError, AttributeError):
             raise LoginError("Missing 'Authorization' header")
         except Exception as e:
             raise e
