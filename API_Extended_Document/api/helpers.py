@@ -99,9 +99,7 @@ def format_response(old_function, authorization_function=None,
             return f'Forbidden\n{e}', 403
         except (sqlalchemy.exc.IntegrityError, sqlalchemy.exc.DataError) as e:
             return f'Integrity error\n{e}', 422
-        except sqlalchemy.orm.exc.NoResultFound as e:
-            return f'No result found\n{e}', 404
-        except NotFound as e:
+        except (NotFound, sqlalchemy.orm.exc.NoResultFound) as e:
             return f'Not found\n{e}', 404
         except FormatError as e:
             return f'Unsupported file format\n{e}', 415

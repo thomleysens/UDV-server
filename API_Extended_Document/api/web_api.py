@@ -187,6 +187,10 @@ def delete_comment(comment_id, auth_info):
 @app.route('/document/<int:doc_id>/archive', methods=['GET'])
 @format_response
 def get_archive(doc_id):
+    try:
+        DocController.get_document_by_id(doc_id)
+    except Exception:
+        raise NotFound("Document does not exist")
     archive = ArchiveController.get_archive(doc_id)
     return ResponseOK(archive)
 
