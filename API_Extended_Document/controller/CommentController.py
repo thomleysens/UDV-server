@@ -40,6 +40,18 @@ class CommentController:
 
     @staticmethod
     @pUnit.make_a_query
+    def get_comment(session, comment_id):
+        """
+        This method is used to fetch a comment by its id
+        :param session: The SQLAlchemy session
+        :param comment_id: The ID of the comment
+        :return: The comment with the specified ID
+        """
+        comment = session.query(Comment).filter(Comment.id == comment_id).one()
+        return comment
+
+    @staticmethod
+    @pUnit.make_a_query
     def get_comments(session, *args):
         """
         This method is used to make a research the comments of a document

@@ -157,6 +157,13 @@ def get_comment(doc_id):
     return ResponseOK(comments)
 
 
+@app.route('/comment/<int:comment_id>', methods=['GET'])
+@format_response
+def get_comment_by_id(comment_id):
+    comment = CommentController.get_comment(comment_id)
+    return ResponseOK(comment)
+
+
 @app.route('/comment/<int:comment_id>', methods=['PUT'])
 @format_response
 @need_authentication
