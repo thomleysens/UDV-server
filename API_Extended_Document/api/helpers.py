@@ -88,9 +88,6 @@ def format_response(old_function, authorization_function=None,
             if isinstance(response, Response):
                 return response.format()
             else:
-                print('You should not return objects other than `Response`')
-                info_logger.warn('You should not return objects other than'
-                                 '`Response`')
                 return response
         except BadRequest as e:
             return f'Bad request\n{e}', 400

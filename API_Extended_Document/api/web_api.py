@@ -217,8 +217,10 @@ def get_documents_to_validate(auth_info):
 # `send_from_directory` flask method (hence neither `format_response` nor
 # a `Response` object are present).
 @app.route('/document/<int:doc_id>/file', methods=['GET'])
-def get_document_file(doc_id):
-    location = DocController.get_document_file_location(doc_id)
+@format_response
+@use_authentication(required=False)
+def get_document_file(doc_id, auth_info):
+    location = DocController.get_document_file_location(doc_id, auth_info)
     return send_from_directory(os.getcwd(), location)
 
 
@@ -241,7 +243,7 @@ def upload_file(doc_id, auth_info):
 @format_response
 @use_authentication()
 def delete_member_image(doc_id, auth_info):
-    filename = DocController.get_document_file_location(doc_id)
+    filename = DocController.get_document_file_location(doc_id, auth_info)
     document = DocController.delete_document_file(auth_info, doc_id)
     delete_file(filename)
     return ResponseOK(document)

@@ -79,7 +79,7 @@ class DocController:
                 # The only case where we're not allowed to access the document
                 # is when it's in validation and we're neither the owner nor an
                 # admin
-                if auth_info:
+                if auth_info is None:
                     # In this case we return unauthorized because the user could
                     # access the resource if he/she authenticate
                     raise Unauthorized
@@ -93,11 +93,9 @@ class DocController:
             ExtendedDocument.id == doc_id).one()
 
     @staticmethod
-    @pUnit.make_a_query
-    def get_document_file_location(session, doc_id):
-        document = session.query(ExtendedDocument).filter(
-            ExtendedDocument.id == doc_id).one()
-        filename = document.metaData.file
+    def get_document_file_location(doc_id, auth_info):
+        document = DocController.get_document_by_id(doc_id, auth_info)
+        filename = document['metaData']['file']
         location = os.path.join(UPLOAD_FOLDER, filename)
         if os.path.exists(location):
             return location
