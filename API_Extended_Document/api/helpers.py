@@ -94,7 +94,7 @@ def format_response(old_function, authorization_function=None,
                 return response
         except BadRequest as e:
             return f'Bad request\n{e}', 400
-        except LoginError as e:
+        except Unauthorized as e:
             return f'Unauthorized\n{e}', 401
         except AuthError as e:
             return f'Forbidden\n{e}', 403
@@ -111,34 +111,43 @@ def format_response(old_function, authorization_function=None,
     return new_function
 
 
-def need_authentication(old_function):
+def use_authentication(required=True):
     """
     Decorator used to specify that a route needs authentication. To put after
     the `app.route` decorator from Flask. Will search in the request headers
     for an 'Authorization' field and decode it as JWT. If the field cannot be
     found, or the timeout is expired, or the field is not a valid JWT, returns
     a LoginError.
-    :param old_function: The old function
-    :return: Either the old function, or a function that raises a LoginError
+    :param required: Specify if the auth is required or not. If set to True,
+    the decorator will raise an Unauthorized exception if no auth is provided.
+    If set to false, it will pass None as auth_info.
     """
-    @wraps(old_function)
-    def new_function(*args, **kwargs):
-        try:
-            # Can raise a KeyError if header is not found
-            bearer = request.headers["Authorization"]
-            encoded_jwt = re.search('Bearer (.*)', bearer).group(1)
-            decoded_jwt = jwt.decode(encoded_jwt, VarConfig.get()['password'],
-                                     algorithms=['HS256'])
-            if decoded_jwt is None:
-                raise LoginError
+    def decorator(old_function):
+        @wraps(old_function)
+        def new_function(*args, **kwargs):
+            try:
+                # Can raise a KeyError if header is not found
+                try:
+                    bearer = request.headers["Authorization"]
+                    encoded_jwt = re.search('Bearer (.*)', bearer).group(1)
+                    decoded_jwt = jwt.decode(encoded_jwt, VarConfig.get()['password'],
+                                             algorithms=['HS256'])
+                    if decoded_jwt is None:
+                        raise Unauthorized
+                except KeyError:
+                    if required:
+                        raise Unauthorized("Missing 'Authorization' header")
+                    else:
+                        decoded_jwt = None
 
-            kwargs['auth_info'] = decoded_jwt
-            return old_function(*args, **kwargs)
-        except jwt.PyJWTError as e:
-            raise LoginError(e)
-        except (KeyError, AttributeError):
-            raise LoginError("Missing 'Authorization' header")
-        except Exception as e:
-            raise e
+                kwargs['auth_info'] = decoded_jwt
+                return old_function(*args, **kwargs)
+            except jwt.PyJWTError as e:
+                raise Unauthorized(e)
+            except AttributeError:
+                raise Unauthorized("Missing 'Authorization' header")
+            except Exception as e:
+                raise e
 
-    return new_function
+        return new_function
+    return decorator

@@ -3,7 +3,7 @@
 
 from time import time
 
-from util.Exception import LoginError
+from util.Exception import Unauthorized
 from util.encryption import *
 from util.log import info_logger
 from entities.User import User
@@ -90,10 +90,10 @@ class UserController:
                         algorithm='HS256').decode('utf-8')
                 }
             else:
-                raise LoginError
+                raise Unauthorized
         except Exception as e:
             info_logger.error(e)
-            raise LoginError('Wrong credentials')
+            raise Unauthorized('Wrong credentials')
 
     @staticmethod
     @pUnit.make_a_transaction

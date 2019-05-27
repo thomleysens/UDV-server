@@ -62,7 +62,7 @@ def create_user():
 
 @app.route('/user/me', methods=['GET'])
 @format_response
-@need_authentication
+@use_authentication()
 def get_connected_user(auth_info):
     user = UserController.get_user_by_id(auth_info['user_id'])
     return ResponseOK(user)
@@ -77,7 +77,7 @@ def get_user(user_id):
 
 @app.route('/user/grant', methods=['POST'])
 @format_response
-@need_authentication
+@use_authentication()
 def add_privileged_user(auth_info):
     user = UserController.create_privileged_user({
             key: request.form.get(key) for key in
@@ -87,7 +87,7 @@ def add_privileged_user(auth_info):
 
 @app.route('/document', methods=['POST'])
 @format_response
-@need_authentication
+@use_authentication()
 def create_document(auth_info):
     args = {key: request.form.get(key) for key in
             request.form.keys()}
@@ -115,7 +115,7 @@ def get_documents():
 
 @app.route('/document/<int:doc_id>', methods=['GET'])
 @format_response
-@need_authentication
+@use_authentication(required=False)
 def get_document(doc_id, auth_info):
     document = DocController.get_document_by_id(doc_id, auth_info)
     return ResponseOK(document)
@@ -123,7 +123,7 @@ def get_document(doc_id, auth_info):
 
 @app.route('/document/<int:doc_id>', methods=['PUT'])
 @format_response
-@need_authentication
+@use_authentication()
 def update_document(doc_id, auth_info):
     attributes = {key: request.form.get(key) for key in request.form.keys()}
     updated_document = DocController.update_document(auth_info, doc_id,
@@ -133,7 +133,7 @@ def update_document(doc_id, auth_info):
 
 @app.route('/document/<int:doc_id>', methods=['DELETE'])
 @format_response
-@need_authentication
+@use_authentication()
 def delete_document(doc_id, auth_info):
     deleted_document = DocController.delete_documents(doc_id, auth_info)
     return ResponseOK(deleted_document)
@@ -141,7 +141,7 @@ def delete_document(doc_id, auth_info):
 
 @app.route('/document/<int:doc_id>/comment', methods=['POST'])
 @format_response
-@need_authentication
+@use_authentication()
 def create_comment(doc_id, auth_info):
     form = {key: request.form.get(key) for key in request.form.keys()}
     args = {}
@@ -167,7 +167,7 @@ def get_comment_by_id(comment_id):
 
 @app.route('/comment/<int:comment_id>', methods=['PUT'])
 @format_response
-@need_authentication
+@use_authentication()
 def update_comment(comment_id, auth_info):
     form = {key: request.form.get(key) for key in request.form.keys()}
     args = {}
@@ -179,7 +179,7 @@ def update_comment(comment_id, auth_info):
 
 @app.route('/comment/<int:comment_id>', methods=['DELETE'])
 @format_response
-@need_authentication
+@use_authentication()
 def delete_comment(comment_id, auth_info):
     deleted_comment = CommentController.delete_comment(comment_id, auth_info)
     return ResponseOK(deleted_comment)
@@ -198,7 +198,7 @@ def get_archive(doc_id):
 
 @app.route('/document/validate', methods=['POST'])
 @format_response
-@need_authentication
+@use_authentication()
 def validate_document(auth_info):
     validated_document = DocController.validate_document(
                          request.form['id'], auth_info)
@@ -207,7 +207,7 @@ def validate_document(auth_info):
 
 @app.route('/document/in_validation', methods=['GET'])
 @format_response
-@need_authentication
+@use_authentication()
 def get_documents_to_validate(auth_info):
     documents = DocController.get_documents_to_validate(auth_info)
     return ResponseOK(documents)
@@ -224,7 +224,7 @@ def get_document_file(doc_id):
 
 @app.route('/document/<int:doc_id>/file', methods=['POST'])
 @format_response
-@need_authentication
+@use_authentication()
 def upload_file(doc_id, auth_info):
     if request.files.get('file'):
         file = request.files['file']
@@ -239,7 +239,7 @@ def upload_file(doc_id, auth_info):
 
 @app.route('/document/<doc_id>/file', methods=['DELETE'])
 @format_response
-@need_authentication
+@use_authentication()
 def delete_member_image(doc_id, auth_info):
     filename = DocController.get_document_file_location(doc_id)
     document = DocController.delete_document_file(auth_info, doc_id)

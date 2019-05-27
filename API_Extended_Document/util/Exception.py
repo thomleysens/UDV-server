@@ -2,7 +2,7 @@
 # coding: utf8
 
 
-class LoginError(Exception):
+class Unauthorized(Exception):
     pass
 
 

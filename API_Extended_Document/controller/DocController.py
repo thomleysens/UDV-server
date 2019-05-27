@@ -70,7 +70,7 @@ class DocController:
         :raises NoResultFound: if the document isn't in the database
         """
         # If we're an admin, no need to check what document it is
-        if not ExtendedDocument.is_allowed(auth_info):
+        if auth_info is None or not ExtendedDocument.is_allowed(auth_info):
             try:
                 # If this raises NoResultFound, it means that the document has
                 # been validated, so we can continue
@@ -79,7 +79,13 @@ class DocController:
                 # The only case where we're not allowed to access the document
                 # is when it's in validation and we're neither the owner nor an
                 # admin
+                if auth_info:
+                    # In this case we return unauthorized because the user could
+                    # access the resource if he/she authenticate
+                    raise Unauthorized
                 if doc_to_validate.user_id != auth_info["user_id"]:
+                    # In this case we return forbidden because the user is
+                    # authenticated but hasn't the rights on the doc
                     raise AuthError
             except NoResultFound:
                 pass
