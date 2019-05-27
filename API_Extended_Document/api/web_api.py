@@ -98,7 +98,11 @@ def create_document(auth_info):
         filename = save_file(request.files['file'])
         if filename is not None:
             args['file'] = filename
-            document = DocController.create_document(args)
+            try:
+                document = DocController.create_document(args)
+            except Exception as e:
+                delete_file(f'{UPLOAD_FOLDER}/{filename}')
+                raise e
             return ResponseCreated(document)
         else:
             raise FormatError("Invalid file format")
