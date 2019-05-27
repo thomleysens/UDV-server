@@ -155,7 +155,9 @@ def create_comment(doc_id, auth_info):
 
 @app.route('/document/<int:doc_id>/comment', methods=['GET'])
 @format_response
-def get_comment(doc_id):
+@use_authentication(required=False)
+def get_comment(doc_id, auth_info):
+    DocController.get_document_by_id(doc_id, auth_info)
     comments = CommentController.get_comments(doc_id)
     return ResponseOK(comments)
 
