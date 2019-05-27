@@ -4,6 +4,8 @@
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 
+from sqlalchemy.orm.exc import NoResultFound
+
 from controller.CommentController import CommentController
 from controller.Controller import Controller
 from controller.TourController import TourController
@@ -187,10 +189,11 @@ def delete_comment(comment_id, auth_info):
 
 @app.route('/document/<int:doc_id>/archive', methods=['GET'])
 @format_response
-def get_archive(doc_id):
+@use_authentication(required=False)
+def get_archive(doc_id, auth_info):
     try:
-        DocController.get_document_by_id(doc_id)
-    except Exception:
+        DocController.get_document_by_id(doc_id, auth_info)
+    except NoResultFound:
         raise NotFound("Document does not exist")
     archive = ArchiveController.get_archive(doc_id)
     return ResponseOK(archive)
