@@ -53,6 +53,9 @@ def login():
     return ResponseOK(token)
 
 
+# ---- USERS -------------------------------------------------------------------
+
+
 @app.route('/user', methods=['POST'])
 @format_response
 def create_user():
@@ -85,6 +88,9 @@ def add_privileged_user(auth_info):
             key: request.form.get(key) for key in
             request.form.keys()}, auth_info)
     return ResponseOK(user)
+
+
+# ---- DOCUMENTS ---------------------------------------------------------------
 
 
 @app.route('/document', methods=['POST'])
@@ -145,6 +151,9 @@ def delete_document(doc_id, auth_info):
     return ResponseOK(deleted_document)
 
 
+# ---- DOCUMENT -- COMMENTS ----------------------------------------------------
+
+
 @app.route('/document/<int:doc_id>/comment', methods=['POST'])
 @format_response
 @use_authentication()
@@ -193,6 +202,9 @@ def delete_comment(comment_id, auth_info):
     return ResponseOK(deleted_comment)
 
 
+# ---- DOCUMENTS -- ARCHIVES ---------------------------------------------------
+
+
 @app.route('/document/<int:doc_id>/archive', methods=['GET'])
 @format_response
 @use_authentication(required=False)
@@ -203,6 +215,9 @@ def get_archive(doc_id, auth_info):
         raise NotFound("Document does not exist")
     archive = ArchiveController.get_archive(doc_id)
     return ResponseOK(archive)
+
+
+# ---- DOCUMENTS -- VALIDATION -------------------------------------------------
 
 
 @app.route('/document/validate', methods=['POST'])
@@ -220,6 +235,9 @@ def validate_document(auth_info):
 def get_documents_to_validate(auth_info):
     documents = DocController.get_documents_to_validate(auth_info)
     return ResponseOK(documents)
+
+
+# ---- DOCUMENTS -- FILES ------------------------------------------------------
 
 
 # This method does not follow the standard scheme because of the
@@ -256,6 +274,9 @@ def delete_member_image(doc_id, auth_info):
     document = DocController.delete_document_file(auth_info, doc_id)
     delete_file(filename)
     return ResponseOK(document)
+
+
+# ---- GUIDED TOURS ------------------------------------------------------------
 
 
 @app.route('/guidedTour', methods=['POST'])
@@ -296,6 +317,9 @@ def update_guided_tour(tour_id):
 def delete_tour(doc_id):
     deleted_tour = TourController.delete_tour(doc_id)
     return ResponseOK(deleted_tour)
+
+
+# ---- GUIDED TOURS -- DOCUMENTS -----------------------------------------------
 
 
 @app.route('/guidedTour/<int:tour_id>/document', methods=['POST'])
