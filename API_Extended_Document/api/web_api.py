@@ -157,6 +157,13 @@ def get_comment(doc_id):
     return ResponseOK(comments)
 
 
+@app.route('/comment/<int:comment_id>', methods=['GET'])
+@format_response
+def get_comment_by_id(comment_id):
+    comment = CommentController.get_comment(comment_id)
+    return ResponseOK(comment)
+
+
 @app.route('/comment/<int:comment_id>', methods=['PUT'])
 @format_response
 @need_authentication
@@ -180,6 +187,10 @@ def delete_comment(comment_id, auth_info):
 @app.route('/document/<int:doc_id>/archive', methods=['GET'])
 @format_response
 def get_archive(doc_id):
+    try:
+        DocController.get_document_by_id(doc_id)
+    except Exception:
+        raise NotFound("Document does not exist")
     archive = ArchiveController.get_archive(doc_id)
     return ResponseOK(archive)
 
@@ -291,6 +302,14 @@ def add_document_to_guided_tour(tour_id):
 @format_response
 def update_guided_tour_document(tour_id, doc_position):
     updated_tour = TourController.update_document(tour_id, doc_position, request.form)
+    return ResponseOK(updated_tour)
+
+
+@app.route('/guidedTour/<int:tour_id>/document/<int:doc_position>',
+           methods=['DELETE'])
+@format_response
+def delete_guided_tour_document(tour_id, doc_position):
+    updated_tour = TourController.remove_document(tour_id, doc_position)
     return ResponseOK(updated_tour)
 
 

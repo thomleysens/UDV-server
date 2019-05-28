@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-import sys
-from json import dumps
+from util.Exception import *
 
 from sqlalchemy import func
 
-from controller.Controller import Controller
 import persistence_unit.PersistenceUnit as pUnit
-from entities.ExtendedDocument import ExtendedDocument
 from entities.GuidedTour import GuidedTour
 from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
 
@@ -96,17 +93,17 @@ class TourController:
 
     @staticmethod
     @pUnit.make_a_transaction
-    def remove_document(session, *args):
-        tour_id = args[0]
-        doc_id = args[1]
-
-        document = session.query(ExtendedDocument).filter(
-            ExtendedDocument.id == doc_id).one()
+    def remove_document(session, tour_id, doc_position):
         guided_tour = session.query(GuidedTour).filter(
             GuidedTour.id == tour_id).one()
+        doc_position -= 1
 
-        guided_tour.extendedDocs.remove(document)
+        try:
+            guided_tour.extendedDocs.pop(doc_position)
+        except Exception:
+            raise NotFound("Document is not in Guided Tour")
         session.add(guided_tour)
+        return guided_tour
 
     @staticmethod
     @pUnit.make_a_transaction
