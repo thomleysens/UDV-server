@@ -3,10 +3,10 @@
   "info" : {
     "description" : "API used to manage the extended documents in UDV Server.",
     "version" : "1.0.0",
-    "title" : "UDV-Server API"
+    "title" : "UDV-Server API$"
   },
-  "host" : "0.0.0.0:5000",
-  "basePath" : "/",
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/Crejak/UDV-Server/1.0.0",
   "tags" : [ {
     "name" : "Users",
     "description" : "User account management"
@@ -62,10 +62,10 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       }
@@ -116,10 +116,10 @@
             }
           },
           "422" : {
-            "description" : "Integrity error"
+            "description" : "Unprocessable entity (invalid field, duplicate item)\n"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       }
@@ -139,10 +139,10 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         },
         "security" : [ {
@@ -162,7 +162,8 @@
           "in" : "path",
           "description" : "Pass the id of user you want to retrieve",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "200" : {
@@ -172,10 +173,10 @@
             }
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       }
@@ -232,10 +233,10 @@
             }
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         },
         "security" : [ {
@@ -259,7 +260,7 @@
             }
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       },
@@ -346,19 +347,22 @@
             }
           },
           "400" : {
-            "description" : "Bad request"
+            "description" : "Request is malformed (a mandatory field is missing)"
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "403" : {
-            "description" : "Forbidden"
+            "description" : "The user does not has sufficient privilege to perform the request\n"
+          },
+          "415" : {
+            "description" : "The file has an incorrect format\n"
           },
           "422" : {
-            "description" : "Integrity error"
+            "description" : "Unprocessable entity (invalid field, duplicate item)\n"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         },
         "security" : [ {
@@ -375,7 +379,8 @@
           "in" : "path",
           "description" : "ID of the extendedDoc.",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "200" : {
@@ -385,10 +390,10 @@
             }
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       },
@@ -401,7 +406,8 @@
           "in" : "path",
           "description" : "ID of the document.",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         }, {
           "name" : "title",
           "in" : "formData",
@@ -476,19 +482,19 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "403" : {
-            "description" : "Forbidden"
+            "description" : "The user does not has sufficient privilege to perform the request\n"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "422" : {
-            "description" : "Integrity error"
+            "description" : "Unprocessable entity (invalid field, duplicate item)\n"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         },
         "security" : [ {
@@ -503,7 +509,8 @@
           "in" : "path",
           "description" : "ID of the document.",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "200" : {
@@ -513,16 +520,16 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "403" : {
-            "description" : "Forbidden"
+            "description" : "The user does not has sufficient privilege to perform the request\n"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         },
         "security" : [ {
@@ -539,17 +546,18 @@
           "in" : "path",
           "description" : "ID of the extendedDoc.",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "200" : {
             "description" : "Successfully get the document's image with the specified id\n"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       },
@@ -562,7 +570,8 @@
           "in" : "path",
           "description" : "ID of the document",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         }, {
           "name" : "file",
           "in" : "formData",
@@ -575,19 +584,19 @@
             "description" : "Successfully uploaded the document's file"
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "403" : {
-            "description" : "Forbidden"
+            "description" : "The user does not has sufficient privilege to perform the request\n"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "422" : {
-            "description" : "Integrity error"
+            "description" : "Unprocessable entity (invalid field, duplicate item)\n"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         },
         "security" : [ {
@@ -602,23 +611,24 @@
           "in" : "path",
           "description" : "ID of the extendedDoc.",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "204" : {
             "description" : "Successfully delete the extendedDocument file"
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "403" : {
-            "description" : "Forbidden"
+            "description" : "The user does not has sufficient privilege to perform the request\n"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         },
         "security" : [ {
@@ -642,13 +652,13 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "403" : {
-            "description" : "Forbidden"
+            "description" : "The user does not has sufficient privilege to perform the request\n"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         },
         "security" : [ {
@@ -673,16 +683,16 @@
             "description" : "Successfuly validated the document"
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "403" : {
-            "description" : "Forbidden"
+            "description" : "The user does not has sufficient privilege to perform the request\n"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         },
         "security" : [ {
@@ -699,7 +709,8 @@
           "in" : "path",
           "description" : "ID of the extendedDoc.",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "200" : {
@@ -709,10 +720,10 @@
             }
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       },
@@ -725,7 +736,8 @@
           "in" : "path",
           "description" : "ID of the extendedDoc.",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         }, {
           "name" : "description",
           "in" : "formData",
@@ -741,19 +753,19 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "403" : {
-            "description" : "Forbidden"
+            "description" : "The user does not has sufficient privilege to perform the request\n"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "422" : {
-            "description" : "Integrity error"
+            "description" : "Unprocessable entity (invalid field, duplicate item)\n"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         },
         "security" : [ {
@@ -770,7 +782,8 @@
           "in" : "path",
           "description" : "ID of the comment",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "200" : {
@@ -780,10 +793,10 @@
             }
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       },
@@ -796,7 +809,8 @@
           "in" : "path",
           "description" : "ID of the comment",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         }, {
           "name" : "description",
           "in" : "formData",
@@ -812,19 +826,19 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "403" : {
-            "description" : "Forbidden"
+            "description" : "The user does not has sufficient privilege to perform the request\n"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "422" : {
-            "description" : "Integrity error"
+            "description" : "Unprocessable entity (invalid field, duplicate item)\n"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         },
         "security" : [ {
@@ -839,7 +853,8 @@
           "in" : "path",
           "description" : "ID of the comment",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "200" : {
@@ -849,16 +864,16 @@
             }
           },
           "401" : {
-            "description" : "Unauthorized"
+            "description" : "Authentication is needed to perform the request"
           },
           "403" : {
-            "description" : "Forbidden"
+            "description" : "The user does not has sufficient privilege to perform the request\n"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       }
@@ -872,7 +887,8 @@
           "in" : "path",
           "description" : "ID of the document",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "200" : {
@@ -885,10 +901,10 @@
             }
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       }
@@ -909,7 +925,7 @@
             }
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       },
@@ -936,13 +952,13 @@
             }
           },
           "400" : {
-            "description" : "Bad request"
+            "description" : "Request is malformed (a mandatory field is missing)"
           },
           "422" : {
-            "description" : "Integrity error"
+            "description" : "Unprocessable entity (invalid field, duplicate item)\n"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       }
@@ -956,7 +972,8 @@
           "in" : "path",
           "description" : "ID of the guided tour",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "200" : {
@@ -966,10 +983,10 @@
             }
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       },
@@ -982,7 +999,8 @@
           "in" : "path",
           "description" : "ID of the guided tour",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         }, {
           "name" : "name",
           "in" : "formData",
@@ -1002,16 +1020,16 @@
             }
           },
           "400" : {
-            "description" : "Bad request"
+            "description" : "Request is malformed (a mandatory field is missing)"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "422" : {
-            "description" : "Integrity error"
+            "description" : "Unprocessable entity (invalid field, duplicate item)\n"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       },
@@ -1023,7 +1041,8 @@
           "in" : "path",
           "description" : "ID of the guided tour",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "200" : {
@@ -1033,10 +1052,10 @@
             }
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       }
@@ -1051,7 +1070,8 @@
           "in" : "path",
           "description" : "ID of the guided tour",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         }, {
           "name" : "user_id",
           "in" : "formData",
@@ -1064,13 +1084,13 @@
             "description" : "Successfully add a document to a guded tour"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "422" : {
-            "description" : "Integrity error"
+            "description" : "Unprocessable entity (invalid field, duplicate item)\n"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       }
@@ -1085,13 +1105,15 @@
           "in" : "path",
           "description" : "ID of the guided tour",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         }, {
           "name" : "doc_id",
           "in" : "path",
           "description" : "Position of the document in the guided tour. This is not the ID of the document\n",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         }, {
           "name" : "text1",
           "in" : "formData",
@@ -1116,13 +1138,13 @@
             }
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "422" : {
-            "description" : "Integrity error"
+            "description" : "Unprocessable entity (invalid field, duplicate item)\n"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       },
@@ -1134,23 +1156,25 @@
           "in" : "path",
           "description" : "ID of the guided tour",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         }, {
           "name" : "doc_id",
           "in" : "path",
           "description" : "Position of the document in the guided tour. This is not the ID of the document\n",
           "required" : true,
-          "type" : "integer"
+          "type" : "integer",
+          "x-example" : 1
         } ],
         "responses" : {
           "200" : {
             "description" : "The successfully deleted document, associated to the guided tour.\n"
           },
           "404" : {
-            "description" : "Not found"
+            "description" : "The specified resource was not found"
           },
           "500" : {
-            "description" : "Unexpected error"
+            "description" : "Unexpected server error (should not happen)"
           }
         }
       }
@@ -1385,25 +1409,25 @@
   },
   "responses" : {
     "BadRequest" : {
-      "description" : "Bad request"
+      "description" : "Request is malformed (a mandatory field is missing)"
     },
     "AuthenticationFailed" : {
-      "description" : "Unauthorized"
+      "description" : "Authentication is needed to perform the request"
     },
     "Forbidden" : {
-      "description" : "Forbidden"
+      "description" : "The user does not has sufficient privilege to perform the request\n"
     },
     "NotFound" : {
-      "description" : "Not found"
+      "description" : "The specified resource was not found"
     },
     "IntegrityError" : {
-      "description" : "Integrity error"
+      "description" : "Unprocessable entity (invalid field, duplicate item)\n"
     },
-    "FormatFileError" : {
-      "description" : "The file has an incorrect format"
+    "FileFormatError" : {
+      "description" : "The file has an incorrect format\n"
     },
     "ServerError" : {
-      "description" : "Unexpected error"
+      "description" : "Unexpected server error (should not happen)"
     }
   }
 }
