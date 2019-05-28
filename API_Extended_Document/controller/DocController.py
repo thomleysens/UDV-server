@@ -4,7 +4,7 @@
 from sqlalchemy import or_, and_
 
 from util.log import *
-from util.upload import UPLOAD_FOLDER
+from util.upload import *
 from util.Exception import *
 
 from entities.MetaData import MetaData
@@ -59,6 +59,17 @@ class DocController:
         doc_id = args[0]
         return session.query(ExtendedDocument).filter(
             ExtendedDocument.id == doc_id).one()
+
+    @staticmethod
+    @pUnit.make_a_query
+    def get_document_file_location(session, doc_id):
+        document = session.query(ExtendedDocument).filter(
+            ExtendedDocument.id == doc_id).one()
+        filename = document.metaData.file
+        location = os.path.join(UPLOAD_FOLDER, filename)
+        if os.path.exists(location):
+            return location
+        raise NotFound("File doest not exist")
 
     @staticmethod
     @pUnit.make_a_query
@@ -128,16 +139,14 @@ class DocController:
 
     @staticmethod
     @pUnit.make_a_transaction
-    def update_document(session, *args):
-        doc_id = args[0]
-        attributes = args[1]
+    def update_document(session, auth_info, doc_id, attributes):
         document = session.query(ExtendedDocument) \
             .filter(ExtendedDocument.id == doc_id).one()
         # To change not supposed to be done in Controller
         doc_count = session.query(ExtendedDocument).filter(
-            and_(ExtendedDocument.id == doc_id, ExtendedDocument.user_id == attributes['user_id'])).join(
+            and_(ExtendedDocument.id == doc_id, ExtendedDocument.user_id == auth_info['user_id'])).join(
             ToValidateDoc).count()
-        if ExtendedDocument.is_allowed(attributes) or attributes['initial_creation'] or doc_count > 0:
+        if ExtendedDocument.is_allowed(auth_info) or doc_count > 0:
             ArchiveController.create_archive(document.serialize())
             document.update(attributes)
             session.add(document)
@@ -161,10 +170,50 @@ class DocController:
                 ArchiveController.create_archive(a_doc.serialize())
                 session.delete(a_doc)
             try:
-                os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.link)
+                os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.file)
                 return a_doc
             except Exception as e:
                 print(e)
                 info_logger.error(e)
         else:
             raise AuthError
+
+    @staticmethod
+    @pUnit.make_a_transaction
+    def delete_document_file(session, auth_info, doc_id):
+        document = session.query(ExtendedDocument) \
+            .filter(ExtendedDocument.id == doc_id).one()
+        if document:
+            if document.is_owner(auth_info) or \
+               ExtendedDocument.is_allowed(auth_info):
+                filename = document.metaData.file
+                if filename:
+                    ArchiveController.create_archive(document.serialize())
+                    document.update({
+                        'file': None
+                    })
+                    session.add(document)
+                    return document
+                else:
+                    raise NotFound
+            else:
+                raise AuthError
+        else:
+            raise NotFound
+
+    @staticmethod
+    @pUnit.make_a_query
+    def check_authorization(session, auth_info, doc_id):
+        """
+        Checks if the authenticated user has rights on the document identified
+        by the `doc_ic`. The function returns `True` only if the user is the
+        owner of the document or an admin
+        :param session: The sqlalchemy session
+        :param auth_info: The authenticated use info
+        :param doc_id: The document id
+        :return: True if the user has rights on the document, False otherwise
+        """
+        document = session.query(ExtendedDocument) \
+            .filter(ExtendedDocument.id == doc_id).one()
+        return ExtendedDocument.is_allowed(auth_info)\
+            or document.is_owner(auth_info)

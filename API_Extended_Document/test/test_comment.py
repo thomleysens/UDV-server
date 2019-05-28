@@ -119,7 +119,13 @@ class TestComment:
 
     def test_delete_comment(self):
         print("delete a comment")
-        expected_response = None
+        expected_response = {
+            'id': 2,
+            'user_id': 1,
+            'doc_id': 1,
+            'description': 'ok_2',
+            'date': FAKE_TIME
+        }
         assert expected_response == CommentController.delete_comment(2, {
             'user_id': 1,
             "position": {

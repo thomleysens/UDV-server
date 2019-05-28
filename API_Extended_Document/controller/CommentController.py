@@ -69,9 +69,10 @@ class CommentController:
     def delete_comment(session, *args):
         an_id = args[0]
         attributes = args[1]
-        if ExtendedDocument.is_allowed(attributes) or Comment.user_id == attributes['user_id']:
-            comment = session.query(Comment).filter(Comment.id == an_id).one()
+        comment = session.query(Comment).filter(Comment.id == an_id).one()
+        if ExtendedDocument.is_allowed(attributes) or comment.user_id == attributes['user_id']:
             session.delete(comment)
+            return comment
         else:
-            raise  AuthError
+            raise AuthError
 

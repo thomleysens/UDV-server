@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-import sqlalchemy.exc
-import sqlalchemy.orm
-
-from flask import Flask, send_from_directory, request
-from flask.json import jsonify
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 
 from controller.CommentController import CommentController
@@ -15,72 +11,16 @@ from controller.UserController import UserController
 from controller.DocController import DocController
 from controller.ArchiveController import ArchiveController
 from util.upload import *
-from util.encryption import *
-from util.Exception import *
 from util.JsonIsoEncoder import JsonIsoEncoder
+
+# Imports the Response objects and the need_authentication / format_response
+# decorators
+from helpers import *
 
 app = Flask(__name__)
 app.json_encoder = JsonIsoEncoder
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
-
-
-def send_response(old_function, authorization_function=None,
-                  authorization=None, resource_id=None):
-    def new_function(*args, **kwargs):
-        try:
-            if authorization_function:
-                authorization_function(authorization, resource_id)
-            response = old_function(*args, **kwargs)
-            if response is None:
-                return '', 204
-            if isinstance(response, (dict, list)):
-                return jsonify(response)
-            return response
-
-        except LoginError:
-            return 'unauthorized', 401
-        except AuthError:
-            return 'access denied', 403
-        except sqlalchemy.exc.IntegrityError:
-            return 'integrity error', 422
-        except sqlalchemy.orm.exc.NoResultFound:
-            return 'no result found', 204
-        except (AuthError, jwt.exceptions.InvalidSignatureError):
-            return 'Authentication failed', 403
-        except NotFound:
-            return 'no result found', 404
-        except FormatError:
-            return 'Unsupported File Format', 415
-        except Exception as e:
-            print(e)
-            info_logger.error(e)
-            return "unexpected error", 500
-
-    return new_function
-
-
-def get_file(member_id):
-    image_location = find_image(member_id)
-    if image_location:
-        return send_from_directory(
-            safe_join(os.getcwd(), app.config['UPLOAD_FOLDER']),
-            image_location)
-    raise NotFound
-
-
-def is_connected(*args):
-    encoded_jwt = args[0]["Authorization"]
-    if encoded_jwt:
-        payload = jwt.decode(encoded_jwt, VarConfig.get()['password'],
-                             algorithms=['HS256'])
-        if payload:
-            return payload
-    raise LoginError
-
-
-def get_my_id(authorization):
-    return is_connected(authorization)['user_id']
 
 
 @app.route('/')
@@ -103,229 +43,255 @@ def index():
 
 
 @app.route('/login', methods=['POST'])
+@format_response
 def login():
-    return send_response(
-        lambda: UserController.login(
+    token = UserController.login(
             {key: request.form.get(key) for key in
-             request.form.keys()}))()
+             request.form.keys()})
+    return ResponseOK(token)
 
 
 @app.route('/user', methods=['POST'])
+@format_response
 def create_user():
-    return send_response(
-        lambda: UserController.create_user(
+    created_user = UserController.create_user(
             {key: request.form.get(key) for key in
-             request.form.keys()}))()
+             request.form.keys()})
+    return ResponseCreated(created_user)
 
 
 @app.route('/user/me', methods=['GET'])
-def get_connected_user():
-    return send_response(
-        lambda: UserController.get_user_by_id(
-            is_connected(request.headers)['user_id']))()
+@format_response
+@need_authentication
+def get_connected_user(auth_info):
+    user = UserController.get_user_by_id(auth_info['user_id'])
+    return ResponseOK(user)
 
 
 @app.route('/user/<int:user_id>', methods=['GET'])
+@format_response
 def get_user(user_id):
-    return send_response(
-        lambda: UserController.get_user_by_id(user_id))()
+    user = UserController.get_user_by_id(user_id)
+    return ResponseOK(user)
 
 
 @app.route('/user/grant', methods=['POST'])
-def add_privileged_user():
-    return send_response(
-        lambda: UserController.create_privileged_user({
+@format_response
+@need_authentication
+def add_privileged_user(auth_info):
+    user = UserController.create_privileged_user({
             key: request.form.get(key) for key in
-            request.form.keys()}, is_connected(request.headers)))()
+            request.form.keys()}, auth_info)
+    return ResponseOK(user)
 
 
 @app.route('/document', methods=['POST'])
-def create_document():
-    def creation():
-        args = {key: request.form.get(key) for key in
-                request.form.keys()}
-        args.update(is_connected(request.headers))
-        document = DocController.create_document(args)
-        filename = ''
-        if request.files.get('file'):
-            filename = save_file(document['id'],
-                                 request.files['file'])
+@format_response
+@need_authentication
+def create_document(auth_info):
+    args = {key: request.form.get(key) for key in
+            request.form.keys()}
+    args.update(auth_info)
+    if request.files.get('file'):
+        filename = save_file(request.files['file'])
         if filename is not None:
-            payload = is_connected(request.headers)
-            payload['file'] = filename
-            payload['initial_creation'] = True
-            document = DocController.update_document(document['id'],
-                                                     payload)
+            args['file'] = filename
+            document = DocController.create_document(args)
+            return ResponseCreated(document)
         else:
-            raise FormatError
-        return document
-
-    return send_response(lambda: creation())()
+            raise FormatError("Invalid file format")
+    else:
+        raise BadRequest("Missing 'file' parameter")
 
 
 @app.route('/document', methods=['GET'])
+@format_response
 def get_documents():
-    return send_response(
-        lambda: DocController.get_documents(
+    documents = DocController.get_documents(
             {key: request.args.get(key)
-             for key in request.args.keys()}))()
+             for key in request.args.keys()})
+    return ResponseOK(documents)
 
 
 @app.route('/document/<int:doc_id>', methods=['GET'])
+@format_response
 def get_document(doc_id):
-    return send_response(
-        lambda: DocController.get_document_by_id(doc_id))()
+    document = DocController.get_document_by_id(doc_id)
+    return ResponseOK(document)
 
 
 @app.route('/document/<int:doc_id>', methods=['PUT'])
-def update_document(doc_id):
-    args = {key: request.form.get(key) for key in request.form.keys()}
-    payload = is_connected(request.headers)
-    args['initial_creation'] = False
-    args.update(payload)
-    return send_response(
-        lambda: DocController.update_document(doc_id, args))()
+@format_response
+@need_authentication
+def update_document(doc_id, auth_info):
+    attributes = {key: request.form.get(key) for key in request.form.keys()}
+    updated_document = DocController.update_document(auth_info, doc_id,
+                                                     attributes)
+    return ResponseOK(updated_document)
 
 
 @app.route('/document/<int:doc_id>', methods=['DELETE'])
-def delete_document(doc_id):
-    return send_response(lambda: DocController.delete_documents(
-        doc_id, is_connected(request.headers)))()
+@format_response
+@need_authentication
+def delete_document(doc_id, auth_info):
+    deleted_document = DocController.delete_documents(doc_id, auth_info)
+    return ResponseOK(deleted_document)
 
 
 @app.route('/document/<int:doc_id>/comment', methods=['POST'])
-def create_comment(doc_id):
-    def creation():
-        payload = is_connected(request.headers)
-        form = {key: request.form.get(key) for key in request.form.keys()}
-        args = {}
-        args.update(payload)
-        args.update(form)
-        comment = CommentController.create_comment(doc_id, args)
-        return comment
-
-    return send_response(creation)()
+@format_response
+@need_authentication
+def create_comment(doc_id, auth_info):
+    form = {key: request.form.get(key) for key in request.form.keys()}
+    args = {}
+    args.update(auth_info)
+    args.update(form)
+    comment = CommentController.create_comment(doc_id, args)
+    return ResponseCreated(comment)
 
 
-@app.route('/document/<int:doc_id>/comment', methods=['GET']) 
+@app.route('/document/<int:doc_id>/comment', methods=['GET'])
+@format_response
 def get_comment(doc_id):
-    return send_response(
-        lambda: CommentController.get_comments(doc_id))()
+    comments = CommentController.get_comments(doc_id)
+    return ResponseOK(comments)
 
 
 @app.route('/comment/<int:comment_id>', methods=['PUT'])
-def update_comment(comment_id):
-    def creation():
-        payload = is_connected(request.headers)
-        form = {key: request.form.get(key) for key in request.form.keys()}
-        args = {}
-        args.update(payload)
-        args.update(form)
-        comment = CommentController.update_comment(comment_id, args)
-        return comment
-
-    return send_response(creation)()
+@format_response
+@need_authentication
+def update_comment(comment_id, auth_info):
+    form = {key: request.form.get(key) for key in request.form.keys()}
+    args = {}
+    args.update(auth_info)
+    args.update(form)
+    updated_comment = CommentController.update_comment(comment_id, args)
+    return ResponseOK(updated_comment)
 
 
 @app.route('/comment/<int:comment_id>', methods=['DELETE'])
-def delete_comment(comment_id):
-    return send_response(lambda: CommentController.delete_comment(comment_id, is_connected(request.headers)))()
+@format_response
+@need_authentication
+def delete_comment(comment_id, auth_info):
+    deleted_comment = CommentController.delete_comment(comment_id, auth_info)
+    return ResponseOK(deleted_comment)
 
 
 @app.route('/document/<int:doc_id>/archive', methods=['GET'])
+@format_response
 def get_archive(doc_id):
-    return send_response(
-        lambda: ArchiveController.get_archive(doc_id))()
+    archive = ArchiveController.get_archive(doc_id)
+    return ResponseOK(archive)
 
 
 @app.route('/document/validate', methods=['POST'])
-def validate_document():
-    return send_response(
-        lambda: DocController.validate_document(
-            request.form['id'], is_connected(request.headers)))()
+@format_response
+@need_authentication
+def validate_document(auth_info):
+    validated_document = DocController.validate_document(
+                         request.form['id'], auth_info)
+    return ResponseOK(validated_document)
 
 
 @app.route('/document/in_validation', methods=['GET'])
-def get_documents_to_validate():
-    return send_response(
-        lambda: DocController.get_documents_to_validate(
-            is_connected(request.headers)))()
+@format_response
+@need_authentication
+def get_documents_to_validate(auth_info):
+    documents = DocController.get_documents_to_validate(auth_info)
+    return ResponseOK(documents)
 
 
+# This method does not follow the standard scheme because of the
+# `send_from_directory` flask method (hence neither `format_response` nor
+# a `Response` object are present).
 @app.route('/document/<int:doc_id>/file', methods=['GET'])
 def get_document_file(doc_id):
-    return send_response(
-        lambda: get_file(doc_id)
-    )()
+    location = DocController.get_document_file_location(doc_id)
+    return send_from_directory(os.getcwd(), location)
 
 
 @app.route('/document/<int:doc_id>/file', methods=['POST'])
-def upload_file(doc_id):
+@format_response
+@need_authentication
+def upload_file(doc_id, auth_info):
     if request.files.get('file'):
         file = request.files['file']
-        return send_response(
-            lambda: save_file(doc_id, file)
-        )()
+        filename = save_file(file)
+        updated_document = DocController.update_document(auth_info, doc_id, {
+            'file': filename
+        })
+        return ResponseOK(updated_document)
+    else:
+        raise BadRequest("Missing 'file' data")
 
 
 @app.route('/document/<doc_id>/file', methods=['DELETE'])
-def delete_member_image(doc_id):
-    return send_response(
-        lambda: delete_image(doc_id)
-    )()
+@format_response
+@need_authentication
+def delete_member_image(doc_id, auth_info):
+    filename = DocController.get_document_file_location(doc_id)
+    document = DocController.delete_document_file(auth_info, doc_id)
+    delete_file(filename)
+    return ResponseOK(document)
 
 
 @app.route('/guidedTour', methods=['POST'])
+@format_response
 def create_guided_tour():
     name = request.form.get('name')
     description = request.form.get('description')
     if name is None or description is None:
-        return 'parameter is missing', 400
+        raise BadRequest("Parameters are missing : 'name', 'description'")
 
-    return send_response(
-        lambda: TourController.create_tour(name, description))()
+    guided_tour = TourController.create_tour(name, description)
+    return ResponseCreated(guided_tour)
 
 
 @app.route('/guidedTour', methods=['GET'])
+@format_response
 def get_all_guided_tours():
-    return send_response(
-        lambda: TourController.get_tours())()
+    guided_tours = TourController.get_tours()
+    return ResponseOK(guided_tours)
 
 
 @app.route('/guidedTour/<int:tour_id>', methods=['GET'])
+@format_response
 def get_guided_tour(tour_id):
-    return send_response(
-        lambda: TourController.get_tour_by_id(tour_id))()
+    guided_tour = TourController.get_tour_by_id(tour_id)
+    return ResponseOK(guided_tour)
 
 
 @app.route('/guidedTour/<int:tour_id>', methods=['PUT'])
+@format_response
 def update_guided_tour(tour_id):
-    return send_response(
-        lambda: TourController.update(
-            tour_id, request.form))()
+    updated_tour = TourController.update(tour_id, request.form)
+    return ResponseOK(updated_tour)
 
 
 @app.route('/guidedTour/<int:doc_id>', methods=['DELETE'])
+@format_response
 def delete_tour(doc_id):
-    return send_response(
-        lambda: TourController.delete_tour(doc_id))()
+    deleted_tour = TourController.delete_tour(doc_id)
+    return ResponseOK(deleted_tour)
 
 
 @app.route('/guidedTour/<int:tour_id>/document', methods=['POST'])
+@format_response
 def add_document_to_guided_tour(tour_id):
     doc_id = request.form.get('doc_id')
     if doc_id is None or tour_id is None:
-        return 'parameter is missing', 400
+        raise BadRequest("Parameter is missing : 'doc_id'")
 
-    return send_response(
-        lambda: TourController.add_document(tour_id, doc_id))()
+    guided_tour = TourController.add_document(tour_id, doc_id)
+    return ResponseCreated(guided_tour)
 
 
-@app.route('/guidedTour/<int:tour_id>/document/<int:doc_position>', methods=['POST'])
+@app.route('/guidedTour/<int:tour_id>/document/<int:doc_position>',
+           methods=['POST'])
+@format_response
 def update_guided_tour_document(tour_id, doc_position):
-    return send_response(
-        lambda: TourController.update_document(
-            tour_id, doc_position, request.form))()
+    updated_tour = TourController.update_document(tour_id, doc_position, request.form)
+    return ResponseOK(updated_tour)
 
 
 if __name__ == '__main__':

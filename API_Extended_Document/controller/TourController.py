@@ -115,3 +115,4 @@ class TourController:
         a_tour = session.query(GuidedTour).filter(
             GuidedTour.id == an_id).one()
         session.delete(a_tour)
+        return a_tour

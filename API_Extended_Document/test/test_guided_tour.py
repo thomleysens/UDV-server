@@ -230,7 +230,13 @@ class TestGuidedTour:
 
     def test_delete_tour_1(self):
         print("existing tour")
-        assert TourController.delete_tour(3) is None
+        expected = {
+            'extendedDocs': [],
+            'name': 'Third tour',
+            'id': 3,
+            'description': 'This is the third guided tour'
+        }
+        assert TourController.delete_tour(3) == expected
 
     def test_delete_tour_2(self):
         print("non existing tour")
