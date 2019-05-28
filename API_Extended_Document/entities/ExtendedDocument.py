@@ -10,7 +10,7 @@ from entities.Entity import Entity
 from entities.MetaData import MetaData
 from entities.Visualisation import Visualisation
 from entities.ValidDoc import ValidDoc
-from entities.Position import Position
+from entities.Position import Position, LEVEL_MIN
 from entities.ToValidateDoc import ToValidateDoc
 
 
@@ -83,7 +83,7 @@ class ExtendedDocument(Entity, Base):
     def is_allowed(auth_info):
         role = auth_info['position']['label']
         level = Position.get_clearance_level(role)
-        return level > Position.LEVEL_MIN
+        return level > LEVEL_MIN
 
     def is_owner(self, auth_info):
         return auth_info['user_id'] == self.user_id
