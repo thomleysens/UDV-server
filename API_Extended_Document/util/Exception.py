@@ -26,6 +26,14 @@ class BadRequest(Exception):
     pass
 
 
+class UnprocessableEntity(Exception):
+    pass
+
+
+class Conflict(Exception):
+    pass
+
+
 def throw(ex):
     """
     Transforms a raise statement into an expression. Used in lambda functions

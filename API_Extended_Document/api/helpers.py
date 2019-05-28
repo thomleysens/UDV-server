@@ -90,20 +90,22 @@ def format_response(old_function, authorization_function=None,
             else:
                 return response
         except BadRequest as e:
-            return f'Bad request\n{e}', 400
+            return f'Bad request  \n{e}', 400
         except Unauthorized as e:
-            return f'Unauthorized\n{e}', 401
+            return f'Unauthorized  \n{e}', 401
         except AuthError as e:
-            return f'Forbidden\n{e}', 403
-        except (sqlalchemy.exc.IntegrityError, sqlalchemy.exc.DataError) as e:
-            return f'Integrity error\n{e}', 422
+            return f'Forbidden  \n{e}', 403
+        except (sqlalchemy.exc.IntegrityError, sqlalchemy.exc.DataError, UnprocessableEntity) as e:
+            return f'Unprocessable entity  \n{e}', 422
         except (NotFound, sqlalchemy.orm.exc.NoResultFound) as e:
             return f'Not found\n{e}', 404
         except FormatError as e:
-            return f'Unsupported file format\n{e}', 415
+            return f'Unsupported file format  \n{e}', 415
+        except Conflict as e:
+            return f'Conflict  \n{e}'
         except Exception as e:
             info_logger.error(e)
-            return f"Unexpected error\n{e}", 500
+            return f"Unexpected error  \n{e}", 500
 
     return new_function
 

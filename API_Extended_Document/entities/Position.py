@@ -6,6 +6,11 @@ from sqlalchemy import Column, Integer, String
 from util.db_config import Base
 from entities.Entity import Entity
 
+clearance = ["contributor", "softModerator", "moderator", "admin"]
+
+LEVEL_MIN = 1
+LEVEL_MAX = 3
+
 
 class Position(Entity, Base):
     __tablename__ = "position"
@@ -13,25 +18,20 @@ class Position(Entity, Base):
     id = Column(Integer, primary_key=True)
     label = Column(String)
 
-    clearance = ["contributor", "softModerator", "moderator", "admin"]
-
-    LEVEL_MIN = 1
-    LEVEL_MAX = 3
-
     def __init__(self, label):
         self.label = label
 
     @staticmethod
     def get_clearance(level):
         if (level == int(level) and 0 <= level < len(
-                Position.clearance)):
-            return Position.clearance[level]
+                clearance)):
+            return clearance[level]
         else:
-            return Position.clearance[0]
+            return clearance[0]
 
     @staticmethod
     def get_clearance_level(role):
-        if role in Position.clearance:
-            return Position.clearance.index(role)
+        if role in clearance:
+            return clearance.index(role)
         else:
             return None
