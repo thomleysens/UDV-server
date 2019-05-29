@@ -2,7 +2,7 @@
 # coding: utf8
 
 
-class LoginError(Exception):
+class Unauthorized(Exception):
     pass
 
 
@@ -23,6 +23,14 @@ class NotFound(Exception):
 
 
 class BadRequest(Exception):
+    pass
+
+
+class UnprocessableEntity(Exception):
+    pass
+
+
+class Conflict(Exception):
     pass
 
 

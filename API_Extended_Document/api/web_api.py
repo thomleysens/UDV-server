@@ -4,6 +4,8 @@
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 
+from sqlalchemy.orm.exc import NoResultFound
+
 from controller.CommentController import CommentController
 from controller.Controller import Controller
 from controller.TourController import TourController
@@ -51,6 +53,9 @@ def login():
     return ResponseOK(token)
 
 
+# ---- USERS -------------------------------------------------------------------
+
+
 @app.route('/user', methods=['POST'])
 @format_response
 def create_user():
@@ -62,7 +67,7 @@ def create_user():
 
 @app.route('/user/me', methods=['GET'])
 @format_response
-@need_authentication
+@use_authentication()
 def get_connected_user(auth_info):
     user = UserController.get_user_by_id(auth_info['user_id'])
     return ResponseOK(user)
@@ -77,7 +82,7 @@ def get_user(user_id):
 
 @app.route('/user/grant', methods=['POST'])
 @format_response
-@need_authentication
+@use_authentication()
 def add_privileged_user(auth_info):
     user = UserController.create_privileged_user({
             key: request.form.get(key) for key in
@@ -85,9 +90,12 @@ def add_privileged_user(auth_info):
     return ResponseOK(user)
 
 
+# ---- DOCUMENTS ---------------------------------------------------------------
+
+
 @app.route('/document', methods=['POST'])
 @format_response
-@need_authentication
+@use_authentication()
 def create_document(auth_info):
     args = {key: request.form.get(key) for key in
             request.form.keys()}
@@ -96,7 +104,11 @@ def create_document(auth_info):
         filename = save_file(request.files['file'])
         if filename is not None:
             args['file'] = filename
-            document = DocController.create_document(args)
+            try:
+                document = DocController.create_document(args)
+            except Exception as e:
+                delete_file(f'{UPLOAD_FOLDER}/{filename}')
+                raise e
             return ResponseCreated(document)
         else:
             raise FormatError("Invalid file format")
@@ -115,14 +127,15 @@ def get_documents():
 
 @app.route('/document/<int:doc_id>', methods=['GET'])
 @format_response
-def get_document(doc_id):
-    document = DocController.get_document_by_id(doc_id)
+@use_authentication(required=False)
+def get_document(doc_id, auth_info):
+    document = DocController.get_document_by_id(doc_id, auth_info)
     return ResponseOK(document)
 
 
 @app.route('/document/<int:doc_id>', methods=['PUT'])
 @format_response
-@need_authentication
+@use_authentication()
 def update_document(doc_id, auth_info):
     attributes = {key: request.form.get(key) for key in request.form.keys()}
     updated_document = DocController.update_document(auth_info, doc_id,
@@ -132,15 +145,18 @@ def update_document(doc_id, auth_info):
 
 @app.route('/document/<int:doc_id>', methods=['DELETE'])
 @format_response
-@need_authentication
+@use_authentication()
 def delete_document(doc_id, auth_info):
     deleted_document = DocController.delete_documents(doc_id, auth_info)
     return ResponseOK(deleted_document)
 
 
+# ---- DOCUMENT -- COMMENTS ----------------------------------------------------
+
+
 @app.route('/document/<int:doc_id>/comment', methods=['POST'])
 @format_response
-@need_authentication
+@use_authentication()
 def create_comment(doc_id, auth_info):
     form = {key: request.form.get(key) for key in request.form.keys()}
     args = {}
@@ -152,7 +168,9 @@ def create_comment(doc_id, auth_info):
 
 @app.route('/document/<int:doc_id>/comment', methods=['GET'])
 @format_response
-def get_comment(doc_id):
+@use_authentication(required=False)
+def get_comment(doc_id, auth_info):
+    DocController.get_document_by_id(doc_id, auth_info)
     comments = CommentController.get_comments(doc_id)
     return ResponseOK(comments)
 
@@ -166,7 +184,7 @@ def get_comment_by_id(comment_id):
 
 @app.route('/comment/<int:comment_id>', methods=['PUT'])
 @format_response
-@need_authentication
+@use_authentication()
 def update_comment(comment_id, auth_info):
     form = {key: request.form.get(key) for key in request.form.keys()}
     args = {}
@@ -178,26 +196,33 @@ def update_comment(comment_id, auth_info):
 
 @app.route('/comment/<int:comment_id>', methods=['DELETE'])
 @format_response
-@need_authentication
+@use_authentication()
 def delete_comment(comment_id, auth_info):
     deleted_comment = CommentController.delete_comment(comment_id, auth_info)
     return ResponseOK(deleted_comment)
 
 
+# ---- DOCUMENTS -- ARCHIVES ---------------------------------------------------
+
+
 @app.route('/document/<int:doc_id>/archive', methods=['GET'])
 @format_response
-def get_archive(doc_id):
+@use_authentication(required=False)
+def get_archive(doc_id, auth_info):
     try:
-        DocController.get_document_by_id(doc_id)
-    except Exception:
+        DocController.get_document_by_id(doc_id, auth_info)
+    except NoResultFound:
         raise NotFound("Document does not exist")
     archive = ArchiveController.get_archive(doc_id)
     return ResponseOK(archive)
 
 
+# ---- DOCUMENTS -- VALIDATION -------------------------------------------------
+
+
 @app.route('/document/validate', methods=['POST'])
 @format_response
-@need_authentication
+@use_authentication()
 def validate_document(auth_info):
     validated_document = DocController.validate_document(
                          request.form['id'], auth_info)
@@ -206,24 +231,29 @@ def validate_document(auth_info):
 
 @app.route('/document/in_validation', methods=['GET'])
 @format_response
-@need_authentication
+@use_authentication()
 def get_documents_to_validate(auth_info):
     documents = DocController.get_documents_to_validate(auth_info)
     return ResponseOK(documents)
+
+
+# ---- DOCUMENTS -- FILES ------------------------------------------------------
 
 
 # This method does not follow the standard scheme because of the
 # `send_from_directory` flask method (hence neither `format_response` nor
 # a `Response` object are present).
 @app.route('/document/<int:doc_id>/file', methods=['GET'])
-def get_document_file(doc_id):
-    location = DocController.get_document_file_location(doc_id)
+@format_response
+@use_authentication(required=False)
+def get_document_file(doc_id, auth_info):
+    location = DocController.get_document_file_location(doc_id, auth_info)
     return send_from_directory(os.getcwd(), location)
 
 
 @app.route('/document/<int:doc_id>/file', methods=['POST'])
 @format_response
-@need_authentication
+@use_authentication()
 def upload_file(doc_id, auth_info):
     if request.files.get('file'):
         file = request.files['file']
@@ -238,12 +268,15 @@ def upload_file(doc_id, auth_info):
 
 @app.route('/document/<doc_id>/file', methods=['DELETE'])
 @format_response
-@need_authentication
+@use_authentication()
 def delete_member_image(doc_id, auth_info):
-    filename = DocController.get_document_file_location(doc_id)
+    filename = DocController.get_document_file_location(doc_id, auth_info)
     document = DocController.delete_document_file(auth_info, doc_id)
     delete_file(filename)
     return ResponseOK(document)
+
+
+# ---- GUIDED TOURS ------------------------------------------------------------
 
 
 @app.route('/guidedTour', methods=['POST'])
@@ -284,6 +317,9 @@ def update_guided_tour(tour_id):
 def delete_tour(doc_id):
     deleted_tour = TourController.delete_tour(doc_id)
     return ResponseOK(deleted_tour)
+
+
+# ---- GUIDED TOURS -- DOCUMENTS -----------------------------------------------
 
 
 @app.route('/guidedTour/<int:tour_id>/document', methods=['POST'])

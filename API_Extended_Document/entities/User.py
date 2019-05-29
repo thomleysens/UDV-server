@@ -7,9 +7,11 @@ from util.encryption import encrypt
 
 from util.db_config import Base
 from util.serialize import serialize
+from util.Exception import UnprocessableEntity
+
 from entities.Entity import Entity
 
-from entities.Position import Position
+from entities.Position import Position, LEVEL_MAX
 
 
 class User(Entity, Base):
@@ -51,8 +53,10 @@ class User(Entity, Base):
 
     @staticmethod
     def is_admin(attributes):
-        level = Position.get_clearance_level(attributes['position']['label'])
-        return level == Position.LEVEL_MAX
+        level = Position.get_clearance_level(attributes['role'])
+        if level is None:
+            raise UnprocessableEntity(f'Unknown role : {attributes["role"]}')
+        return level == LEVEL_MAX
 
     def serialize(self):
         serialized_object = {}

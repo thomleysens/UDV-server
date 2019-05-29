@@ -1,0 +1,1126 @@
+---
+swagger: "2.0"
+info:
+  description: API used to manage the extended documents in UDV Server.
+  version: 1.0.0
+  title: UDV-Server API$
+host: virtserver.swaggerhub.com
+basePath: /Crejak/UDV-Server/1.0.0
+tags:
+- name: Users
+  description: User account management
+- name: Documents
+  description: Extended documents management
+- name: Document files
+  description: Management of files attached to extended documents
+- name: Document validation
+  description: Management of documents in validation
+- name: Document comments
+  description: Management of comments attached to extended documents
+- name: Document archives
+  description: Management of previous versions of extended documents
+- name: Guided tours
+  description: Guided tour management
+- name: Guided tour documents
+  description: Management of documents inside a guided tour
+schemes:
+- https
+paths:
+  /login:
+    post:
+      tags:
+      - Users
+      summary: Log in and retrieve a token
+      description: Authenticate a user by giving them a auth token
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: username
+        in: formData
+        description: Username of the user
+        required: true
+        type: string
+      - name: password
+        in: formData
+        description: Password of the user
+        required: true
+        type: string
+      responses:
+        200:
+          description: Successfully logged in
+          schema:
+            $ref: '#/definitions/TokenItem'
+        401:
+          description: Authentication is needed to perform the request
+        500:
+          description: Unexpected server error (should not happen)
+  /user:
+    post:
+      tags:
+      - Users
+      summary: Create a new user
+      description: |
+        Add a new User by passing informations below
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: lastName
+        in: formData
+        description: Pass the lastName of user you want to create
+        required: true
+        type: string
+      - name: firstName
+        in: formData
+        description: Pass the firstName of user you want to create
+        required: true
+        type: string
+      - name: email
+        in: formData
+        description: Pass the email of user you want to create
+        required: true
+        type: string
+      - name: username
+        in: formData
+        description: Pass the username of user you want to create
+        required: true
+        type: string
+      - name: password
+        in: formData
+        description: Pass the password of user you want to create
+        required: true
+        type: string
+      responses:
+        201:
+          description: Information about the new user
+          schema:
+            $ref: '#/definitions/UserItem'
+        422:
+          description: |
+            Unprocessable entity (invalid field, duplicate item)
+        500:
+          description: Unexpected server error (should not happen)
+  /user/me:
+    get:
+      tags:
+      - Users
+      summary: Retrieve the connected user
+      description: |
+        Retrieve the logged in user with the given token
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: The connected user's information
+          schema:
+            $ref: '#/definitions/UserItem'
+        401:
+          description: Authentication is needed to perform the request
+        500:
+          description: Unexpected server error (should not happen)
+      security:
+      - Bearer: []
+  /user/{id}:
+    get:
+      tags:
+      - Users
+      summary: Retrieve user by their ID
+      description: |
+        Retrieve a specific User by passing the id
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Pass the id of user you want to retrieve
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        200:
+          description: The user's information
+          schema:
+            $ref: '#/definitions/UserItem'
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+  /user/grant:
+    post:
+      tags:
+      - Users
+      summary: Create a privileged user
+      description: Create a user with the specific role
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: lastName
+        in: formData
+        description: Pass the lastName of user you want to create
+        required: true
+        type: string
+      - name: firstName
+        in: formData
+        description: Pass the firstName of user you want to create
+        required: true
+        type: string
+      - name: email
+        in: formData
+        description: Pass the email of user you want to create
+        required: true
+        type: string
+      - name: username
+        in: formData
+        description: Pass the username of user you want to create
+        required: true
+        type: string
+      - name: password
+        in: formData
+        description: Pass the password of user you want to create
+        required: true
+        type: string
+      - name: role
+        in: formData
+        description: The role of the user
+        required: true
+        type: string
+      responses:
+        200:
+          description: The user's information
+          schema:
+            $ref: '#/definitions/UserItem'
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+      security:
+      - Bearer: []
+  /document:
+    get:
+      tags:
+      - Documents
+      summary: Get all extended documents
+      parameters: []
+      responses:
+        200:
+          description: Successfully get the extended documents
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ExtendedDocument'
+        500:
+          description: Unexpected server error (should not happen)
+    post:
+      tags:
+      - Documents
+      summary: Create a new extended document
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: title
+        in: formData
+        required: true
+        type: string
+      - name: subject
+        in: formData
+        required: true
+        type: string
+      - name: description
+        in: formData
+        required: true
+        type: string
+      - name: refDate
+        in: formData
+        required: true
+        type: string
+      - name: publicationDate
+        in: formData
+        required: true
+        type: string
+      - name: type
+        in: formData
+        required: true
+        type: string
+      - name: quaternionX
+        in: formData
+        required: true
+        type: number
+      - name: quaternionY
+        in: formData
+        required: true
+        type: number
+      - name: quaternionZ
+        in: formData
+        required: true
+        type: number
+      - name: quaternionW
+        in: formData
+        required: true
+        type: number
+      - name: positionX
+        in: formData
+        required: true
+        type: number
+      - name: positionY
+        in: formData
+        required: true
+        type: number
+      - name: positionZ
+        in: formData
+        required: true
+        type: number
+      - name: file
+        in: formData
+        required: true
+        type: file
+      responses:
+        201:
+          description: Successfully created an extended document
+          schema:
+            $ref: '#/definitions/ExtendedDocument'
+        400:
+          description: Request is malformed (a mandatory field is missing)
+        401:
+          description: Authentication is needed to perform the request
+        403:
+          description: |
+            The user does not has sufficient privilege to perform the request
+        415:
+          description: |
+            The file has an incorrect format
+        422:
+          description: |
+            Unprocessable entity (invalid field, duplicate item)
+        500:
+          description: Unexpected server error (should not happen)
+      security:
+      - Bearer: []
+  /document/{id}:
+    get:
+      tags:
+      - Documents
+      summary: Get an extended document with a specific id
+      parameters:
+      - name: id
+        in: path
+        description: ID of the extendedDoc.
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        200:
+          description: Successfully get the extendedDoc
+          schema:
+            $ref: '#/definitions/ExtendedDocument'
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+    put:
+      tags:
+      - Documents
+      summary: Update an extended document
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: id
+        in: path
+        description: ID of the document.
+        required: true
+        type: integer
+        x-example: 1
+      - name: title
+        in: formData
+        required: false
+        type: string
+      - name: subject
+        in: formData
+        required: false
+        type: string
+      - name: description
+        in: formData
+        required: false
+        type: string
+      - name: refDate
+        in: formData
+        required: false
+        type: string
+      - name: publicationDate
+        in: formData
+        required: false
+        type: string
+      - name: type
+        in: formData
+        required: false
+        type: string
+      - name: quaternionX
+        in: formData
+        required: false
+        type: string
+      - name: quaternionY
+        in: formData
+        required: false
+        type: string
+      - name: quaternionZ
+        in: formData
+        required: false
+        type: string
+      - name: quaternionW
+        in: formData
+        required: false
+        type: string
+      - name: positionX
+        in: formData
+        required: false
+        type: string
+      - name: positionY
+        in: formData
+        required: false
+        type: string
+      - name: positionZ
+        in: formData
+        required: false
+        type: string
+      responses:
+        200:
+          description: Successfully updated the document
+          schema:
+            $ref: '#/definitions/ExtendedDocument'
+        401:
+          description: Authentication is needed to perform the request
+        403:
+          description: |
+            The user does not has sufficient privilege to perform the request
+        404:
+          description: The specified resource was not found
+        422:
+          description: |
+            Unprocessable entity (invalid field, duplicate item)
+        500:
+          description: Unexpected server error (should not happen)
+      security:
+      - Bearer: []
+    delete:
+      tags:
+      - Documents
+      summary: Delete an extended document with a specific id
+      parameters:
+      - name: id
+        in: path
+        description: ID of the document.
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        200:
+          description: Successfully deleted the document
+          schema:
+            $ref: '#/definitions/ExtendedDocument'
+        401:
+          description: Authentication is needed to perform the request
+        403:
+          description: |
+            The user does not has sufficient privilege to perform the request
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+      security:
+      - Bearer: []
+  /document/{id}/file:
+    get:
+      tags:
+      - Document files
+      summary: Get the file associated to a document
+      parameters:
+      - name: id
+        in: path
+        description: ID of the extendedDoc.
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        200:
+          description: |
+            Successfully get the document's image with the specified id
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+    post:
+      tags:
+      - Document files
+      summary: Upload and associate a file to document
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: id
+        in: path
+        description: ID of the document
+        required: true
+        type: integer
+        x-example: 1
+      - name: file
+        in: formData
+        description: The file to upload
+        required: true
+        type: file
+      responses:
+        200:
+          description: Successfully uploaded the document's file
+        401:
+          description: Authentication is needed to perform the request
+        403:
+          description: |
+            The user does not has sufficient privilege to perform the request
+        404:
+          description: The specified resource was not found
+        422:
+          description: |
+            Unprocessable entity (invalid field, duplicate item)
+        500:
+          description: Unexpected server error (should not happen)
+      security:
+      - Bearer: []
+    delete:
+      tags:
+      - Document files
+      summary: Delete the file associated to a document
+      parameters:
+      - name: id
+        in: path
+        description: ID of the extendedDoc.
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        204:
+          description: Successfully delete the extendedDocument file
+        401:
+          description: Authentication is needed to perform the request
+        403:
+          description: |
+            The user does not has sufficient privilege to perform the request
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+      security:
+      - Bearer: []
+  /document/in_validation:
+    get:
+      tags:
+      - Document validation
+      summary: Get the documents in validation
+      parameters: []
+      responses:
+        200:
+          description: The retrieved documents
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ExtendedDocument'
+        401:
+          description: Authentication is needed to perform the request
+        403:
+          description: |
+            The user does not has sufficient privilege to perform the request
+        500:
+          description: Unexpected server error (should not happen)
+      security:
+      - Bearer: []
+  /document/validate:
+    post:
+      tags:
+      - Document validation
+      summary: Validate a document
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: id
+        in: formData
+        description: ID of the extended document in validation
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Successfuly validated the document
+        401:
+          description: Authentication is needed to perform the request
+        403:
+          description: |
+            The user does not has sufficient privilege to perform the request
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+      security:
+      - Bearer: []
+  /document/{id}/comment:
+    get:
+      tags:
+      - Document comments
+      summary: Get all the comments associated to a document
+      parameters:
+      - name: id
+        in: path
+        description: ID of the extendedDoc.
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        200:
+          description: The retrieved comments for this document
+          schema:
+            $ref: '#/definitions/Comment'
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+    post:
+      tags:
+      - Document comments
+      summary: Create a new comment, associated to a document
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: id
+        in: path
+        description: ID of the extendedDoc.
+        required: true
+        type: integer
+        x-example: 1
+      - name: description
+        in: formData
+        description: Comment
+        required: true
+        type: string
+      responses:
+        201:
+          description: Successfully create a new comment, associated to a document
+          schema:
+            $ref: '#/definitions/Comment'
+        401:
+          description: Authentication is needed to perform the request
+        403:
+          description: |
+            The user does not has sufficient privilege to perform the request
+        404:
+          description: The specified resource was not found
+        422:
+          description: |
+            Unprocessable entity (invalid field, duplicate item)
+        500:
+          description: Unexpected server error (should not happen)
+      security:
+      - Bearer: []
+  /comment/{id}:
+    get:
+      tags:
+      - Document comments
+      summary: Get a specific comment
+      parameters:
+      - name: id
+        in: path
+        description: ID of the comment
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        200:
+          description: The retrieved comment
+          schema:
+            $ref: '#/definitions/Comment'
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+    put:
+      tags:
+      - Document comments
+      summary: Modify a comment
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: id
+        in: path
+        description: ID of the comment
+        required: true
+        type: integer
+        x-example: 1
+      - name: description
+        in: formData
+        description: Content of the comment
+        required: true
+        type: string
+      responses:
+        200:
+          description: Successfully updated the comment
+          schema:
+            $ref: '#/definitions/Comment'
+        401:
+          description: Authentication is needed to perform the request
+        403:
+          description: |
+            The user does not has sufficient privilege to perform the request
+        404:
+          description: The specified resource was not found
+        422:
+          description: |
+            Unprocessable entity (invalid field, duplicate item)
+        500:
+          description: Unexpected server error (should not happen)
+      security:
+      - Bearer: []
+    delete:
+      tags:
+      - Document comments
+      summary: Delete a comment
+      parameters:
+      - name: id
+        in: path
+        description: ID of the comment
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        200:
+          description: Successfully deleted the comment
+          schema:
+            $ref: '#/definitions/Comment'
+        401:
+          description: Authentication is needed to perform the request
+        403:
+          description: |
+            The user does not has sufficient privilege to perform the request
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+  /document/{id}/archive:
+    get:
+      tags:
+      - Document archives
+      summary: Get all previous versions of a document with a specific ID
+      parameters:
+      - name: id
+        in: path
+        description: ID of the document
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        200:
+          description: The successfully retrieved versions
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ExtendedDocument'
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+  /guidedTour:
+    get:
+      tags:
+      - Guided tours
+      summary: Get all guided tours
+      parameters: []
+      responses:
+        200:
+          description: The guided tours
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GuidedTour'
+        500:
+          description: Unexpected server error (should not happen)
+    post:
+      tags:
+      - Guided tours
+      summary: Create a new guided tour
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: name
+        in: formData
+        required: true
+        type: string
+      - name: description
+        in: formData
+        required: true
+        type: string
+      responses:
+        201:
+          description: Successfully created a guided tour
+          schema:
+            $ref: '#/definitions/GuidedTour'
+        400:
+          description: Request is malformed (a mandatory field is missing)
+        422:
+          description: |
+            Unprocessable entity (invalid field, duplicate item)
+        500:
+          description: Unexpected server error (should not happen)
+  /guidedTour/{id}:
+    get:
+      tags:
+      - Guided tours
+      summary: Get a guided tour with the specified ID
+      parameters:
+      - name: id
+        in: path
+        description: ID of the guided tour
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        200:
+          description: The retrieved guided tour
+          schema:
+            $ref: '#/definitions/GuidedTour'
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+    put:
+      tags:
+      - Guided tours
+      summary: Update a guidedTour with a specific id
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: id
+        in: path
+        description: ID of the guided tour
+        required: true
+        type: integer
+        x-example: 1
+      - name: name
+        in: formData
+        required: true
+        type: string
+      - name: description
+        in: formData
+        required: true
+        type: string
+      responses:
+        200:
+          description: The updated guided tour
+          schema:
+            $ref: '#/definitions/GuidedTour'
+        400:
+          description: Request is malformed (a mandatory field is missing)
+        404:
+          description: The specified resource was not found
+        422:
+          description: |
+            Unprocessable entity (invalid field, duplicate item)
+        500:
+          description: Unexpected server error (should not happen)
+    delete:
+      tags:
+      - Guided tours
+      summary: Delete a guidedTour with a specific id
+      parameters:
+      - name: id
+        in: path
+        description: ID of the guided tour
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        200:
+          description: The deleted guided tour
+          schema:
+            $ref: '#/definitions/GuidedTour'
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+  /guidedTour/{id}/document:
+    post:
+      tags:
+      - Guided tour documents
+      summary: Add a dcoument to a guided tour
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: id
+        in: path
+        description: ID of the guided tour
+        required: true
+        type: integer
+        x-example: 1
+      - name: user_id
+        in: formData
+        description: ID of the document to add
+        required: true
+        type: number
+      responses:
+        200:
+          description: Successfully add a document to a guded tour
+        404:
+          description: The specified resource was not found
+        422:
+          description: |
+            Unprocessable entity (invalid field, duplicate item)
+        500:
+          description: Unexpected server error (should not happen)
+  /guidedTour/{id}/document/{doc_id}:
+    put:
+      tags:
+      - Guided tour documents
+      summary: Modify a document associated to a guided tour
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: id
+        in: path
+        description: ID of the guided tour
+        required: true
+        type: integer
+        x-example: 1
+      - name: doc_id
+        in: path
+        description: |
+          Position of the document in the guided tour. This is not the ID of the document
+        required: true
+        type: integer
+        x-example: 1
+      - name: text1
+        in: formData
+        required: false
+        type: string
+      - name: text2
+        in: formData
+        required: false
+        type: string
+      - name: title
+        in: formData
+        required: false
+        type: string
+      responses:
+        200:
+          description: The successfully updated guided tour
+          schema:
+            $ref: '#/definitions/GuidedTour'
+        404:
+          description: The specified resource was not found
+        422:
+          description: |
+            Unprocessable entity (invalid field, duplicate item)
+        500:
+          description: Unexpected server error (should not happen)
+    delete:
+      tags:
+      - Guided tour documents
+      summary: Delete the document associated to a guided tour
+      parameters:
+      - name: id
+        in: path
+        description: ID of the guided tour
+        required: true
+        type: integer
+        x-example: 1
+      - name: doc_id
+        in: path
+        description: |
+          Position of the document in the guided tour. This is not the ID of the document
+        required: true
+        type: integer
+        x-example: 1
+      responses:
+        200:
+          description: |
+            The successfully deleted document, associated to the guided tour.
+        404:
+          description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  TokenItem:
+    type: object
+    properties:
+      token:
+        type: string
+        format: jwt
+        example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IlVEViIsImVtYWlsIjoiYWRtaW5AdWR2LmZyIiwicG9zaXRpb24iOnsiTEVWRUxfTUlOIjoxLCJsYWJlbCI6ImFkbWluIiwiaWQiOjEsImNsZWFyYW5jZSI6WyJjb250cmlidXRvciIsInNvZnRNb2RlcmF0b3IiLCJtb2RlcmF0b3IiLCJhZG1pbiJdLCJMRVZFTF9NQVgiOjN9LCJleHAiOjE1NTg3NzcwMzYuMDM1MTczfQ.-6ns6_K-VpRlsqTrXbrV4shm8Oa0GJn3IfiR0LmLJoE
+  PositionItem:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 4
+      label:
+        type: string
+        example: contributor
+  UserItem:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      username:
+        type: string
+        example: jdoe
+      firstName:
+        type: string
+        example: John
+      lastName:
+        type: string
+        example: Doe
+      email:
+        type: string
+        example: john.doe@example.com
+      position:
+        $ref: '#/definitions/PositionItem'
+      position_id:
+        type: integer
+        example: 4
+  MetaData:
+    type: object
+    properties:
+      title:
+        type: string
+        example: Perrache
+      subject:
+        type: string
+        example: Architecture
+      description:
+        type: string
+        example: Une photo de la gare de Perrache
+      refDate:
+        type: string
+        example: 2019-03-15
+      pubicationDate:
+        type: string
+        example: 2018-02-13
+      type:
+        type: string
+        example: photo
+  Visualization:
+    type: object
+    properties:
+      quaternionX:
+        type: number
+        example: 12.0
+      quaternionY:
+        type: number
+        example: 23.0
+      quaternionZ:
+        type: number
+        example: 18.0
+      quaternionW:
+        type: number
+        example: 0.0
+      positionX:
+        type: number
+        example: 17.0
+      positionY:
+        type: number
+        example: 3.0
+      positionZ:
+        type: number
+        example: 14.0
+  ExtendedDocument:
+    type: object
+    properties:
+      id:
+        type: number
+        example: 1.0
+      to_validate_doc:
+        type: number
+        example: 1.0
+      user_id:
+        type: number
+        example: 1.0
+      valid_doc:
+        $ref: '#/definitions/ExtendedDocument_valid_doc'
+      metaData:
+        $ref: '#/definitions/MetaData'
+      visualization:
+        $ref: '#/definitions/Visualization'
+  GuidedTour:
+    type: object
+    properties:
+      id:
+        type: number
+        example: 2.0
+      description:
+        type: string
+        example: GuidedTour
+      name:
+        type: string
+        example: GuidedTour1
+      extendedDocs:
+        type: array
+        items:
+          $ref: '#/definitions/GuidedTour_extendedDocs'
+  Comment:
+    type: object
+    properties:
+      id:
+        type: number
+        example: 2.0
+      document_id:
+        type: number
+        example: 1.0
+      user_id:
+        type: number
+        example: 3.0
+      description:
+        type: string
+        example: This is a comment
+  ExtendedDocument_valid_doc:
+    properties:
+      is_valid:
+        type: number
+        example: 1.0
+  GuidedTour_extendedDocs:
+    properties:
+      id:
+        type: string
+        example: "1"
+      text1:
+        type: string
+        example: text1
+      text2:
+        type: string
+        example: text2
+      title:
+        type: string
+        example: title
+      document:
+        $ref: '#/definitions/ExtendedDocument'
+responses:
+  BadRequest:
+    description: Request is malformed (a mandatory field is missing)
+  AuthenticationFailed:
+    description: Authentication is needed to perform the request
+  Forbidden:
+    description: |
+      The user does not has sufficient privilege to perform the request
+  NotFound:
+    description: The specified resource was not found
+  IntegrityError:
+    description: |
+      Unprocessable entity (invalid field, duplicate item)
+  FileFormatError:
+    description: |
+      The file has an incorrect format
+  ServerError:
+    description: Unexpected server error (should not happen)

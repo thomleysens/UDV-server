@@ -2,6 +2,7 @@
 # coding: utf8
 
 from sqlalchemy import or_, and_
+from sqlalchemy.orm.exc import NoResultFound
 
 from util.log import *
 from util.upload import *
@@ -55,17 +56,46 @@ class DocController:
 
     @staticmethod
     @pUnit.make_a_query
-    def get_document_by_id(session, *args):
-        doc_id = args[0]
+    def get_document_by_id(session, doc_id, auth_info):
+        """
+        Gets a document by its id. The code is a bit tricky because in the case
+        where the document is in validation, only an admin or the owner of the
+        document can access it.
+        :param session: The SQLAlchemy session
+        :param doc_id: An id of a document
+        :param auth_info: The auth info
+        :return: The extended document with the correct id
+        :raises AuthError: if this is a document in validation and the user has
+        no privilege on it
+        :raises NoResultFound: if the document isn't in the database
+        """
+        # If we're an admin, no need to check what document it is
+        if auth_info is None or not ExtendedDocument.is_allowed(auth_info):
+            try:
+                # If this raises NoResultFound, it means that the document has
+                # been validated, so we can continue
+                doc_to_validate = session.query(ExtendedDocument).join(ToValidateDoc) \
+                                  .filter(ExtendedDocument.id == doc_id).one()
+                # The only case where we're not allowed to access the document
+                # is when it's in validation and we're neither the owner nor an
+                # admin
+                if auth_info is None:
+                    # In this case we return unauthorized because the user could
+                    # access the resource if he/she authenticate
+                    raise Unauthorized
+                if doc_to_validate.user_id != auth_info["user_id"]:
+                    # In this case we return forbidden because the user is
+                    # authenticated but hasn't the rights on the doc
+                    raise AuthError
+            except NoResultFound:
+                pass
         return session.query(ExtendedDocument).filter(
             ExtendedDocument.id == doc_id).one()
 
     @staticmethod
-    @pUnit.make_a_query
-    def get_document_file_location(session, doc_id):
-        document = session.query(ExtendedDocument).filter(
-            ExtendedDocument.id == doc_id).one()
-        filename = document.metaData.file
+    def get_document_file_location(doc_id, auth_info):
+        document = DocController.get_document_by_id(doc_id, auth_info)
+        filename = document['metaData']['file']
         location = os.path.join(UPLOAD_FOLDER, filename)
         if os.path.exists(location):
             return location

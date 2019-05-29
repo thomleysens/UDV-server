@@ -207,12 +207,12 @@ class TestDocument:
 
     def test_get_document_by_id(self):
         print('Get a document by its id')
-        assert 1 == DocController.get_document_by_id(1)['id']
+        assert 1 == DocController.get_document_by_id(1, None)['id']
 
     def test_get_non_existing_document(self):
         print('Get a document using a non existent id')
         with pytest.raises(sqlalchemy.orm.exc.NoResultFound):
-            DocController.get_document_by_id(-1)
+            DocController.get_document_by_id(-1, None)
 
     def test_update_document_as_contributor(self):
         print('Update a document as contributor')
