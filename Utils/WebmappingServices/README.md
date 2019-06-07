@@ -10,6 +10,9 @@ This module facilitate the access to Webmapping services to get:
 
 It is mainly based on OWSLib Python library (http://geopython.github.io/OWSLib)
 
+Examples can be found in the Jupyter notebook and here (*nbviewer notebook*):
+https://nbviewer.jupyter.org/github/MEPP-team/UDV-server/blob/dev/Utils/WebmappingServices/Get%20and%20visualise%20data%20%26%20metadata.ipynb
+
 # WebmappingServices.get_data
 
 Created on Tue Jun  4 12:48:01 2019
