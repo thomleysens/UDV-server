@@ -18,7 +18,7 @@ from owslib.fes import PropertyIsEqualTo, PropertyIsLike, BBox
 from os import path
 import geopandas as gpd
 
-from .get_data import GetWFS
+from get_data import GetWFS
 
 class CSWGetMetadata:
     """
@@ -67,7 +67,7 @@ class CSWGetMetadata:
     def __init__(self,
                  csw_url,
                  query,
-                 directory,
+                 directory="",
                  method='csw:AnyText', 
                  query_type="equal",
                  bbox=[],
@@ -145,7 +145,7 @@ class CSWGetMetadata:
             
         return geom_type
     
-    def _get_metadata(self):
+    def get_metadata(self):
         """
         Get metadata from records and update self.dict_
         """
@@ -186,17 +186,21 @@ class CSWGetMetadata:
         
         Write JSON files and returns dict
         """
-        self._get_metadata()
+        self.get_metadata()
         
-        for key,value in self.dict_.items():
-            filename = path.join(self.directory, key + ".json")
-            with open(filename,"w", encoding='UTF-8') as f:
-                dump(
-                        value,
-                        f, 
-                        ensure_ascii=False,
-                        indent=4
-                        )
+        if self.directory == "":
+            print ("Empty directory string, impossible to write file")
+            
+        else:
+            for key,value in self.dict_.items():
+                filename = path.join(self.directory, key + ".json")
+                with open(filename,"w", encoding='UTF-8') as f:
+                    dump(
+                            value,
+                            f, 
+                            ensure_ascii=False,
+                            indent=4
+                            )
         
         
         
