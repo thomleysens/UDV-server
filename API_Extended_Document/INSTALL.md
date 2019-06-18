@@ -26,6 +26,16 @@ sudo docker-compose up
 
 ## Troubleshooting
 
+### Problem with docker-compose
+
+If you get the following error when running `sudo docker-compose up` :
+
+````
+ERROR: Version in "./docker-compose.yml" is unsupported. You might be seeing this error because you're using the wrong Compose file version. Either specify a version of "2" (or "2.0") and place your service definitions under the `services` key, or omit the `version` key and place your service definitions at the root of the file to use version 1.
+For more on the Compose file format versions, see https://docs.docker.com/compose/compose-file/
+````
+You may need to check your version of docker-compose and update it by downloading the last stable version [here](https://docs.docker.com/compose/install/).
+
 ### Cannot start service postgres
 
 If you get the following error when running `sudo docker-compose up` :
