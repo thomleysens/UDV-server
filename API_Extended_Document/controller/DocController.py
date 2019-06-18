@@ -2,15 +2,13 @@
 # coding: utf8
 
 from sqlalchemy import or_, and_
-from sqlalchemy.orm.exc import NoResultFound
 
 from util.log import *
 from util.upload import *
 from util.Exception import *
 
 from entities.Document import Document
-from entities.ToValidateDoc import ToValidateDoc
-from entities.ValidDoc import ValidDoc
+from entities.ValidationStatus import ValidationStatus, Status
 from controller.ArchiveController import ArchiveController
 
 import persistence_unit.PersistenceUnit as pUnit
@@ -44,10 +42,7 @@ class DocController:
         if Document.is_allowed(attributes):
             document = session.query(Document).filter(
                 Document.id == doc_id).one()
-            to_validate = session.query(ToValidateDoc).filter(
-                ToValidateDoc.id_to_validate == doc_id).one()
             document.validate(attributes)
-            session.delete(to_validate)
             session.add(document)
             return document
         else:
@@ -70,11 +65,10 @@ class DocController:
         """
         # If we're an admin, no need to check what document it is
         if auth_info is None or not Document.is_allowed(auth_info):
-            try:
-                # If this raises NoResultFound, it means that the document has
-                # been validated, so we can continue
-                doc_to_validate = session.query(Document).join(ToValidateDoc) \
-                                  .filter(Document.id == doc_id).one()
+            document = session.query(Document) \
+                              .filter(Document.id == doc_id).one()
+            # If the document is validated, everybody can see it
+            if document.validationStatus.status != Status.Validated:
                 # The only case where we're not allowed to access the document
                 # is when it's in validation and we're neither the owner nor an
                 # admin
@@ -82,12 +76,10 @@ class DocController:
                     # In this case we return unauthorized because the user could
                     # access the resource if he/she authenticate
                     raise Unauthorized
-                if doc_to_validate.user_id != auth_info["user_id"]:
+                if document.user_id != auth_info["user_id"]:
                     # In this case we return forbidden because the user is
                     # authenticated but hasn't the rights on the doc
                     raise AuthError
-            except NoResultFound:
-                pass
         return session.query(Document).filter(
             Document.id == doc_id).one()
 
@@ -124,7 +116,7 @@ class DocController:
                 keyword_conditions.append(
                     MetaData.get_attr(attr).ilike('%' + keyword + '%'))
         """
-        comparison_conditions = []
+        comparison_conditions = [ValidationStatus.get_attr('status') == Status.Validated]
         """
         # dictionaries of attributes to compare
         inf_dict = {key.replace('Start', ''): attributes[key]
@@ -146,7 +138,7 @@ class DocController:
         """
         query = session.query(Document).filter_by(**attributes).filter(
             and_(*comparison_conditions)).filter(
-            or_(*keyword_conditions)).join(ValidDoc)
+            or_(*keyword_conditions))
 
         return query.all()
 
@@ -158,12 +150,13 @@ class DocController:
         """
         attributes = args[0]
         if Document.is_allowed(attributes):
-            query = session.query(Document).join(ToValidateDoc)
+            query = session.query(Document).filter(
+                ValidationStatus.status == Status.InValidation)
             return query.all()
         else:
-            query = session.query(Document) \
-                .join(ToValidateDoc).filter(
-                Document.user_id == attributes['user_id'])
+            query = session.query(Document).filter(
+                and_(ValidationStatus.status == Status.InValidation,
+                     Document.user_id == attributes['user_id']))
             return query.all()
 
     @staticmethod
@@ -173,8 +166,9 @@ class DocController:
             .filter(Document.id == doc_id).one()
         # To change not supposed to be done in Controller
         doc_count = session.query(Document).filter(
-            and_(Document.id == doc_id, Document.user_id == auth_info['user_id'])).join(
-            ToValidateDoc).count()
+            and_(Document.id == doc_id,
+                 Document.user_id == auth_info['user_id'],
+                 ValidationStatus.status == Status.InValidation)).count()
         if Document.is_allowed(auth_info) or doc_count > 0:
             ArchiveController.create_archive(document.serialize())
             document.update(attributes)

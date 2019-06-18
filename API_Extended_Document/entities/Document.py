@@ -8,9 +8,8 @@ from util.db_config import Base
 from entities.Entity import Entity
 
 from entities.Visualisation import Visualisation
-from entities.ValidDoc import ValidDoc
 from entities.Position import Position, LEVEL_MIN
-from entities.ToValidateDoc import ToValidateDoc
+from entities.ValidationStatus import ValidationStatus, Status
 
 
 class Document(Entity, Base):
@@ -33,13 +32,9 @@ class Document(Entity, Base):
     comments = relationship("Comment",
                             cascade="all, delete-orphan")
 
-    valid_doc = relationship("ValidDoc",
-                             uselist=False,
-                             cascade="all, delete-orphan")
-
-    to_validate_doc = relationship("ToValidateDoc",
-                                   uselist=False,
-                                   cascade="all, delete-orphan")
+    validationStatus = relationship("ValidationStatus",
+                                    uselist=False,
+                                    cascade="all, delete-orphan")
 
     visualization = relationship("Visualisation",
                                  uselist=False,
@@ -48,23 +43,18 @@ class Document(Entity, Base):
     def __init__(self, attributes):
         self.visualization = Visualisation()
         if Document.is_allowed(attributes):
-            self.valid_doc = ValidDoc()
+            self.validationStatus = ValidationStatus(Status.Validated)
         else:
-            self.to_validate_doc = ToValidateDoc()
+            self.validationStatus = ValidationStatus(Status.InValidation)
 
     def validate(self, attributes):
-        self.valid_doc = ValidDoc()
-        self.valid_doc.update(attributes)
+        self.validationStatus.validate()
 
     def update_initial(self, attributes):
         self.visualization.update(attributes)
         for attKey, attVal in attributes.items():
             if hasattr(self, attKey):
                 setattr(self, attKey, attVal)
-        if Document.is_allowed(attributes):
-            self.valid_doc.update(attributes)
-        else:
-            self.to_validate_doc.update(attributes)
 
         return self
 
@@ -73,10 +63,6 @@ class Document(Entity, Base):
         for attKey, attVal in attributes.items():
             if hasattr(self, attKey):
                 setattr(self, attKey, attVal)
-            if self.valid_doc:
-                self.valid_doc.update(attributes)
-            if self.to_validate_doc:
-                self.to_validate_doc.update(attributes)
         return self
 
     @staticmethod
