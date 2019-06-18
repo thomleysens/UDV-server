@@ -8,7 +8,6 @@ from util.log import *
 from util.upload import *
 from util.Exception import *
 
-from entities.MetaData import MetaData
 from entities.Document import Document
 from entities.ToValidateDoc import ToValidateDoc
 from entities.ValidDoc import ValidDoc
@@ -95,7 +94,7 @@ class DocController:
     @staticmethod
     def get_document_file_location(doc_id, auth_info):
         document = DocController.get_document_by_id(doc_id, auth_info)
-        filename = document['metaData']['file']
+        filename = document['file']
         location = os.path.join(UPLOAD_FOLDER, filename)
         if os.path.exists(location):
             return location
@@ -118,14 +117,15 @@ class DocController:
         # list that will contain research conditions for the query
         keyword_conditions = []
         attributes = args[0]
-
+        """
         if attributes.get("keyword"):
             keyword = attributes.pop("keyword")
             for attr in DocController.keyword_attr:
                 keyword_conditions.append(
                     MetaData.get_attr(attr).ilike('%' + keyword + '%'))
-
+        """
         comparison_conditions = []
+        """
         # dictionaries of attributes to compare
         inf_dict = {key.replace('Start', ''): attributes[key]
                     for key in attributes if 'Start' in key}
@@ -143,9 +143,8 @@ class DocController:
         for attr in inf_dict.keys():
             comparison_conditions.append(
                 MetaData.get_attr(attr) >= inf_dict[attr])
-
-        query = session.query(Document).join(
-            MetaData).filter_by(**attributes).filter(
+        """
+        query = session.query(Document).filter_by(**attributes).filter(
             and_(*comparison_conditions)).filter(
             or_(*keyword_conditions)).join(ValidDoc)
 
@@ -200,7 +199,7 @@ class DocController:
                 ArchiveController.create_archive(a_doc.serialize())
                 session.delete(a_doc)
             try:
-                os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.file)
+                os.remove(UPLOAD_FOLDER + '/' + a_doc.file)
                 return a_doc
             except Exception as e:
                 print(e)
@@ -216,7 +215,7 @@ class DocController:
         if document:
             if document.is_owner(auth_info) or \
                Document.is_allowed(auth_info):
-                filename = document.metaData.file
+                filename = document.file
                 if filename:
                     ArchiveController.create_archive(document.serialize())
                     document.update({

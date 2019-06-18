@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey, String, DateTime
 from sqlalchemy.orm import relationship
 
 from util.db_config import Base
 from entities.Entity import Entity
 
-from entities.MetaData import MetaData
 from entities.Visualisation import Visualisation
 from entities.ValidDoc import ValidDoc
 from entities.Position import Position, LEVEL_MIN
@@ -22,10 +21,14 @@ class Document(Entity, Base):
     user_id = Column(Integer,
                      ForeignKey("user.id"),
                      nullable=False)
-
-    metaData = relationship("MetaData",
-                            uselist=False,
-                            cascade="all, delete-orphan")
+    title = Column(String, nullable=False)
+    subject = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+    refDate = Column(DateTime(timezone=True))
+    publicationDate = Column(DateTime(timezone=True))
+    type = Column(String)
+    file = Column(String)
+    originalName = Column(String)
 
     comments = relationship("Comment",
                             cascade="all, delete-orphan")
@@ -43,7 +46,6 @@ class Document(Entity, Base):
                                  cascade="all, delete-orphan")
 
     def __init__(self, attributes):
-        self.metaData = MetaData()
         self.visualization = Visualisation()
         if Document.is_allowed(attributes):
             self.valid_doc = ValidDoc()
@@ -55,7 +57,6 @@ class Document(Entity, Base):
         self.valid_doc.update(attributes)
 
     def update_initial(self, attributes):
-        self.metaData.update(attributes)
         self.visualization.update(attributes)
         for attKey, attVal in attributes.items():
             if hasattr(self, attKey):
@@ -68,7 +69,6 @@ class Document(Entity, Base):
         return self
 
     def update(self, attributes):
-        self.metaData.update(attributes)
         self.visualization.update(attributes)
         for attKey, attVal in attributes.items():
             if hasattr(self, attKey):
