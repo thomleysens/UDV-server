@@ -9,8 +9,8 @@ from util.db_config import Base
 from entities.Entity import Entity
 
 
-class ExtendedDocGuidedTour(Base, Entity):
-    __tablename__ = "extended_doc_guided_tour"
+class DocumentGuidedTour(Base, Entity):
+    __tablename__ = "document_guided_tour"
 
     id = Column(Integer, primary_key=True)
     tour_id = Column(Integer,

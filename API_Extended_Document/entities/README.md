@@ -19,7 +19,7 @@ We tried to make a résumé of what we use from **SQLAlchemy**, however a lot of
 
 ## A simple example
 
-In the following we create three classes : `ExtendedDocument`, `Metadata` and `ExtendedDocGuidedTour`.
+In the following we create three classes : `ExtendedDocument`, `Metadata` and `DocumentGuidedTour`.
 
 ![](../doc/img/class-diagrams/ORM_Example.png)
 
@@ -82,8 +82,8 @@ According to the diagram above, we a **Many to One** relationship between `exten
 Furthermore, the navigation is only from `ExtendedDocGuideTour` to `ExtendedDocument`. 
 Nothing more is needed in `ExtendedDocument`, we just have to define `ExtendedDocGuideTour` as below:
 ```python
-class ExtendedDocGuidedTour(Base):
-    __tablename__ = "extended_doc_guided_tour"
+class DocumentGuidedTour(Base):
+    __tablename__ = "document_guided_tour"
 
     id = Column(Integer, primary_key=True)
     doc_id = Column(Integer, ForeignKey("extended_document.id"))

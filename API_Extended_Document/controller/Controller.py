@@ -10,7 +10,7 @@ from entities.User import User
 from entities.Position import Position
 from entities.GuidedTour import GuidedTour
 from entities.Document import Document
-from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
+from entities.DocumentGuidedTour import DocumentGuidedTour
 from entities.Comment import Comment
 from entities.VersionDoc import VersionDoc
 
