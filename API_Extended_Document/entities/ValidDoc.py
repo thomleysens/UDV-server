@@ -11,5 +11,5 @@ from entities.Entity import Entity
 class ValidDoc(Entity, Base):
     __tablename__ = "valid_doc"
 
-    id_valid = Column(Integer, ForeignKey('extended_document.id'),
+    id_valid = Column(Integer, ForeignKey('document.id'),
                 primary_key=True)

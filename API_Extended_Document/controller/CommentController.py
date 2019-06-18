@@ -9,7 +9,7 @@ from util.Exception import *
 
 from entities.Comment import Comment
 from entities.User import User
-from entities.ExtendedDocument import ExtendedDocument
+from entities.Document import Document
 
 import persistence_unit.PersistenceUnit as pUnit
 
@@ -69,7 +69,7 @@ class CommentController:
         comment_id = args[0]
         attributes = args[1]
         comment = session.query(Comment).filter(Comment.id == comment_id).one()
-        if ExtendedDocument.is_allowed(attributes) or comment.user_id == attributes['user_id']:
+        if Document.is_allowed(attributes) or comment.user_id == attributes['user_id']:
             comment.update(attributes)
             session.add(comment)
             return comment
@@ -82,7 +82,7 @@ class CommentController:
         an_id = args[0]
         attributes = args[1]
         comment = session.query(Comment).filter(Comment.id == an_id).one()
-        if ExtendedDocument.is_allowed(attributes) or comment.user_id == attributes['user_id']:
+        if Document.is_allowed(attributes) or comment.user_id == attributes['user_id']:
             session.delete(comment)
             return comment
         else:

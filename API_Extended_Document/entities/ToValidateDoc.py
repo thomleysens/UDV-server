@@ -11,6 +11,6 @@ from entities.Entity import Entity
 class ToValidateDoc(Entity, Base):
     __tablename__ = "to_validate_doc"
 
-    id_to_validate = Column(Integer, ForeignKey('extended_document.id'),
+    id_to_validate = Column(Integer, ForeignKey('document.id'),
                             primary_key=True)
 

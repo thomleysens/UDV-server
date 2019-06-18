@@ -11,7 +11,7 @@ from entities.Entity import Entity
 class Visualisation(Entity, Base):
     __tablename__ = "visualisation"
 
-    id = Column(Integer, ForeignKey('extended_document.id'),
+    id = Column(Integer, ForeignKey('document.id'),
                 primary_key=True, )
     quaternionX = Column(Float)
     quaternionY = Column(Float)

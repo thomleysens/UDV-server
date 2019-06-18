@@ -14,8 +14,8 @@ from entities.Position import Position, LEVEL_MIN
 from entities.ToValidateDoc import ToValidateDoc
 
 
-class ExtendedDocument(Entity, Base):
-    __tablename__ = "extended_document"
+class Document(Entity, Base):
+    __tablename__ = "document"
 
     id = Column(Integer, primary_key=True)
 
@@ -45,7 +45,7 @@ class ExtendedDocument(Entity, Base):
     def __init__(self, attributes):
         self.metaData = MetaData()
         self.visualization = Visualisation()
-        if ExtendedDocument.is_allowed(attributes):
+        if Document.is_allowed(attributes):
             self.valid_doc = ValidDoc()
         else:
             self.to_validate_doc = ToValidateDoc()
@@ -60,7 +60,7 @@ class ExtendedDocument(Entity, Base):
         for attKey, attVal in attributes.items():
             if hasattr(self, attKey):
                 setattr(self, attKey, attVal)
-        if ExtendedDocument.is_allowed(attributes):
+        if Document.is_allowed(attributes):
             self.valid_doc.update(attributes)
         else:
             self.to_validate_doc.update(attributes)

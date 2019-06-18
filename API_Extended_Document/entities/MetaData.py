@@ -11,7 +11,7 @@ from entities.Entity import Entity
 class MetaData(Entity, Base):
     __tablename__ = "metadata"
 
-    id = Column(Integer, ForeignKey('extended_document.id'),
+    id = Column(Integer, ForeignKey('document.id'),
                 primary_key=True)
     title = Column(String, nullable=False)
     subject = Column(String, nullable=False)
