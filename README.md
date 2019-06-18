@@ -47,7 +47,7 @@ buildings.
 More information
  [here](https://www.postgresql.org/docs/9.3/static/sql-refreshmaterializedview.html)*
 
-#### Design
+#### Design
 
 We had the choice between using a view, a materialized view or a new table
 (possibly in a new database) to store the output result.
