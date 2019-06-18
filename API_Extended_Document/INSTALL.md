@@ -11,7 +11,8 @@ port=5432
 dbname=extendedDoc
 ````
 
-*Note: the .env that is commited should not be modified because it is used by travis for CI.*  
+> *Note: the .env that is commited should not be modified because it is used by travis for CI.*  
+> Please make sure when you commit your files that you do not commit the `.env` file. If you see that `.env` appears in your changelog (in the `git status` command for example), you can prevent it from being commited using the command `git update-index --assume-unchanged .env`.
 
 Then run the following commands:
 
@@ -22,6 +23,10 @@ sudo systemctl start docker.service
 sudo docker-compose build
 sudo docker-compose up
 ````
+
+## Troubleshooting
+
+### Cannot start service postgres
 
 If you get the following error when running `sudo docker-compose up` :
 
@@ -40,6 +45,34 @@ ERROR: Encountered errors while bringing up the project.
 You need to stop your local postgresql with the command `sudo service postgresql stop`.
 
 You can also tell postgres to not start when booting with the command `sudo update-rc.d postgresql disable`
+
+### Could not connect to server: Connection refused
+
+While running docker compose, if the database was successfully created but you get the following error :
+
+```
+extended_doc_api | /api
+extended_doc_api | Trying to connect to Database...
+extended_doc_api | Config :  postgresql://postgres:password@postgres:5432/extendedDoc
+extended_doc_api | Connection failed (psycopg2.OperationalError) could not connect to server: Connection refused
+extended_doc_api |      Is the server running on host "postgres" (172.22.0.2) and accepting
+extended_doc_api |      TCP/IP connections on port 5432?
+extended_doc_api | 
+extended_doc_api | (Background on this error at: http://sqlalche.me/e/e3q8)
+```
+
+It may be because the `.env` file is not correctly configured. Please make sure that your `.env` file matches the content shown above. Then, delete the database using :
+
+```
+sudo rm -r postgres-data
+```
+
+And rebuild the containers :
+
+```
+sudo docker-compose build
+sudo docker-compose up
+```
 
 # Manual install  
 
