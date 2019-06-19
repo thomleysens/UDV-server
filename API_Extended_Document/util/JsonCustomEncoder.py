@@ -20,7 +20,7 @@ class JsonCustomEncoder(JSONEncoder):
             if isinstance(obj, date):
                 return obj.isoformat()
             elif isinstance(obj, Enum):
-                return obj.value
+                return obj.name
             iterable = iter(obj)
         except TypeError:
             pass

@@ -65,7 +65,7 @@ class DocController:
         """
         # If we're an admin, no need to check what document it is
         if auth_info is None or not Document.is_allowed(auth_info):
-            document = session.query(Document) \
+            document = session.query(Document).join(ValidationStatus) \
                               .filter(Document.id == doc_id).one()
             # If the document is validated, everybody can see it
             if document.validationStatus.status != Status.Validated:
@@ -116,7 +116,7 @@ class DocController:
                 keyword_conditions.append(
                     MetaData.get_attr(attr).ilike('%' + keyword + '%'))
         """
-        comparison_conditions = [ValidationStatus.get_attr('status') == Status.Validated]
+        comparison_conditions = [ValidationStatus.status == Status.Validated]
         """
         # dictionaries of attributes to compare
         inf_dict = {key.replace('Start', ''): attributes[key]
@@ -136,7 +136,8 @@ class DocController:
             comparison_conditions.append(
                 MetaData.get_attr(attr) >= inf_dict[attr])
         """
-        query = session.query(Document).filter_by(**attributes).filter(
+        query = session.query(Document).join(ValidationStatus).filter_by(
+            **attributes).filter(
             and_(*comparison_conditions)).filter(
             or_(*keyword_conditions))
 
@@ -150,11 +151,11 @@ class DocController:
         """
         attributes = args[0]
         if Document.is_allowed(attributes):
-            query = session.query(Document).filter(
+            query = session.query(Document).join(ValidationStatus).filter(
                 ValidationStatus.status == Status.InValidation)
             return query.all()
         else:
-            query = session.query(Document).filter(
+            query = session.query(Document).join(ValidationStatus).filter(
                 and_(ValidationStatus.status == Status.InValidation,
                      Document.user_id == attributes['user_id']))
             return query.all()
@@ -165,7 +166,7 @@ class DocController:
         document = session.query(Document) \
             .filter(Document.id == doc_id).one()
         # To change not supposed to be done in Controller
-        doc_count = session.query(Document).filter(
+        doc_count = session.query(Document).join(ValidationStatus).filter(
             and_(Document.id == doc_id,
                  Document.user_id == auth_info['user_id'],
                  ValidationStatus.status == Status.InValidation)).count()

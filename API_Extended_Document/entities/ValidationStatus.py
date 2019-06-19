@@ -11,8 +11,8 @@ import enum
 
 
 class Status(enum.Enum):
-    Validated = "VALIDATED",
-    InValidation = "IN_VALIDATION"
+    Validated = enum.auto(),
+    InValidation = enum.auto()
 
 
 class ValidationStatus(Base, Entity):
