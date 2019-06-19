@@ -113,15 +113,15 @@ class DocController:
         # list that will contain research conditions for the query
         keyword_conditions = []
         attributes = args[0]
-        """
+
         if attributes.get("keyword"):
             keyword = attributes.pop("keyword")
             for attr in DocController.keyword_attr:
                 keyword_conditions.append(
-                    MetaData.get_attr(attr).ilike('%' + keyword + '%'))
-        """
+                    Document.get_attr(attr).ilike('%' + keyword + '%'))
+
         comparison_conditions = [ValidationStatus.status == Status.Validated]
-        """
+
         # dictionaries of attributes to compare
         inf_dict = {key.replace('Start', ''): attributes[key]
                     for key in attributes if 'Start' in key}
@@ -134,12 +134,12 @@ class DocController:
 
         for attr in sup_dict.keys():
             comparison_conditions.append(
-                MetaData.get_attr(attr) <= sup_dict[attr])
+                Document.get_attr(attr) <= sup_dict[attr])
 
         for attr in inf_dict.keys():
             comparison_conditions.append(
-                MetaData.get_attr(attr) >= inf_dict[attr])
-        """
+                Document.get_attr(attr) >= inf_dict[attr])
+
         query = session.query(Document).join(ValidationStatus).filter_by(
             **attributes).filter(
             and_(*comparison_conditions)).filter(

@@ -5,6 +5,7 @@ import pytest
 import sqlalchemy.orm
 import sqlalchemy.exc
 
+from entities.ValidationStatus import Status
 from controller.Controller import Controller
 from controller.DocController import DocController
 from controller.TourController import TourController
@@ -79,6 +80,8 @@ class TestGuidedTour:
             "file": "1.gif",
             'user_id': 1,
             'position': {'label': 'admin'}
+        }, {
+            'user_id': 1
         })
         DocController.create_document({
             "title": "title2",
@@ -88,6 +91,8 @@ class TestGuidedTour:
             "file": "1.gif",
             'user_id': 1,
             'position': {'label': 'admin'}
+        }, {
+            'user_id': 1
         })
         print("adding existing document")
         expected_response = {
@@ -100,22 +105,20 @@ class TestGuidedTour:
                 'doc_id': 1,
                 'document': {
                     'id': 1,
-                    'valid_doc': {
-                        'id_valid': 1
+                    'validationStatus': {
+                        'status': Status.Validated,
+                        'doc_id': 1
                     },
                     'user_id': 1,
                     'comments': [],
-                    'to_validate_doc': None,
-                    'metaData': {
-                        'id': 1,
-                        'title': 'title',
-                        'type': 'type',
-                        'publicationDate': None,
-                        'file': '1.gif',
-                        'description': 'a description',
-                        'subject': 'Subject1',
-                        'originalName': None,
-                        'refDate': None},
+                    'title': 'title',
+                    'type': 'type',
+                    'publicationDate': None,
+                    'file': '1.gif',
+                    'description': 'a description',
+                    'subject': 'Subject1',
+                    'originalName': None,
+                    'refDate': None,
                     'visualization': {
                         'positionZ': None,
                         'id': 1,
@@ -145,21 +148,19 @@ class TestGuidedTour:
                 'document': {
                     'id': 1,
                     'comments': [],
-                    'valid_doc': {
-                        'id_valid': 1
+                    'validationStatus': {
+                        'status': Status.Validated,
+                        'doc_id': 1
                     },
                     'user_id': 1,
-                    'to_validate_doc': None,
-                    'metaData':
-                        {'id': 1,
-                         'title': 'title',
-                         'type': 'type',
-                         'publicationDate': None,
-                         'file': '1.gif',
-                         'description': 'a description',
-                         'subject': 'Subject1',
-                         'originalName': None,
-                         'refDate': None},
+                    'title': 'title',
+                    'type': 'type',
+                    'publicationDate': None,
+                    'file': '1.gif',
+                    'description': 'a description',
+                    'subject': 'Subject1',
+                    'originalName': None,
+                    'refDate': None,
                     'visualization': {
                         'positionZ': None,
                         'id': 1,
@@ -182,21 +183,19 @@ class TestGuidedTour:
                     'document': {
                         'id': 1,
                         'comments': [],
-                        'valid_doc': {
-                            'id_valid': 1
+                        'validationStatus': {
+                            'status': Status.Validated,
+                            'doc_id': 1
                         },
                         'user_id': 1,
-                        'to_validate_doc': None,
-                        'metaData': {
-                            'id': 1,
-                            'title': 'title',
-                            'type': 'type',
-                            'publicationDate': None,
-                            'file': '1.gif',
-                            'description': 'a description',
-                            'subject': 'Subject1',
-                            'originalName': None,
-                            'refDate': None},
+                        'title': 'title',
+                        'type': 'type',
+                        'publicationDate': None,
+                        'file': '1.gif',
+                        'description': 'a description',
+                        'subject': 'Subject1',
+                        'originalName': None,
+                        'refDate': None,
                         'visualization': {
                             'positionZ': None,
                             'id': 1,

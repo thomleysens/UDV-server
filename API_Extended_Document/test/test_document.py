@@ -5,6 +5,7 @@ import pytest
 import sqlalchemy.orm
 import sqlalchemy.exc
 
+from entities.ValidationStatus import Status
 from util.Exception import AuthError
 from controller.Controller import Controller
 from controller.DocController import DocController
@@ -35,15 +36,14 @@ class TestDocument:
     def test_create_document_1(self):
         print('create document to validate with all needed attributes')
         expected_response = {
-            'metaData': {
-                'file': '1.gif',
-                'description': 'a description',
-                'subject': 'Subject1',
-                'title': 'title',
-                'originalName': None,
-                'type': 'type',
-                'publicationDate': None,
-                'refDate': None, 'id': 1},
+            'file': '1.gif',
+            'description': 'a description',
+            'subject': 'Subject1',
+            'title': 'title',
+            'originalName': None,
+            'type': 'type',
+            'publicationDate': None,
+            'refDate': None,
             'visualization': {
                 'positionX': None,
                 'quaternionY': None,
@@ -55,10 +55,10 @@ class TestDocument:
                 'quaternionW': None
             },
             'user_id': 1,
-            'valid_doc': {
-                'id_valid': 1
+            'validationStatus': {
+                'doc_id': 1,
+                'status': Status.Validated
             },
-            'to_validate_doc': None,
             'comments': [],
             'id': 1}
 
@@ -70,6 +70,8 @@ class TestDocument:
             'description': 'a description',
             'file': '1.gif',
             'position': {'label': 'admin'}
+        }, {
+            'user_id': 1
         })
 
     def test_create_document_2(self):
@@ -77,23 +79,20 @@ class TestDocument:
               'needed attributes')
         expected_response = {
             'id': 2,
-            'metaData': {
-                'id': 2,
-                'publicationDate': None,
-                'refDate': FAKE_REF_DATE,
-                'subject': 'Subject2',
-                'file': '2.gif',
-                'description': 'a description',
-                'type': 'type',
-                'originalName': None,
-                'title': 'title'
-            },
-            'valid_doc': {
-                'id_valid': 2
+            'publicationDate': None,
+            'refDate': FAKE_REF_DATE,
+            'subject': 'Subject2',
+            'file': '2.gif',
+            'description': 'a description',
+            'type': 'type',
+            'originalName': None,
+            'title': 'title',
+            'validationStatus': {
+                'doc_id': 2,
+                'status': Status.Validated
             },
             'user_id': 2,
             'comments': [],
-            'to_validate_doc': None,
             'visualization': {
                 'id': 2,
                 'quaternionW': None,
@@ -114,6 +113,8 @@ class TestDocument:
             'file': '2.gif',
             'refDate': FAKE_REF_DATE,
             'position': {'label': 'admin'}
+        }, {
+            'user_id': 2
         })
 
     def test_create_document_3(self):
@@ -129,6 +130,8 @@ class TestDocument:
             'description': 'an other description',
             'file': '3.png',
             'position': {'label': 'contributor'}
+        }, {
+            'user_id': 2
         }) is not None
 
     def test_create_document_4(self):
@@ -144,6 +147,8 @@ class TestDocument:
             'description': 'details',
             'file': '3.png',
             'position': {'label': 'admin'}
+        }, {
+            'user_id': 1
         }) is not None
 
     def test_create_document_5(self):
@@ -152,6 +157,8 @@ class TestDocument:
             DocController.create_document({
                 'user_id': 2,
                 'title': 'another title'
+            }, {
+                'user_id': 2
             })
 
     def test_validate_document_1(self):
@@ -160,14 +167,18 @@ class TestDocument:
             DocController.validate_document(2, {
                 'user_id': 2,
                 'position': {'label': 'contributor'}
+            }, {
+                'user_id': 2
             })
 
     def test_validate_document_2(self):
         print('Validate a document as an admin')
         with pytest.raises(sqlalchemy.orm.exc.NoResultFound):
-            DocController.validate_document(2, {
+            DocController.validate_document(7, {
                 'user_id': 1,
                 'position': {'label': 'admin'}
+            }, {
+                'user_id': 1
             })
 
     def test_get_all_documents(self):
@@ -237,7 +248,7 @@ class TestDocument:
             'description': 'another description'
         })
         assert response['visualization']['positionX'] == 12
-        assert response['metaData']['description'] == 'another description'
+        assert response['description'] == 'another description'
 
     def test_update_non_existing_document(self):
         print('Update a non existing document')
