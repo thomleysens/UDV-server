@@ -3,6 +3,7 @@
 
 from sqlalchemy import Column, Integer, ForeignKey, String, DateTime
 from sqlalchemy.orm import relationship
+from util.serialize import serialize
 
 from util.db_config import Base
 from entities.Entity import Entity
@@ -17,9 +18,6 @@ class Document(Entity, Base):
 
     id = Column(Integer, primary_key=True)
 
-    user_id = Column(Integer,
-                     ForeignKey("user.id"),
-                     nullable=False)
     title = Column(String, nullable=False)
     subject = Column(String, nullable=False)
     description = Column(String, nullable=False)
@@ -39,6 +37,9 @@ class Document(Entity, Base):
     visualization = relationship("Visualisation",
                                  uselist=False,
                                  cascade="all, delete-orphan")
+
+    documentUser = relationship('DocumentUser',
+                                cascade="all, delete-orphan")
 
     def __init__(self, attributes):
         self.visualization = Visualisation()
@@ -71,5 +72,19 @@ class Document(Entity, Base):
         level = Position.get_clearance_level(role)
         return level > LEVEL_MIN
 
+    def owner_id(self):
+        return self.documentUser[0].user_id
+
+    def owner(self):
+        return self.documentUser[0].user
+
     def is_owner(self, auth_info):
-        return auth_info['user_id'] == self.user_id
+        return auth_info['user_id'] == self.owner_id()
+
+    def serialize(self):
+        serialized_object = {}
+        for attr in self.get_all_attr():
+            if attr != 'documentUser':
+                serialized_object[attr] = serialize(getattr(self, attr))
+        serialized_object['user_id'] = self.owner_id()
+        return serialized_object

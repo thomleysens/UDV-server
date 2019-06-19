@@ -105,7 +105,7 @@ def create_document(auth_info):
         if filename is not None:
             args['file'] = filename
             try:
-                document = DocController.create_document(args)
+                document = DocController.create_document(args, auth_info)
             except Exception as e:
                 delete_file(f'{UPLOAD_FOLDER}/{filename}')
                 raise e

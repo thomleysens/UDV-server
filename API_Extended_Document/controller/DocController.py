@@ -9,6 +9,7 @@ from util.Exception import *
 
 from entities.Document import Document
 from entities.ValidationStatus import ValidationStatus, Status
+from entities.DocumentUser import DocumentUser
 from controller.ArchiveController import ArchiveController
 
 import persistence_unit.PersistenceUnit as pUnit
@@ -27,11 +28,14 @@ class DocController:
 
     @staticmethod
     @pUnit.make_a_transaction
-    def create_document(session, *args):
-        attributes = args[0]
+    def create_document(session, attributes, auth_info):
         document = Document(attributes)
         document.update_initial(attributes)
         session.add(document)
+        # Commit to assign an id to the document
+        session.commit()
+        document_user = DocumentUser(document.id, auth_info['user_id'])
+        session.add(document_user)
         return document
 
     @staticmethod
@@ -76,7 +80,7 @@ class DocController:
                     # In this case we return unauthorized because the user could
                     # access the resource if he/she authenticate
                     raise Unauthorized
-                if document.user_id != auth_info["user_id"]:
+                if document.owner_id() != auth_info["user_id"]:
                     # In this case we return forbidden because the user is
                     # authenticated but hasn't the rights on the doc
                     raise AuthError
@@ -155,10 +159,9 @@ class DocController:
                 ValidationStatus.status == Status.InValidation)
             return query.all()
         else:
-            query = session.query(Document).join(ValidationStatus).filter(
-                and_(ValidationStatus.status == Status.InValidation,
-                     Document.user_id == attributes['user_id']))
-            return query.all()
+            documents = session.query(Document).join(ValidationStatus).filter(
+                ValidationStatus.status == Status.InValidation).all()
+            return [doc for doc in documents if doc.owner_id() == attributes['user_id']]
 
     @staticmethod
     @pUnit.make_a_transaction
@@ -166,10 +169,11 @@ class DocController:
         document = session.query(Document) \
             .filter(Document.id == doc_id).one()
         # To change not supposed to be done in Controller
-        doc_count = session.query(Document).join(ValidationStatus).filter(
+        documents = session.query(Document).join(ValidationStatus).filter(
             and_(Document.id == doc_id,
-                 Document.user_id == auth_info['user_id'],
-                 ValidationStatus.status == Status.InValidation)).count()
+                 ValidationStatus.status == Status.InValidation)).all()
+        doc_count = len([doc for doc in documents
+                         if doc.owner_id() == auth_info['user_id']])
         if Document.is_allowed(auth_info) or doc_count > 0:
             ArchiveController.create_archive(document.serialize())
             document.update(attributes)
@@ -183,8 +187,10 @@ class DocController:
     def delete_documents(session, *args):
         an_id = args[0]
         attributes = args[1]
-        doc_count = session.query(Document).filter(
-            and_(Document.id == an_id, Document.user_id == attributes['user_id'])).count()
+        documents = session.query(Document).filter(
+            Document.id == an_id).all()
+        doc_count = len([doc for doc in documents
+                         if doc.owner_id() == attributes['user_id']])
         if Document.is_allowed(attributes) or doc_count > 0:
             # we also remove the associated image
             # located in 'UPLOAD_FOLDER' directory
