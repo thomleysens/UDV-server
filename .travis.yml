@@ -5,7 +5,7 @@ services:
   - postgresql
 
 install:
-  - cd API_Extended_Document
+  - cd API_Enhanced_City
   - export PYTHONPATH=$PYTHONPATH:.
   - pip install -r requirements.txt
 
