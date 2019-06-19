@@ -7,7 +7,7 @@ from sqlalchemy import func
 
 import persistence_unit.PersistenceUnit as pUnit
 from entities.GuidedTour import GuidedTour
-from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
+from entities.DocumentGuidedTour import DocumentGuidedTour
 
 
 class TourController:
@@ -50,16 +50,16 @@ class TourController:
         doc_id = args[1]
 
         query_result = session.query(
-            func.max(ExtendedDocGuidedTour.doc_position).label(
+            func.max(DocumentGuidedTour.doc_position).label(
                 "doc_number")).filter(
-            ExtendedDocGuidedTour.tour_id == tour_id).one()
+            DocumentGuidedTour.tour_id == tour_id).one()
 
         doc_number = query_result.doc_number
         if not doc_number:
             doc_number = 0
 
         session.add(
-            ExtendedDocGuidedTour(tour_id, doc_id, doc_number + 1))
+            DocumentGuidedTour(tour_id, doc_id, doc_number + 1))
 
         return session.query(GuidedTour).filter(
             GuidedTour.id == tour_id).one()

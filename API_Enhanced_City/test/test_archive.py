@@ -3,6 +3,7 @@
 import pytest
 import sqlalchemy.orm
 
+from entities.ValidationStatus import Status
 from controller.Controller import Controller
 from controller.DocController import DocController
 from controller.CommentController import CommentController
@@ -18,18 +19,17 @@ class TestArchive:
             'id': 1,
             'comments': [],
             'user_id': 1,
-            'metaData': {
-                'publicationDate': None,
-                'subject': 'Subject1',
-                'id': 1,
-                'title': 'title',
-                'refDate': None,
-                'file': '1.gif',
-                'originalName': None,
-                'description': 'a description',
-                'type': 'type'
-            }, 'valid_doc': {
-                'id_valid': 1
+            'publicationDate': None,
+            'subject': 'Subject1',
+            'title': 'title',
+            'refDate': None,
+            'file': '1.gif',
+            'originalName': None,
+            'description': 'a description',
+            'type': 'type',
+            'validationStatus': {
+                'doc_id': 1,
+                'status': Status.Validated
             }, 'visualization': {
                 'quaternionZ': None,
                 'positionZ': None,
@@ -39,7 +39,7 @@ class TestArchive:
                 'quaternionW': None,
                 'positionY': None,
                 'quaternionX': None
-            }, 'to_validate_doc': None
+            }
         }
         assert expected_response == DocController.create_document({
             'title': 'title',
@@ -47,27 +47,26 @@ class TestArchive:
             'type': 'type',
             'description': 'a description',
             'file': '1.gif',
-            'user_id' : 1,
+            'user_id': 1,
             "position": {
                 'label' : 'admin'
             }
+        }, {
+            'user_id': 1
         })
 
     def test_update_document_1(self):
         print("update a document")
         expected_response = {
             'user_id': 1,
-            'metaData': {
-                'type': 'type',
-                'publicationDate': None,
-                'description': 'description of a document',
-                'subject': 'Subject1',
-                'file': '1.gif',
-                'id': 1,
-                'refDate': None,
-                'title': 'title',
-                'originalName': None
-            },
+            'type': 'type',
+            'publicationDate': None,
+            'description': 'description of a document',
+            'subject': 'Subject1',
+            'file': '1.gif',
+            'refDate': None,
+            'title': 'title',
+            'originalName': None,
             'id': 1,
             'visualization': {
                 'quaternionY': None,
@@ -79,9 +78,11 @@ class TestArchive:
                 'quaternionW': None,
                 'positionZ': None
             },
-            'valid_doc': {'id_valid': 1},
+            'validationStatus': {
+                'status': Status.Validated,
+                'doc_id': 1
+            },
             'comments': [],
-            'to_validate_doc': None
         }
         assert expected_response == DocController.update_document({
             'user_id': 1,
@@ -96,18 +97,14 @@ class TestArchive:
         print("update a document")
         expected_response = {
             'user_id': 1,
-            'metaData': {
-                'refDate': None,
-                'file': '1.gif',
-                'publicationDate': None,
-                'id': 1,
-                'description': 'a new description',
-                'originalName': None,
-                'subject': 'Subject1',
-                'type': 'type',
-                'title': 'title'
-            },
-            'to_validate_doc': None,
+            'refDate': None,
+            'file': '1.gif',
+            'publicationDate': None,
+            'description': 'a new description',
+            'originalName': None,
+            'subject': 'Subject1',
+            'type': 'type',
+            'title': 'title',
             'visualization': {
                 'positionZ': None,
                 'quaternionX': None,
@@ -119,7 +116,10 @@ class TestArchive:
                 'quaternionW': None
             },
             'id': 1,
-            'valid_doc': {'id_valid': 1},
+            'validationStatus': {
+                'status': Status.Validated,
+                'doc_id': 1
+            },
             'comments': []
         }
         assert expected_response == DocController.update_document({

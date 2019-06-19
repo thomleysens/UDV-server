@@ -2,16 +2,14 @@
 # coding: utf8
 
 from sqlalchemy import or_, and_
-from sqlalchemy.orm.exc import NoResultFound
 
 from util.log import *
 from util.upload import *
 from util.Exception import *
 
-from entities.MetaData import MetaData
-from entities.ExtendedDocument import ExtendedDocument
-from entities.ToValidateDoc import ToValidateDoc
-from entities.ValidDoc import ValidDoc
+from entities.Document import Document
+from entities.ValidationStatus import ValidationStatus, Status
+from entities.DocumentUser import DocumentUser
 from controller.ArchiveController import ArchiveController
 
 import persistence_unit.PersistenceUnit as pUnit
@@ -30,11 +28,14 @@ class DocController:
 
     @staticmethod
     @pUnit.make_a_transaction
-    def create_document(session, *args):
-        attributes = args[0]
-        document = ExtendedDocument(attributes)
+    def create_document(session, attributes, auth_info):
+        document = Document(attributes)
         document.update_initial(attributes)
         session.add(document)
+        # Commit to assign an id to the document
+        session.commit()
+        document_user = DocumentUser(document.id, auth_info['user_id'])
+        session.add(document_user)
         return document
 
     @staticmethod
@@ -42,13 +43,10 @@ class DocController:
     def validate_document(session, *args):
         doc_id = args[0]
         attributes = args[1]
-        if ExtendedDocument.is_allowed(attributes):
-            document = session.query(ExtendedDocument).filter(
-                ExtendedDocument.id == doc_id).one()
-            to_validate = session.query(ToValidateDoc).filter(
-                ToValidateDoc.id_to_validate == doc_id).one()
+        if Document.is_allowed(attributes):
+            document = session.query(Document).filter(
+                Document.id == doc_id).one()
             document.validate(attributes)
-            session.delete(to_validate)
             session.add(document)
             return document
         else:
@@ -70,12 +68,11 @@ class DocController:
         :raises NoResultFound: if the document isn't in the database
         """
         # If we're an admin, no need to check what document it is
-        if auth_info is None or not ExtendedDocument.is_allowed(auth_info):
-            try:
-                # If this raises NoResultFound, it means that the document has
-                # been validated, so we can continue
-                doc_to_validate = session.query(ExtendedDocument).join(ToValidateDoc) \
-                                  .filter(ExtendedDocument.id == doc_id).one()
+        if auth_info is None or not Document.is_allowed(auth_info):
+            document = session.query(Document).join(ValidationStatus) \
+                              .filter(Document.id == doc_id).one()
+            # If the document is validated, everybody can see it
+            if document.validationStatus.status != Status.Validated:
                 # The only case where we're not allowed to access the document
                 # is when it's in validation and we're neither the owner nor an
                 # admin
@@ -83,19 +80,17 @@ class DocController:
                     # In this case we return unauthorized because the user could
                     # access the resource if he/she authenticate
                     raise Unauthorized
-                if doc_to_validate.user_id != auth_info["user_id"]:
+                if document.owner_id() != auth_info["user_id"]:
                     # In this case we return forbidden because the user is
                     # authenticated but hasn't the rights on the doc
                     raise AuthError
-            except NoResultFound:
-                pass
-        return session.query(ExtendedDocument).filter(
-            ExtendedDocument.id == doc_id).one()
+        return session.query(Document).filter(
+            Document.id == doc_id).one()
 
     @staticmethod
     def get_document_file_location(doc_id, auth_info):
         document = DocController.get_document_by_id(doc_id, auth_info)
-        filename = document['metaData']['file']
+        filename = document['file']
         location = os.path.join(UPLOAD_FOLDER, filename)
         if os.path.exists(location):
             return location
@@ -123,9 +118,10 @@ class DocController:
             keyword = attributes.pop("keyword")
             for attr in DocController.keyword_attr:
                 keyword_conditions.append(
-                    MetaData.get_attr(attr).ilike('%' + keyword + '%'))
+                    Document.get_attr(attr).ilike('%' + keyword + '%'))
 
-        comparison_conditions = []
+        comparison_conditions = [ValidationStatus.status == Status.Validated]
+
         # dictionaries of attributes to compare
         inf_dict = {key.replace('Start', ''): attributes[key]
                     for key in attributes if 'Start' in key}
@@ -138,16 +134,16 @@ class DocController:
 
         for attr in sup_dict.keys():
             comparison_conditions.append(
-                MetaData.get_attr(attr) <= sup_dict[attr])
+                Document.get_attr(attr) <= sup_dict[attr])
 
         for attr in inf_dict.keys():
             comparison_conditions.append(
-                MetaData.get_attr(attr) >= inf_dict[attr])
+                Document.get_attr(attr) >= inf_dict[attr])
 
-        query = session.query(ExtendedDocument).join(
-            MetaData).filter_by(**attributes).filter(
+        query = session.query(Document).join(ValidationStatus).filter_by(
+            **attributes).filter(
             and_(*comparison_conditions)).filter(
-            or_(*keyword_conditions)).join(ValidDoc)
+            or_(*keyword_conditions))
 
         return query.all()
 
@@ -158,25 +154,27 @@ class DocController:
         This method si used to get documents to validate
         """
         attributes = args[0]
-        if ExtendedDocument.is_allowed(attributes):
-            query = session.query(ExtendedDocument).join(ToValidateDoc)
+        if Document.is_allowed(attributes):
+            query = session.query(Document).join(ValidationStatus).filter(
+                ValidationStatus.status == Status.InValidation)
             return query.all()
         else:
-            query = session.query(ExtendedDocument) \
-                .join(ToValidateDoc).filter(
-                ExtendedDocument.user_id == attributes['user_id'])
-            return query.all()
+            documents = session.query(Document).join(ValidationStatus).filter(
+                ValidationStatus.status == Status.InValidation).all()
+            return [doc for doc in documents if doc.owner_id() == attributes['user_id']]
 
     @staticmethod
     @pUnit.make_a_transaction
     def update_document(session, auth_info, doc_id, attributes):
-        document = session.query(ExtendedDocument) \
-            .filter(ExtendedDocument.id == doc_id).one()
+        document = session.query(Document) \
+            .filter(Document.id == doc_id).one()
         # To change not supposed to be done in Controller
-        doc_count = session.query(ExtendedDocument).filter(
-            and_(ExtendedDocument.id == doc_id, ExtendedDocument.user_id == auth_info['user_id'])).join(
-            ToValidateDoc).count()
-        if ExtendedDocument.is_allowed(auth_info) or doc_count > 0:
+        documents = session.query(Document).join(ValidationStatus).filter(
+            and_(Document.id == doc_id,
+                 ValidationStatus.status == Status.InValidation)).all()
+        doc_count = len([doc for doc in documents
+                         if doc.owner_id() == auth_info['user_id']])
+        if Document.is_allowed(auth_info) or doc_count > 0:
             ArchiveController.create_archive(document.serialize())
             document.update(attributes)
             session.add(document)
@@ -189,18 +187,20 @@ class DocController:
     def delete_documents(session, *args):
         an_id = args[0]
         attributes = args[1]
-        doc_count = session.query(ExtendedDocument).filter(
-            and_(ExtendedDocument.id == an_id, ExtendedDocument.user_id == attributes['user_id'])).count()
-        if ExtendedDocument.is_allowed(attributes) or doc_count > 0:
+        documents = session.query(Document).filter(
+            Document.id == an_id).all()
+        doc_count = len([doc for doc in documents
+                         if doc.owner_id() == attributes['user_id']])
+        if Document.is_allowed(attributes) or doc_count > 0:
             # we also remove the associated image
             # located in 'UPLOAD_FOLDER' directory
-            a_doc = session.query(ExtendedDocument).filter(
-                ExtendedDocument.id == an_id).one()
+            a_doc = session.query(Document).filter(
+                Document.id == an_id).one()
             if a_doc:
                 ArchiveController.create_archive(a_doc.serialize())
                 session.delete(a_doc)
             try:
-                os.remove(UPLOAD_FOLDER + '/' + a_doc.metaData.file)
+                os.remove(UPLOAD_FOLDER + '/' + a_doc.file)
                 return a_doc
             except Exception as e:
                 print(e)
@@ -211,12 +211,12 @@ class DocController:
     @staticmethod
     @pUnit.make_a_transaction
     def delete_document_file(session, auth_info, doc_id):
-        document = session.query(ExtendedDocument) \
-            .filter(ExtendedDocument.id == doc_id).one()
+        document = session.query(Document) \
+            .filter(Document.id == doc_id).one()
         if document:
             if document.is_owner(auth_info) or \
-               ExtendedDocument.is_allowed(auth_info):
-                filename = document.metaData.file
+               Document.is_allowed(auth_info):
+                filename = document.file
                 if filename:
                     ArchiveController.create_archive(document.serialize())
                     document.update({
@@ -243,7 +243,7 @@ class DocController:
         :param doc_id: The document id
         :return: True if the user has rights on the document, False otherwise
         """
-        document = session.query(ExtendedDocument) \
-            .filter(ExtendedDocument.id == doc_id).one()
-        return ExtendedDocument.is_allowed(auth_info)\
-            or document.is_owner(auth_info)
+        document = session.query(Document) \
+            .filter(Document.id == doc_id).one()
+        return Document.is_allowed(auth_info) \
+               or document.is_owner(auth_info)

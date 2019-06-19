@@ -13,6 +13,6 @@ class Comment(Entity, Base):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
-    doc_id = Column(Integer, ForeignKey('extended_document.id'))
+    doc_id = Column(Integer, ForeignKey('document.id'))
     description = Column(String, nullable=False)
     date = Column(DateTime(timezone=True), nullable=False)

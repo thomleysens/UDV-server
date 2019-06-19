@@ -15,7 +15,7 @@ class GuidedTour(Entity, Base):
     name = Column(String)
     description = Column(String)
 
-    extendedDocs = relationship('ExtendedDocGuidedTour',
+    extendedDocs = relationship('DocumentGuidedTour',
                                 cascade="all, delete-orphan")
 
     def __init__(self, name, description):

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # coding: utf8
-
+from entities.ValidationStatus import Status
 from controller.Controller import Controller
 from controller.DocController import DocController
 from controller.CommentController import CommentController
@@ -36,19 +36,19 @@ class TestComment:
             'id': 1,
             'comments': [],
             'user_id': 1,
-            'metaData': {
-                'publicationDate': None,
-                'subject': 'Subject1',
-                'id': 1,
-                'title': 'title',
-                'refDate': None,
-                'file': '1.gif',
-                'originalName': None,
-                'description': 'a description',
-                'type': 'type'
-            }, 'valid_doc': {
-                'id_valid': 1
-            }, 'visualization': {
+            'publicationDate': None,
+            'subject': 'Subject1',
+            'title': 'title',
+            'refDate': None,
+            'file': '1.gif',
+            'originalName': None,
+            'description': 'a description',
+            'type': 'type',
+            'validationStatus': {
+                'status': Status.Validated,
+                'doc_id': 1
+            },
+            'visualization': {
                 'quaternionZ': None,
                 'positionZ': None,
                 'positionX': None,
@@ -57,7 +57,7 @@ class TestComment:
                 'quaternionW': None,
                 'positionY': None,
                 'quaternionX': None
-            }, 'to_validate_doc': None
+            }
         }
         assert expected_response == DocController.create_document({
             'title': 'title',
@@ -69,6 +69,8 @@ class TestComment:
             "position": {
                 'label': 'admin'
             }
+        }, {
+            'user_id': 1
         })
 
     def test_create_comment_1(self, patch_datetime_now):

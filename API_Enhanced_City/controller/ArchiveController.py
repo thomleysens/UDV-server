@@ -55,7 +55,7 @@ class ArchiveController:
     #@TODO refactor versionDoc in order to take 2 attributes metadata & visualisation instead of attribute in one table
     @staticmethod
     def remake_attribute(attributes):
-        new_attributes = attributes['metaData']
+        new_attributes = attributes
         new_attributes.update(attributes['visualization'])
         new_attributes['user_id'] = attributes['user_id']
         new_attributes['doc_id'] = attributes['id']

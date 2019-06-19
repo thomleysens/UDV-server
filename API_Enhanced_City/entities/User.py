@@ -28,8 +28,8 @@ class User(Entity, Base):
     position = relationship(Position,
                             uselist=False)
 
-    extended_document = relationship('ExtendedDocument',
-                                     cascade="all, delete-orphan")
+    documentUser = relationship('DocumentUser',
+                                cascade="all, delete-orphan")
 
     version = relationship('VersionDoc')
 

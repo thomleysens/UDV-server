@@ -9,10 +9,13 @@ from controller.PositionController import PositionController
 from entities.User import User
 from entities.Position import Position
 from entities.GuidedTour import GuidedTour
-from entities.ExtendedDocument import ExtendedDocument
-from entities.ExtendedDocGuidedTour import ExtendedDocGuidedTour
+from entities.Document import Document
+from entities.DocumentGuidedTour import DocumentGuidedTour
 from entities.Comment import Comment
 from entities.VersionDoc import VersionDoc
+from entities.DocumentUser import DocumentUser
+from entities.ValidationStatus import ValidationStatus
+from entities.Visualisation import Visualisation
 
 
 class Controller:

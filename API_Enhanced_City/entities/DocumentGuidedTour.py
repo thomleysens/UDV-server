@@ -9,8 +9,8 @@ from util.db_config import Base
 from entities.Entity import Entity
 
 
-class ExtendedDocGuidedTour(Base, Entity):
-    __tablename__ = "extended_doc_guided_tour"
+class DocumentGuidedTour(Base, Entity):
+    __tablename__ = "document_guided_tour"
 
     id = Column(Integer, primary_key=True)
     tour_id = Column(Integer,
@@ -18,11 +18,11 @@ class ExtendedDocGuidedTour(Base, Entity):
 
     # Cannot deletion on relationship because it's
     doc_id = Column(Integer,
-                    ForeignKey("extended_document.id",
+                    ForeignKey("document.id",
                                ondelete="CASCADE"))
 
     doc_position = Column(Integer)
-    document = relationship("ExtendedDocument")
+    document = relationship("Document")
     text1 = Column(String)
     text2 = Column(String)
     title = Column(String)

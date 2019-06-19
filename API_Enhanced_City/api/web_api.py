@@ -13,14 +13,14 @@ from controller.UserController import UserController
 from controller.DocController import DocController
 from controller.ArchiveController import ArchiveController
 from util.upload import *
-from util.JsonIsoEncoder import JsonIsoEncoder
+from util.JsonCustomEncoder import JsonCustomEncoder
 
 # Imports the Response objects and the need_authentication / format_response
 # decorators
 from helpers import *
 
 app = Flask(__name__)
-app.json_encoder = JsonIsoEncoder
+app.json_encoder = JsonCustomEncoder
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
@@ -105,7 +105,7 @@ def create_document(auth_info):
         if filename is not None:
             args['file'] = filename
             try:
-                document = DocController.create_document(args)
+                document = DocController.create_document(args, auth_info)
             except Exception as e:
                 delete_file(f'{UPLOAD_FOLDER}/{filename}')
                 raise e
