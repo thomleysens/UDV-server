@@ -12,6 +12,7 @@ from controller.TourController import TourController
 from controller.UserController import UserController
 from controller.DocController import DocController
 from controller.ArchiveController import ArchiveController
+from controller.LinkController import LinkController
 from util.upload import *
 from util.JsonCustomEncoder import JsonCustomEncoder
 
@@ -347,6 +348,52 @@ def update_guided_tour_document(tour_id, doc_position):
 def delete_guided_tour_document(tour_id, doc_position):
     updated_tour = TourController.remove_document(tour_id, doc_position)
     return ResponseOK(updated_tour)
+
+# ---- LINKS -------------------------------------------------------------------
+
+
+@app.route('/link', methods=['GET'])
+@format_response
+def get_link_target_types():
+    """
+    Retrieves all supported target type names.
+    :return: All supported target type names.
+    """
+    types = LinkController.get_target_types()
+    return ResponseOK(types)
+
+
+@app.route('/link/<target_type_name>', methods=['GET'])
+@format_response
+def get_links(target_type_name):
+    """
+    Retrieves links between documents and the specified target type.
+
+    :param str target_type_name: Name of the target type. Accepted names are :
+        'city_object'.
+    :return: The retrieved links
+    """
+    filters = request.form
+    links = LinkController.get_links(target_type_name, filters)
+    return ResponseOK(links)
+
+
+@app.route('/link/<target_type_name>', methods=['POST'])
+@format_response
+def create_link(target_type_name):
+    """
+    Creates a new link between the source document and the specified target.
+
+    :param target_type_name: Name of the target type. Accepted names are :
+        'city_object'.
+    :return: The newly created link
+    """
+    source_id = request.form.get('source_id')
+    target_id = request.form.get('target_id')
+    if source_id is None or target_id is None:
+        raise BadRequest('Missing source and/or target id')
+    link = LinkController.create_link(target_type_name, source_id, target_id)
+    return ResponseOK(link)
 
 
 if __name__ == '__main__':
