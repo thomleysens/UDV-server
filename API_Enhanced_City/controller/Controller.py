@@ -16,6 +16,7 @@ from entities.VersionDoc import VersionDoc
 from entities.DocumentUser import DocumentUser
 from entities.ValidationStatus import ValidationStatus
 from entities.Visualisation import Visualisation
+from entities.LinkCityObject import LinkCityObject
 
 
 class Controller:
