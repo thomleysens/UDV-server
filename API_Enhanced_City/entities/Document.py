@@ -9,7 +9,7 @@ from util.db_config import Base
 from entities.Entity import Entity
 
 from entities.Visualisation import Visualisation
-from entities.Position import Position, LEVEL_MIN
+from entities.UserRole import UserRole, LEVEL_MIN
 from entities.ValidationStatus import ValidationStatus, Status
 
 
@@ -68,8 +68,8 @@ class Document(Entity, Base):
 
     @staticmethod
     def is_allowed(auth_info):
-        role = auth_info['position']['label']
-        level = Position.get_clearance_level(role)
+        role = auth_info['role']['label']
+        level = UserRole.get_clearance_level(role)
         return level > LEVEL_MIN
 
     def owner_id(self):

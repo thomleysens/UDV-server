@@ -48,7 +48,7 @@ class TestArchive:
             'description': 'a description',
             'file': '1.gif',
             'user_id': 1,
-            "position": {
+            "role": {
                 'label' : 'admin'
             }
         }, {
@@ -86,7 +86,7 @@ class TestArchive:
         }
         assert expected_response == DocController.update_document({
             'user_id': 1,
-            "position": {
+            "role": {
                 'label': 'admin'
             }},
             1,
@@ -124,7 +124,7 @@ class TestArchive:
         }
         assert expected_response == DocController.update_document({
             'user_id': 1,
-            'position': {
+            'role': {
                 'label': 'admin'
             }
         }, 1, {
@@ -137,7 +137,7 @@ class TestArchive:
         expected_response = None
         assert expected_response == DocController.delete_documents(1, {
                 'user_id' : 1,
-                "position": {
+                "role": {
                     'label' : 'admin'
                 }
             })

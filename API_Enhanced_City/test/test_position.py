@@ -2,7 +2,7 @@
 # coding: utf8
 
 from controller.Controller import Controller
-from controller.PositionController import PositionController
+from controller.UserRoleController import UserRoleController
 
 
 class TestPosition:
@@ -11,7 +11,7 @@ class TestPosition:
         Controller.recreate_tables()
         print("all positions")
         expected_response = 4
-        assert expected_response == len(PositionController.get_positions())
+        assert expected_response == len(UserRoleController.get_roles())
 
 
 if __name__ == '__main__':

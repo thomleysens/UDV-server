@@ -69,7 +69,7 @@ class TestDocument:
             'type': 'type',
             'description': 'a description',
             'file': '1.gif',
-            'position': {'label': 'admin'}
+            'role': {'label': 'admin'}
         }, {
             'user_id': 1
         })
@@ -112,7 +112,7 @@ class TestDocument:
             'description': 'a description',
             'file': '2.gif',
             'refDate': FAKE_REF_DATE,
-            'position': {'label': 'admin'}
+            'role': {'label': 'admin'}
         }, {
             'user_id': 2
         })
@@ -129,7 +129,7 @@ class TestDocument:
             'refDate': FAKE_REF_DATE,
             'description': 'an other description',
             'file': '3.png',
-            'position': {'label': 'contributor'}
+            'role': {'label': 'contributor'}
         }, {
             'user_id': 2
         }) is not None
@@ -146,7 +146,7 @@ class TestDocument:
             'refDate': FAKE_REF_DATE,
             'description': 'details',
             'file': '3.png',
-            'position': {'label': 'admin'}
+            'role': {'label': 'admin'}
         }, {
             'user_id': 1
         }) is not None
@@ -166,7 +166,7 @@ class TestDocument:
         with pytest.raises(AuthError):
             DocController.validate_document(2, {
                 'user_id': 2,
-                'position': {'label': 'contributor'}
+                'role': {'label': 'contributor'}
             }, {
                 'user_id': 2
             })
@@ -176,7 +176,7 @@ class TestDocument:
         with pytest.raises(sqlalchemy.orm.exc.NoResultFound):
             DocController.validate_document(7, {
                 'user_id': 1,
-                'position': {'label': 'admin'}
+                'role': {'label': 'admin'}
             }, {
                 'user_id': 1
             })
@@ -202,7 +202,7 @@ class TestDocument:
         print('Get documents to validate as an admin')
         response = DocController.get_documents_to_validate({
             'user_id': 3,
-            'position': {'label': 'admin'}
+            'role': {'label': 'admin'}
         })
         assert len(response) == 1
         assert response[0]['id'] == 3
@@ -211,7 +211,7 @@ class TestDocument:
         print('Get documents to validate as a contributor')
         response = DocController.get_documents_to_validate({
             'user_id': 3,
-            'position': {'label': 'admin'}
+            'role': {'label': 'admin'}
         })
         assert len(response) == 1
         assert response[0]['id'] == 3
@@ -231,7 +231,7 @@ class TestDocument:
             DocController.update_document({
                 'user_id': 2,
                 'user_position': 'contributor',
-                'position': {'label': 'contributor'}
+                'role': {'label': 'contributor'}
             }, 1, {
                 'positionX': 12,
                 'description': 'description of a document'
@@ -242,7 +242,7 @@ class TestDocument:
         response = DocController.update_document({
             'user_id': 2,
             'user_position': 'admin',
-            'position': {'label': 'admin'}
+            'role': {'label': 'admin'}
         }, 1, {
             'positionX': 12,
             'description': 'another description'
@@ -256,7 +256,7 @@ class TestDocument:
             DocController.update_document({
                 'user_position': 'admin',
                 'user_id': 2,
-                'position': {'label': 'admin'}
+                'role': {'label': 'admin'}
             }, -1, {
                 'positionX': 12,
                 'description': 'another description'
@@ -267,7 +267,7 @@ class TestDocument:
         with pytest.raises(AuthError):
             DocController.delete_documents(4, {
                 'user_id': 2,
-                'position': {'label': 'contributor'}
+                'role': {'label': 'contributor'}
             })
 
     def test_delete_document_as_admin(self):
@@ -275,7 +275,7 @@ class TestDocument:
         try:
             DocController.delete_documents(4, {
                 'user_id': 1,
-                'position': {'label': 'admin'}
+                'role': {'label': 'admin'}
             })
         except Exception as e:
             print(e)

@@ -12,8 +12,8 @@ LEVEL_MIN = 1
 LEVEL_MAX = 3
 
 
-class Position(Entity, Base):
-    __tablename__ = "position"
+class UserRole(Entity, Base):
+    __tablename__ = "user_role"
 
     id = Column(Integer, primary_key=True)
     label = Column(String)

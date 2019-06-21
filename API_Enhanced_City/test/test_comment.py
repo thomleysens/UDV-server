@@ -66,7 +66,7 @@ class TestComment:
             'description': 'a description',
             'file': '1.gif',
             'user_id': 1,
-            "position": {
+            "role": {
                 'label': 'admin'
             }
         }, {
@@ -113,7 +113,7 @@ class TestComment:
         assert expected_response == CommentController.update_comment(1, {
             'id': 1,
             'user_id': 1,
-            "position": {
+            "role": {
                 'label': 'admin'
             },
             'description': 'ok_1'
@@ -130,7 +130,7 @@ class TestComment:
         }
         assert expected_response == CommentController.delete_comment(2, {
             'user_id': 1,
-            "position": {
+            "role": {
                 'label': 'admin'
             }
         })

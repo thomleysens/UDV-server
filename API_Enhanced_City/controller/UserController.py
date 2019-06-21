@@ -7,7 +7,7 @@ from util.Exception import Unauthorized
 from util.encryption import *
 from util.log import info_logger
 from entities.User import User
-from entities.Position import Position
+from entities.UserRole import UserRole
 import persistence_unit.PersistenceUnit as pUnit
 
 
@@ -26,8 +26,8 @@ class UserController:
     def create_user(session, *args):
         attributes = args[0]
         user = User()
-        user.set_position(session.query(Position).filter(
-            Position.label == Position.get_clearance(0)).one())
+        user.set_role(session.query(UserRole).filter(
+            UserRole.label == UserRole.get_clearance(0)).one())
         user.update(attributes)
         session.add(user)
         return user
@@ -39,7 +39,7 @@ class UserController:
         payload = args[1]
         if User.is_admin(attributes):
             user = User()
-            user.set_position(session.query(Position).filter(Position.label == attributes["role"]).one())
+            user.set_role(session.query(UserRole).filter(UserRole.label == attributes["role"]).one())
             user.update(attributes)
             session.add(user)
             return user
@@ -51,8 +51,8 @@ class UserController:
     def create_admin_user(session, *args):
         attributes = args[0]
         user = User()
-        user.set_position(session.query(Position).filter(Position.label == attributes["role"]).one())
         user.update(attributes)
+        user.set_role(session.query(UserRole).filter(UserRole.label == attributes["role"]).one())
         session.add(user)
         return user
 
@@ -81,7 +81,7 @@ class UserController:
                     'firstName': user.firstName,
                     'lastName': user.lastName,
                     'email': user.email,
-                    'position': user.position.serialize(),
+                    'role': user.role.serialize(),
                     'exp': exp
                 }
                 return {

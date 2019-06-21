@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # coding: utf8
 
-from entities.Position import Position
+from entities.UserRole import UserRole
 import persistence_unit.PersistenceUnit as pUnit
 
 
-class PositionController:
+class UserRoleController:
     """
     Class that allows communication with the DB
     No instance is needed because all its methods are static.
@@ -17,22 +17,22 @@ class PositionController:
 
     @staticmethod
     @pUnit.make_a_query
-    def get_positions(session):
-        return session.query(Position).all()
+    def get_roles(session):
+        return session.query(UserRole).all()
 
     @staticmethod
     @pUnit.make_a_transaction
-    def create_position(session, label):
-        position_exist = session.query(Position).filter(
-            Position.label == label).scalar() is not None
+    def create_role(session, label):
+        position_exist = session.query(UserRole).filter(
+            UserRole.label == label).scalar() is not None
 
         if not position_exist:
-            position = Position(label)
+            position = UserRole(label)
             session.add(position)
 
     @staticmethod
-    def create_all_positions():
-        PositionController.create_position("admin")
-        PositionController.create_position("moderator")
-        PositionController.create_position("softModerator")
-        PositionController.create_position("contributor")
+    def create_all_roles():
+        UserRoleController.create_role("admin")
+        UserRoleController.create_role("moderator")
+        UserRoleController.create_role("softModerator")
+        UserRoleController.create_role("contributor")
