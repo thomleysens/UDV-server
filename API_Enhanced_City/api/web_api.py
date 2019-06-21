@@ -393,7 +393,7 @@ def create_link(target_type_name):
     if source_id is None or target_id is None:
         raise BadRequest('Missing source and/or target id')
     link = LinkController.create_link(target_type_name, source_id, target_id)
-    return ResponseOK(link)
+    return ResponseCreated(link)
 
 
 if __name__ == '__main__':
