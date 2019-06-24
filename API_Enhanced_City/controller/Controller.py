@@ -4,10 +4,10 @@
 from util.db_config import *
 import persistence_unit.PersistenceUnit as pUnit
 from controller.UserController import UserController
-from controller.PositionController import PositionController
+from controller.UserRoleController import UserRoleController
 
 from entities.User import User
-from entities.Position import Position
+from entities.UserRole import UserRole
 from entities.GuidedTour import GuidedTour
 from entities.Document import Document
 from entities.DocumentGuidedTour import DocumentGuidedTour
@@ -16,6 +16,7 @@ from entities.VersionDoc import VersionDoc
 from entities.DocumentUser import DocumentUser
 from entities.ValidationStatus import ValidationStatus
 from entities.Visualisation import Visualisation
+from entities.LinkCityObject import LinkCityObject
 
 
 class Controller:
@@ -36,5 +37,5 @@ class Controller:
     @staticmethod
     def create_tables():
         Base.metadata.create_all(pUnit.engine)
-        PositionController.create_all_positions()
+        UserRoleController.create_all_roles()
         UserController.create_admin()

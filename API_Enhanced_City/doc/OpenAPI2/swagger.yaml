@@ -1,11 +1,9 @@
----
 swagger: "2.0"
 info:
   description: API used to manage the extended documents in UDV Server.
   version: 1.0.0
   title: UDV-Server API$
-host: virtserver.swaggerhub.com
-basePath: /Crejak/UDV-Server/1.0.0
+host: localhost:5000
 tags:
 - name: Users
   description: User account management
@@ -23,6 +21,8 @@ tags:
   description: Guided tour management
 - name: Guided tour documents
   description: Management of documents inside a guided tour
+- name: Links
+  description: Management of links between documents and likable objects
 schemes:
 - https
 paths:
@@ -860,7 +860,7 @@ paths:
         required: true
         type: integer
         x-example: 1
-      - name: user_id
+      - name: doc_id
         in: formData
         description: ID of the document to add
         required: true
@@ -944,6 +944,94 @@ paths:
             The successfully deleted document, associated to the guided tour.
         404:
           description: The specified resource was not found
+        500:
+          description: Unexpected server error (should not happen)
+  /link:
+    get:
+      tags:
+      - Links
+      summary: Retrieve the available target types for a link
+      consumes:
+      - multipart/form-data
+      responses:
+        200:
+          description: Successfully get the possible target types
+          schema:
+            type: array
+            items:
+              type: string
+              example: 'city_object'
+        500:
+          description: Unexpected server error (should not happen)
+  /link/{target_type}:
+    get:
+      tags:
+      - Links
+      summary: Retrieve all links of the given type
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: target_type
+        in: path
+        description: Name of the target type. Same as the ones given by GET /link.
+        required: true
+        type: string
+        x-example: 'city_object'
+      - name: source_id
+        in: formData
+        description: ID of the source document
+        required: false
+        type: integer
+        x-example: 1
+      - name: target_id
+        in: formData
+        description: ID of the target linkable object
+        required: false
+        type: string
+        x-example: 'city_object_234'
+      responses:
+        200:
+          description: Successfully get the links
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Link'
+        400:
+          description: Bad request. Target type was probably incorrect.
+        500:
+          description: Unexpected server error (should not happen)
+    post:
+      tags:
+      - Links
+      summary: Create a new link between a document and an object of the given type
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: target_type
+        in: path
+        description: Name of the target type. Same as the ones given by GET /link.
+        required: true
+        type: string
+        x-example: 'city_object'
+      - name: source_id
+        in: formData
+        description: ID of the source document
+        required: true
+        type: integer
+        x-example: 1
+      - name: target_id
+        in: formData
+        description: ID of the target linkable object
+        required: true
+        type: string
+        x-example: 'city_object_234'
+      responses:
+        201:
+          description: Successfully created the link
+          schema:
+            $ref: '#/definitions/Link'
+        400:
+          description: Bad request. Target type was probably incorrect.
         500:
           description: Unexpected server error (should not happen)
 securityDefinitions:
@@ -1106,6 +1194,17 @@ definitions:
         example: title
       document:
         $ref: '#/definitions/ExtendedDocument'
+  Link:
+    properties:
+      id:
+        type: integer
+        example: 1
+      source_id:
+        type: integer
+        example: 1
+      target_id:
+        type: string
+        example: "city_object_23"
 responses:
   BadRequest:
     description: Request is malformed (a mandatory field is missing)

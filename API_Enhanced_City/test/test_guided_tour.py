@@ -79,7 +79,7 @@ class TestGuidedTour:
             "description": "a description",
             "file": "1.gif",
             'user_id': 1,
-            'position': {'label': 'admin'}
+            'role': {'label': 'admin'}
         }, {
             'user_id': 1
         })
@@ -90,7 +90,7 @@ class TestGuidedTour:
             "description": "a description",
             "file": "1.gif",
             'user_id': 1,
-            'position': {'label': 'admin'}
+            'role': {'label': 'admin'}
         }, {
             'user_id': 1
         })

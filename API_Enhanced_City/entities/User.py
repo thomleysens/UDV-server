@@ -11,7 +11,7 @@ from util.Exception import UnprocessableEntity
 
 from entities.Entity import Entity
 
-from entities.Position import Position, LEVEL_MAX
+from entities.UserRole import UserRole, LEVEL_MAX
 
 
 class User(Entity, Base):
@@ -24,9 +24,9 @@ class User(Entity, Base):
     lastName = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
 
-    position_id = Column(Integer, ForeignKey(Position.id))
-    position = relationship(Position,
-                            uselist=False)
+    role_id = Column(Integer, ForeignKey(UserRole.id))
+    role = relationship(UserRole,
+                        uselist=False)
 
     documentUser = relationship('DocumentUser',
                                 cascade="all, delete-orphan")
@@ -47,13 +47,13 @@ class User(Entity, Base):
             self.password = encrypt(new_values['password'])
         return self
 
-    def set_position(self, position):
-        self.position = position
-        self.position_id = position.id
+    def set_role(self, position):
+        self.role = position
+        self.role_id = position.id
 
     @staticmethod
     def is_admin(attributes):
-        level = Position.get_clearance_level(attributes['role'])
+        level = UserRole.get_clearance_level(attributes['role'])
         if level is None:
             raise UnprocessableEntity(f'Unknown role : {attributes["role"]}')
         return level == LEVEL_MAX
