@@ -11,6 +11,8 @@ Version number is defined in `setup.py`.
 
 TODO
 
+Please visit [this page](https://github.com/MEPP-team/UDV-server/blob/master/API_Enhanced_City/INSTALL.md) in order to install this tool.
+
 ### ExtractCityData
 
 #### Introduction
