@@ -5,6 +5,9 @@ The client-side component can be found [here](https://github.com/MEPP-team/UDV).
 
 Version number is defined in `setup.py`.
 
+For an install of the full pipeline of our application, please refer to
+[these install notes](https://github.com/MEPP-team/RICT/blob/master/Install.md).
+
 ## Tools
 
 ### API_Enhanced_City
