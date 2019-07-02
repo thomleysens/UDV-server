@@ -373,7 +373,7 @@ def get_links(target_type_name):
         'city_object'.
     :return: The retrieved links
     """
-    filters = request.form
+    filters = request.args
     links = LinkController.get_links(target_type_name, filters)
     return ResponseOK(links)
 
