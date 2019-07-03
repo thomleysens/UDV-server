@@ -367,7 +367,9 @@ def get_link_target_types():
 @format_response
 def get_links(target_type_name):
     """
-    Retrieves links between documents and the specified target type.
+    Retrieves links between documents and the specified target type. Filtering
+    can be performed by passing URL parameters corresponding to fields of the
+    link object (`source_id` and `target_id` are always supported).
 
     :param str target_type_name: Name of the target type. Accepted names are :
         'city_object'.
@@ -383,6 +385,7 @@ def get_links(target_type_name):
 def create_link(target_type_name):
     """
     Creates a new link between the source document and the specified target.
+    Properties must be supplied in form data.
 
     :param target_type_name: Name of the target type. Accepted names are :
         'city_object'.
@@ -392,8 +395,22 @@ def create_link(target_type_name):
     target_id = request.form.get('target_id')
     if source_id is None or target_id is None:
         raise BadRequest('Missing source and/or target id')
-    link = LinkController.create_link(target_type_name, source_id, target_id)
+    link = LinkController.create_link(target_type_name, request.form)
     return ResponseCreated(link)
+
+
+@app.route('/link/<target_type_name>/<int:link_id>', methods=['DELETE'])
+@format_response
+def delete_link(target_type_name, link_id):
+    """
+    Deletes the link of the specified target type with the specified ID.
+
+    :param target_type_name: The target type of the link.
+    :param link_id: The ID of the link.
+    :return: The deleted link.
+    """
+    link = LinkController.delete_link(target_type_name, link_id)
+    return ResponseOK(link)
 
 
 if __name__ == '__main__':
