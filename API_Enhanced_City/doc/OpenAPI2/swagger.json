@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "title": "UDV-Server API$"
   },
-  "host": "localhost:5000",
+  "host": "localhost:1525",
   "tags": [
     {
       "name": "Users",
@@ -1441,9 +1441,6 @@
           "Links"
         ],
         "summary": "Retrieve all links of the given type",
-        "consumes": [
-          "multipart/form-data"
-        ],
         "parameters": [
           {
             "name": "target_type",
@@ -1455,7 +1452,7 @@
           },
           {
             "name": "source_id",
-            "in": "formData",
+            "in": "query",
             "description": "ID of the source document",
             "required": false,
             "type": "integer",
@@ -1463,11 +1460,11 @@
           },
           {
             "name": "target_id",
-            "in": "formData",
+            "in": "query",
             "description": "ID of the target linkable object",
             "required": false,
             "type": "string",
-            "x-example": "city_object_234"
+            "x-example": "345423"
           }
         ],
         "responses": {
@@ -1531,6 +1528,49 @@
           },
           "400": {
             "description": "Bad request. Target type was probably incorrect."
+          },
+          "500": {
+            "description": "Unexpected server error (should not happen)"
+          }
+        }
+      }
+    },
+    "/link/{target_type}/{link_id}": {
+      "delete": {
+        "tags": [
+          "Links"
+        ],
+        "summary": "Deletes an existing link from its target type and ID",
+        "parameters": [
+          {
+            "name": "target_type",
+            "in": "path",
+            "description": "Name of the target type. Same as the ones given by GET /link",
+            "required": true,
+            "type": "string",
+            "x-example": "city_object"
+          },
+          {
+            "name": "link_id",
+            "in": "path",
+            "description": "ID of the link object",
+            "required": true,
+            "type": "integer",
+            "x-example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the link",
+            "schema": {
+              "$ref": "#/definitions/Link"
+            }
+          },
+          "400": {
+            "description": "Bad request. Target type was probably incorrect."
+          },
+          "404": {
+            "description": "Link was not found"
           },
           "500": {
             "description": "Unexpected server error (should not happen)"
@@ -1777,7 +1817,7 @@
         },
         "target_id": {
           "type": "string",
-          "example": "city_object_23"
+          "example": "543548"
         }
       }
     }

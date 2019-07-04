@@ -2,7 +2,7 @@ from typing import Type, Dict
 
 from sqlalchemy.orm.session import Session
 
-from util.Exception import BadRequest
+from util.Exception import BadRequest, NotFound
 
 from entities.LinkCityObject import LinkCityObject
 
@@ -20,10 +20,16 @@ class LinkController:
 
     - `get_links` : retrieve all links of a specified type. The type is passed
       as the `target_type_name` parameter. A `filters` dict can be also passed
-      as parameter to filter results by source and/or target ids.
+      as parameter to filter results by source, target ids and other properties
+      of the link (depending on the type).
     - `create_link` : creates a new link of the specified type. The type is
-      passed as the `target_type_name` parameter. The parameters `source_id` and
+      passed as the `target_type_name` parameter. Properties of the new link
+      are specified by the `properties` dict. Among these, `source_id` and
       `target_id` are mandatory.
+    - `delete_link` : deletes an existing link. The type is passed as the
+      `target_type_name` parameter. The link ID is passed through the `link_id`
+       parameter.
+
 
     `target_type_name` refers to a string representing a possibly target type
     for a link. These strings are specified in the `target_types` dictionary as
@@ -60,30 +66,52 @@ class LinkController:
         target_type = LinkController.target_types.get(target_type_name)
         if target_type is None:
             raise BadRequest(f'{target_type_name} is not a valid link target.')
-        source_id = filters.get('source_id')
-        target_id = filters.get('target_id')
         query = session.query(target_type)
-        if source_id is not None:
-            query = query.filter(target_type.source_id == source_id)
-        if target_id is not None:
-            query = query.filter(target_type.target_id == target_id)
+        for key, value in filters.items():
+            query = query.filter(target_type.get_attr(key) == value)
         return query.all()
 
     @staticmethod
     @pUnit.make_a_transaction
-    def create_link(session, target_type_name, source_id, target_id):
+    def create_link(session, target_type_name, properties={}):
         """
-        Creates a link between the given document and city objects.
+        Creates a link between the given document and an instance of the target
+        type.
 
         :param Session session: SQLAlchemy session (auto filled)
         :param str target_type_name: The name of the target type.
-        :param int source_id: ID of the source document.
-        :param any target_id: ID of the target city object.
+        :param dict properties: The properties of the link to create. The
+            dictionary must include at least two keys : `source_id` and
+            `target_id`. Other keys depend on the target type.
         :return: The newly created link.
         """
         target_type = LinkController.target_types.get(target_type_name)
         if target_type is None:
             raise BadRequest(f'{target_type_name} is not a valid link target.')
-        new_link = target_type(source_id, target_id)
+        try:
+            new_link = target_type(**properties)
+        except TypeError as e:
+            raise BadRequest(e)
         session.add(new_link)
         return new_link
+
+    @staticmethod
+    @pUnit.make_a_transaction
+    def delete_link(session, target_type_name, link_id):
+        """
+        Deletes a link with the given target type and ID.
+
+        :param Session session: SQLAlchemy session (auto filled)
+        :param target_type_name: The name of the target type.
+        :param link_id: ID of the link.
+        :return: The deleted link.
+        """
+        target_type = LinkController.target_types.get(target_type_name)
+        if target_type is None:
+            raise BadRequest(f'{target_type_name} is not a valid link target.')
+        link = session.query(target_type).filter(
+            target_type.id == link_id).one()
+        if link is None:
+            raise NotFound(f'Link {target_type_name}/{link_id} does not exist.')
+        session.delete(link)
+        return link
