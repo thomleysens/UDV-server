@@ -1,11 +1,11 @@
-# Description of the API Extended Document application
+# Description of the API Enhanced Document application
 
 # Introduction
 
-The goal of the API **Extended Document** is to handle documents needed from the front-end in [UDV](https://github.com/MEPP-team/UDV).
+The goal of the API **Enhanced Document** is to handle documents needed from the front-end in [UDV](https://github.com/MEPP-team/UDV).
 
 It achieves all the [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) on the backend side.
-API Extended Document (AED) is developed in python and is based on an **MVC** (Model, View, Controller) architecture.
+API Document (AED) is developed in python and is based on an **MVC** (Model, View, Controller) architecture.
 Persistance of objects (documents) to the DataBase is obtained through the usage of the [sqlalchemy library](https://www.sqlalchemy.org) [**ORM**](https://en.wikipedia.org/wiki/Object-relational_mapping).
 In order to wrap the (CRUD) service within an HTTP protocol (to deal with the requests and send responses to the client), AED uses the [flask library](http://flask.pocoo.org/docs/1.0/).
 
