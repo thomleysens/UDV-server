@@ -5,7 +5,7 @@ import lxml.etree as ET
 def ParseCommandLine():
     # arg parse
     descr = '''A small utility that extracts all the buildings from a 
-               set of CityGML (XML) files (or folder), blends them and 
+               set of CityGML (XML) files folder, blends them and 
                serializes the result in a new CityGML (XML) file.'''
     parser = argparse.ArgumentParser(description=descr)
     parser.add_argument('--inputFiles',
@@ -15,7 +15,7 @@ def ParseCommandLine():
     parser.add_argument('--inputFolder',
                         nargs='+',
                         type=str,
-                        help='CityGML input folder')
+                        help='Input folder holding CityGML files')
     parser.add_argument('--output',
                         nargs='+',
                         default='output.gml',
