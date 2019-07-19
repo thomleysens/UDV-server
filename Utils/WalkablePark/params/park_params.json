@@ -1,0 +1,20 @@
+{
+"osm_bbox_query" : [45.53, 4.62, 45.97, 5.11],
+"osm_key_query" : "leisure",
+"osm_value_query" : "park",
+"graph_nodes_jsonfile" : "./data/Lyon_metropole/park_case/nodes.json",
+"graph_edges_jsonfile" : "./data/Lyon_metropole/park_case/edges.json",
+"epsg_graph" : 4326,
+"epsg_input" : 4326,
+"epsg_metric" : 2154,
+"output_features_layername" : "parks",
+"output_isolines_layername" : "isolines",
+"output_buffered_isolines_layername" : "buffered_isolines",
+"output_buffered_isolines_union_layername" : "buffered_isolines_union",
+"output_folder" : "./data/Lyon_metropole/park_case",
+"output_format" : "geojson",
+"trip_times" : [5,10,15],
+"distance_buffer" : 40,
+"lat" : "x",
+"lon" : "y"
+}
