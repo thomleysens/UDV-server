@@ -10,4 +10,6 @@ API_Extended_Document/log/*
 API_Extended_Document/Dockerfile
 API_Extended_Document/postgres-data/*
 API_Extended_Document/upload/*
+Utils/WalkablePark/data/*
+Utils/WalkablePark/app_iso/*
 *.log
